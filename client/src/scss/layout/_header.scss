@@ -1,0 +1,25 @@
+.title {
+  font-family: $font;
+  float: right;
+  font-size: 30px;
+  color: $color-white;
+}
+
+.widgetselecter {
+  background-color: $color-black;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+  height: 50px;
+
+	>div:nth-child(1){
+		margin-left: 6px;
+		min-width: 400px;
+		width: 25%;
+		display: flex;
+		justify-content: space-between;
+	}
+	>div:nth-child(2){
+		margin-right: 6px;
+	}
+}

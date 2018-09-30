@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const users = require('./routes/api/users.js');
 const dashboards = require('./routes/api/dashboards.js');
@@ -15,7 +16,9 @@ const db = require('./config/keys').mongoURI;
 
 // Connect to mongo database
 mongoose
-    .connect(db, { useNewUrlParser: true })
+    .connect(db, {
+        useNewUrlParser: true
+    })
     .then(() => console.log("MongoDB connected..."))
     .catch(err => console.log(err));
 
@@ -24,7 +27,7 @@ app.use('/api/users', users);
 app.use('/api/dashboards', dashboards);
 
 // Serve static assets if in production
-if(process.env.NODE_ENV === 'production'){
+if (process.env.NODE_ENV === 'production') {
     // Set static folder
     app.use(express.static('client/build'));
 

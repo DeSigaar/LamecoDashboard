@@ -1,21 +1,31 @@
 {
-    "name": "lamecodashboard",
-    "version": "1.0.0",
-    "description": "Lameco dashboard system",
-    "main": "server.js",
-    "dependencies": {
-        "body-parser": "^1.18.3",
-        "concurrently": "^4.0.1",
-        "express": "^4.16.3",
-        "mongoose": "^5.2.17",
-        "nodemon": "^1.18.4"
-    },
-    "scripts": {
-        "client-install": "npm install --prefix client",
-        "start": "node server.js",
-        "server": "nodemon server.js",
-        "client": "npm start --prefix client",
-        "dev": "concurrently \"npm run server\" \"npm run client\"",
-        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
-    }
+  "name": "lamecodashboard",
+  "version": "1.0.0",
+  "description": "Lameco dashboard system",
+  "author": "Max Altena <Max@MaxAltena.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxAltena/LamecoDashboard.git"
+  },
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.0.1",
+    "express": "^4.16.3",
+    "mongoose": "^5.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  },
+  "scripts": {
+    "install-all": "npm install && npm install --prefix client",
+    "server-install": "npm install",
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  }
 }
