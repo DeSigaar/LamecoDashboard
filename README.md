@@ -58,7 +58,7 @@ This starts the backend on port 5000 and the frontend on port 3000 concurrently.
 
 - [Node.js](https://nodejs.org/)
 - [ReactJS](https://reactjs.org/)
-- [React-Grid-Layout](https://github.com/STRML/react-grid-layout/)
+- [React-Grid-Layout](https://github.com/STRML/react-grid-layout/)  
   Some more stuff here :)
 
 ## Creators
