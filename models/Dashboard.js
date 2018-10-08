@@ -1,20 +1,26 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// Create Schema
+// Create Dashboard Schema
 const DashboardSchema = new Schema({
-    company: {
-        type: String,
-        required: true
-    },
-    name: {
-        type: String,
-        required: true
-    },
-    content: {
-        type: String,
-        required: true
-    }
+  company: {
+    type: Schema.Types.ObjectId,
+    ref: "company"
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  handle: {
+    type: String,
+    required: true,
+    min: 2,
+    max: 40
+  },
+  content: {
+    type: String,
+    required: true
+  }
 });
 
-module.exports = Dashboard = mongoose.model('dashboard', DashboardSchema);
+module.exports = Dashboard = mongoose.model("dashboard", DashboardSchema);
