@@ -6,10 +6,10 @@ class Login extends Component {
       <div className="login">
         <div className="loginImage">
           <img
-            className="backgroundImage"
-            src="img/showcase.jpg"
-            alt="backgroundImage"
-          />
+              className="backgroundImage"
+              src="img/showcase.jpg"
+              alt="backgroundImage"
+            />
           <div className="imageText">
             <h1>Laméco</h1>
             <h4>Maakt Online Succesvol</h4>

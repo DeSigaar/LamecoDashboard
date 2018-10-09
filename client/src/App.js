@@ -8,8 +8,8 @@ import { clearCurrentProfile } from "./actions/profileActions";
 import { Provider } from "react-redux";
 import store from "./store";
 
-import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
+import Login from "./components/pages/Login";
+import Dashboard from "./components/pages/Dashboard";
 
 import "./App.css";
 
