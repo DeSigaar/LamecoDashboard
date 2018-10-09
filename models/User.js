@@ -9,19 +9,22 @@ const UserSchema = new Schema({
   },
   username: {
     type: String,
-    required: true
+    required: true,
+    min: 6,
+    max: 30
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    min: 6,
+    max: 30
   },
   name: {
     type: String,
     required: true
   },
-  handle: {
-    type: String,
-    required: true
+  avatar: {
+    type: String
   },
   admin_role: {
     type: Boolean,

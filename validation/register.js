@@ -57,19 +57,6 @@ module.exports = function validateRegisterInput(data) {
     errors.name = "Name field is required";
   }
 
-  // Check for anything wrong with the handle
-  data.handle = !isEmpty(data.handle) ? data.handle : "";
-  if (Validator.isEmpty(data.handle)) {
-    errors.handle = "Handle field is required";
-  } else if (
-    !Validator.isLength(data.handle, {
-      min: 6,
-      max: 30
-    })
-  ) {
-    errors.handle = "Handle must be between 6 and 30 characters";
-  }
-
   // Check for anything wrong with the admin_role
   data.admin_role = !isEmpty(data.admin_role) ? data.admin_role : "";
   if (Validator.isEmpty(data.admin_role)) {
