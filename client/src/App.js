@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
@@ -8,7 +8,8 @@ import { clearCurrentProfile } from "./actions/profileActions";
 import { Provider } from "react-redux";
 import store from "./store";
 
-import PrivateRoute from "./components/common/PrivateRouter";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
 
 import "./App.css";
 
@@ -39,42 +40,8 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <div className="loginImage">
-              <img
-                className="backgroundImage"
-                src="img/showcase.jpg"
-                alt="backgroundImage"
-              />
-              <div className="imageText">
-                <h1>Laméco</h1>
-                <h4>Maakt Online Succesvol</h4>
-              </div>
-            </div>
-            <div className="loginContainer">
-              <div className="formContainer">
-                <form>
-                  <input
-                    type="text"
-                    name="uname"
-                    placeholder="Email or Username"
-                  />
-                  <input
-                    type="password"
-                    name="psw"
-                    placeholder="Password"
-                    required
-                  />
-                  <label>
-                    <input type="checkbox" name="remember" required /> Remember
-                    me
-                  </label>
-                  <span>
-                    <a href="#">Forgot Password?</a>
-                  </span>
-                  <button type="submit">Login</button>
-                </form>
-              </div>
-            </div>
+            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/login" component={Login} />
           </div>
         </Router>
       </Provider>
