@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export class TitleBar extends Component {
   render() {
     return (
-      <div className="titleBar z-depth-1">
+      <div className="titleBar shadow1">
         <h1>Laméco</h1>
         <ul className="contentRight">
           <li>

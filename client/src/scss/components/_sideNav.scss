@@ -2,8 +2,12 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 30vw;
+  width: 325px;
   background-color: $color-white;
   height: 100vh;
-  margin-top: 56px;
+  padding: 56px 0 0 15px;
+
+  .btn {
+    margin-top: 20px;
+  }
 }
