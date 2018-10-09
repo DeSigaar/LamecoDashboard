@@ -1,4 +1,4 @@
-![De Sigaar Logo](https://raw.githubusercontent.com/MariusHendriks/De-Sigaar/master/branding/DeSigaarIcon-128x128.png)
+![De Sigaar Logo](https://i.gyazo.com/bd001381f989b9443f4769f72c938ca5.png)
 
 # Laméco Dashboard System by De Sigaar
 
@@ -52,6 +52,7 @@ For the application to be able to function as normal, it needs to run both the f
 ```
 $ npm run dev
 ```
+
 This starts the backend on port 5000 and the frontend on port 3000 concurrently.
 
 ## Built with

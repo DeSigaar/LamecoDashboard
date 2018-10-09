@@ -63,11 +63,11 @@ module.exports = function validateRegisterInput(data) {
     errors.handle = "Handle field is required";
   } else if (
     !Validator.isLength(data.handle, {
-      min: 2,
+      min: 6,
       max: 30
     })
   ) {
-    errors.handle = "Handle must be between 2 and 30 characters";
+    errors.handle = "Handle must be between 6 and 30 characters";
   }
 
   // Check for anything wrong with the admin_role

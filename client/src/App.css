@@ -1,0 +1,97 @@
+img {
+  width: 100%;
+}
+
+.landing {
+  position: absolute;
+  background: url("./img/showcase.jpg") no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: calc(100vh - 56px - 72px);
+  width: 100vw;
+}
+
+.landing-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dark-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: calc(100vh - 56px - 72px);
+  width: 100vw;
+}
+
+.card-form {
+  opacity: 0.9;
+}
+
+.latest-profiles-img {
+  width: 40px;
+  height: 40px;
+}
+
+.form-control::placeholder {
+  color: #bbb !important;
+}
+
+nav.navbar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.logoutPicture {
+  width: 25px;
+  margin-right: 5px;
+}
+
+.spinner {
+  width: 200px;
+  margin: auto;
+  display: block;
+}
+
+.App>.myContainer {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  padding-top: 56px;
+  padding-bottom: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.dashboard {
+  flex-grow: 1;
+}
+
+.login,
+.register,
+.notfound {
+  min-width: 80vw;
+  align-self: center;
+}
+
+.create-profile,
+.profiles,
+.profile {
+  min-width: 80vw;
+}
+
+th {
+  min-width: 150px;
+}
