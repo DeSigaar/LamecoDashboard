@@ -58,10 +58,7 @@ module.exports = function validateRegisterInput(data) {
   }
 
   // Check for anything wrong with the admin_role
-  data.admin_role = !isEmpty(data.admin_role) ? data.admin_role : "";
-  if (Validator.isEmpty(data.admin_role)) {
-    errors.admin_role = "Role field is required";
-  }
+  data.admin_role = !isEmpty(data.admin_role) ? data.admin_role : false;
 
   return {
     errors,
