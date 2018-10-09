@@ -12,7 +12,6 @@ import Login from "./components/pages/Login";
 import Dashboard from "./components/pages/Dashboard";
 
 import "./App.css";
-
 // Check for token
 if (localStorage.jwtToken) {
   // Set auth token header auth

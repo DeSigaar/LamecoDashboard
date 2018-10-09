@@ -1,1 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Ubuntu');
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $font;
+    font-weight: bold;
+}
+
+p,
+span,
+a,
+li {
+    font-family: $font;
+    font-weight: medium;
+}

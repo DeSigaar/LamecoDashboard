@@ -1,5 +1,9 @@
-$color-white: rgb(242, 242, 242);
-$color-white-hover: rgb(203, 203, 203);
-$color-black: rgb(23, 23, 23);
-
-$font: 'Ubuntu';
+// All variables should be written with normal dashes ---- NOT ____ NOR camelCase
+// Variable names should be clear and easy to understand
+// EG: colors start with color-, font styles start with font-
+$color-white: rgb(255, 255, 255);
+$color-light-grey: rgb(244, 245, 245);
+$color-grey: rgb(112, 112, 112);
+$color-grey-hover: rgb(86, 86, 86);
+$color-black: rgb(61, 61, 61);
+$font: "Montserrat", sans-serif;
