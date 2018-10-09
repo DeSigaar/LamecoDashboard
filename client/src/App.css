@@ -1,97 +1,194 @@
-img {
+@import url("https://fonts.googleapis.com/css?family=Ubuntu");
+html {
+  box-sizing: border-box; }
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit; }
+
+body {
   width: 100%;
-}
+  max-width: 100%;
+  overflow-x: hidden;
+  height: 100vh;
+  max-height: 100vh;
+  background-color: #f2f2f2; }
 
-.landing {
-  position: absolute;
-  background: url("./img/showcase.jpg") no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: calc(100vh - 56px - 72px);
-  width: 100vw;
-}
+.rw-main.type-today {
+  border-radius: 0px; }
 
-.landing-inner {
+.react-grid-layout {
+  transition: height 200ms ease; }
+
+.title {
+  font-family: "Ubuntu";
+  float: right;
+  font-size: 30px;
+  color: #f2f2f2;
+  margin-right: 10px; }
+
+.widgetselecter {
+  background-color: #171717;
+  padding-top: 10px;
+  padding-left: 10px;
+  height: 50px; }
+
+.Select-control {
+  border-radius: 0px !important;
+  border: none !important;
+  background-color: #f2f2f2 !important; }
+
+.addButton {
+  border-radius: 0px;
+  background-color: #f2f2f2;
+  height: 38px; }
+  .addButton:hover {
+    background-color: #cbcbcb;
+    transition: 0.2s; }
+
+.resetButton {
+  border-radius: 0px;
+  background-color: #f2f2f2;
+  height: 38px; }
+  .resetButton:hover {
+    background-color: #cbcbcb;
+    transition: 0.2s; }
+
+.dropdown {
+  width: 150px;
+  display: inline-block; }
+
+.clock {
+  font-size: 35px;
+  color: #171717;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+
+.photo {
+  background: url("https://fontys.nl/upload_mm/e/1/6/115115_fullimage_fon525_00.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  z-index: 999; }
+
+.rw-main {
+  color: #fff;
+  width: 100%;
+  height: 320px;
+  background: #4997D8;
+  display: flex; }
+
+.rw-main h2 {
+  margin: 0 0 10px 0;
+  font-weight: 300;
+  font-size: x-large;
+  letter-spacing: 2px; }
+
+.rw-main .hr {
+  width: 100%;
+  height: 0;
+  border-bottom: solid 1px #fff;
+  opacity: 0.4;
+  margin: 10px 0; }
+
+.rw-main p {
+  margin: 0; }
+
+.rw-main.type-today {
+  border-radius: 0px; }
+
+.rw-main.type-5days {
+  border-radius: 0px; }
+
+.rw-main .rw-box-left {
+  padding: 30px;
+  width: 60%; }
+
+.rw-main .rw-box-right {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 0px;
+  width: 40%;
   display: flex;
-  justify-content: center;
   align-items: center;
-}
+  justify-content: center; }
 
-.dark-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: calc(100vh - 56px - 72px);
-  width: 100vw;
-}
+.rw-main .rw-box-right i {
+  font-size: 80px; }
 
-.card-form {
-  opacity: 0.9;
-}
+.rw-main .rw-today .date {
+  color: #B5DEF4; }
 
-.latest-profiles-img {
-  width: 40px;
-  height: 40px;
-}
+.rw-main .rw-today .current {
+  font-size: 45px; }
 
-.form-control::placeholder {
-  color: #bbb !important;
-}
+.rw-main .rw-today .range {
+  color: #B5DEF4;
+  font-size: 12px;
+  margin: 0 0 5px 2px; }
 
-nav.navbar {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-}
+.rw-main .rw-today .desc {
+  color: #B5DEF4;
+  font-size: 16px; }
 
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  z-index: 1;
-}
+.rw-main .rw-today .desc i {
+  font-size: 20px;
+  color: #B5DEF4; }
 
-.logoutPicture {
-  width: 25px;
-  margin-right: 5px;
-}
+.rw-main .rw-today .info {
+  color: #B5DEF4; }
 
-.spinner {
-  width: 200px;
-  margin: auto;
-  display: block;
-}
+.rw-main .rw-today .info div {
+  margin-bottom: 5px; }
 
-.App>.myContainer {
-  width: 100%;
-  min-height: 100vh;
-  position: relative;
-  padding-top: 56px;
-  padding-bottom: 72px;
+.rw-box-days {
+  clear: both;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
+  border-left: solid 1px #ddd;
+  border-right: solid 1px #ddd;
+  border-bottom: solid 1px #ddd;
+  border-radius: 0px;
+  font-size: 11px;
+  color: #777;
+  background-color: #fff; }
 
-.dashboard {
-  flex-grow: 1;
-}
+.rw-box-days .rw-day {
+  width: calc(100% / 4);
+  text-align: center;
+  margin: 10px; }
 
-.login,
-.register,
-.notfound {
-  min-width: 80vw;
-  align-self: center;
-}
+.rw-box-days .rw-day:not(:first-child) {
+  border-left: solid 1px #ddd; }
 
-.create-profile,
-.profiles,
-.profile {
-  min-width: 80vw;
-}
+.rw-box-days .rw-date {
+  font-size: 11px;
+  font-weight: bold; }
 
-th {
-  min-width: 150px;
-}
+.rw-box-days .rw-desc {
+  margin: 10px 0 10px 0;
+  font-size: 12px; }
+
+.rw-box-days .rw-range {
+  font-size: 11px; }
+
+.rw-box-days .rw-info {
+  margin-top: 10px;
+  font-size: 12px; }
+
+.rw-box-days .wicon {
+  margin-top: 15px;
+  font-size: 35px;
+  color: #4BC4F7; }
+
+.rw-box {
+  font-family: Helvetica, sans-serif;
+  font-size: 13px; }
+
+.react-grid-item {
+  text-align: center;
+  background: #cbcbcb;
+  transition: all 200ms ease;
+  transition-property: left, top; }
