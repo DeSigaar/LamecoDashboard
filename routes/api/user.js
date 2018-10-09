@@ -16,7 +16,7 @@ const validateUserInput = require("../../validation/user");
 const User = require("../../models/User");
 
 // @route   GET api/user/current
-// @desc    Return current user
+// @desc    Get current user
 // @access  Private
 router.get(
   "/current",
@@ -35,6 +35,26 @@ router.get(
   }
 );
 
+// TODO: Get user by id, email or username - output everything except password
+
+// @route   GET api/user/all
+// @desc    Get all users
+// @access  Private
+router.get(
+  "/all",
+  passport.authenticate("jwt", {
+    session: false
+  }),
+  (req, res) => {
+    if (req.user.admin_role === false) {
+      return res.status(401).json({ authorized: false });
+    }
+    User.find().then(users => {
+      res.json(users);
+    }); // TODO: Do not output passwords within users!!
+  }
+);
+
 // @route   POST api/user/register
 // @desc    Register user
 // @access  Private
@@ -45,7 +65,7 @@ router.post(
   }),
   (req, res) => {
     if (req.user.admin_role === false) {
-      return res.status(400).json({ authorized: false });
+      return res.status(401).json({ authorized: false });
     }
 
     const { errors, isValid } = validateUserInput(req.body);
@@ -108,7 +128,7 @@ router.post(
 // @desc    Update user
 // @access  Private
 router.post(
-  "/update",
+  "/update/:id", // TODO: Update user by id, email or username
   passport.authenticate("jwt", {
     session: false
   }),
@@ -121,7 +141,7 @@ router.post(
     }
 
     const userFields = {};
-    userFields.user = req.user.id;
+    userFields.user = req.params.id;
     if (req.body.email) userFields.email = req.body.email.toLowerCase();
     if (req.body.username)
       userFields.username = req.body.username.toLowerCase();
@@ -131,13 +151,14 @@ router.post(
     User.findOne({
       email: userFields.email
     }).then(user => {
-      if (user && user.id !== req.user.id) {
+      if (user && user.id !== userFields.user) {
         errors.email = "Email already exists";
       }
+
       User.findOne({
         username: userFields.username
       }).then(user => {
-        if (user && user.id !== req.user.id) {
+        if (user && user.id !== userFields.user) {
           errors.username = "Username already exists";
           return res.status(400).json(errors);
         } else if (!isEmpty(errors)) {
@@ -156,7 +177,7 @@ router.post(
 
               // Update
               User.findOneAndUpdate(
-                { _id: req.user.id },
+                { _id: userFields.user },
                 { $set: userFields },
                 { new: true }
               ).then(user => res.json(user));
@@ -208,19 +229,12 @@ router.post("/login", (req, res) => {
           }; // Create JWT payload
 
           // Sign token
-          jwt.sign(
-            payload,
-            keys.secretOrKey,
-            {
-              expiresIn: 0 // Time before token expires in seconds
-            },
-            (err, token) => {
-              res.json({
-                success: true,
-                token: "Bearer " + token
-              });
-            }
-          );
+          jwt.sign(payload, keys.secretOrKey, (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer " + token
+            });
+          });
         } else {
           errors.password = "Password incorrect";
           return res.status(400).json(errors);
@@ -253,19 +267,12 @@ router.post("/login", (req, res) => {
           }; // Create JWT payload
 
           // Sign token
-          jwt.sign(
-            payload,
-            keys.secretOrKey,
-            {
-              expiresIn: 0 // Time before token expires in seconds
-            },
-            (err, token) => {
-              res.json({
-                success: true,
-                token: "Bearer " + token
-              });
-            }
-          );
+          jwt.sign(payload, keys.secretOrKey, (err, token) => {
+            res.json({
+              success: true,
+              token: "Bearer " + token
+            });
+          });
         } else {
           errors.password = "Password incorrect";
           return res.status(400).json(errors);
@@ -274,5 +281,7 @@ router.post("/login", (req, res) => {
     });
   }
 });
+
+// TODO: Delete user by id, email or username - Needs to have admin_role set to true
 
 module.exports = router;
