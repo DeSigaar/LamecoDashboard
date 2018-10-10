@@ -35,7 +35,30 @@ router.get(
   }
 );
 
-// TODO: Get user by id, email or username - output everything except password
+// @route   GET api/user/:id
+// @desc    Get user by given id
+// @access  Private
+router.get(
+  "/:id",
+  passport.authenticate("jwt", {
+    session: false
+  }),
+  (req, res) => {
+    if (req.user.admin_role === false) {
+      return res.status(401).json({ authorized: false });
+    }
+
+    User.findById(req.params.id)
+      .then(user => {
+        user.password = undefined;
+        user.__v = undefined;
+        res.json(user);
+      })
+      .catch(err =>
+        res.status(404).json({ nouserfound: "No user found with that ID" })
+      );
+  }
+);
 
 // @route   GET api/user/all
 // @desc    Get all users
@@ -50,8 +73,12 @@ router.get(
       return res.status(401).json({ authorized: false });
     }
     User.find().then(users => {
+      users.forEach(user => {
+        user.password = undefined;
+        user.__v = undefined;
+      });
       res.json(users);
-    }); // TODO: Do not output passwords within users!!
+    });
   }
 );
 
@@ -124,15 +151,19 @@ router.post(
   }
 );
 
-// @route   POST api/user/update
-// @desc    Update user
+// @route   POST api/user/update/:id
+// @desc    Update user with given id
 // @access  Private
 router.post(
-  "/update/:id", // TODO: Update user by id, email or username
+  "/update/:id",
   passport.authenticate("jwt", {
     session: false
   }),
   (req, res) => {
+    if (req.user.admin_role === false && req.user.id !== req.params.id) {
+      return res.status(401).json({ authorized: false });
+    }
+
     const { errors, isValid } = validateUserInput(req.body);
 
     // Check validation
@@ -190,7 +221,7 @@ router.post(
 );
 
 // @route   POST api/user/login
-// @desc    Login User / Returning JWT token
+// @desc    Login user and return JWT token
 // @access  Public
 router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
@@ -228,13 +259,30 @@ router.post("/login", (req, res) => {
             admin_role: user.admin_role
           }; // Create JWT payload
 
-          // Sign token
-          jwt.sign(payload, keys.secretOrKey, (err, token) => {
-            res.json({
-              success: true,
-              token: "Bearer " + token
+          if (req.body.remember_me === true) {
+            // Sign token
+            jwt.sign(payload, keys.secretOrKey, (err, token) => {
+              res.json({
+                success: true,
+                token: "Bearer " + token
+              });
             });
-          });
+          } else {
+            // Sign token
+            jwt.sign(
+              payload,
+              keys.secretOrKey,
+              {
+                expiresIn: 36000
+              },
+              (err, token) => {
+                res.json({
+                  success: true,
+                  token: "Bearer " + token
+                });
+              }
+            );
+          }
         } else {
           errors.password = "Password incorrect";
           return res.status(400).json(errors);
@@ -266,13 +314,30 @@ router.post("/login", (req, res) => {
             admin_role: user.admin_role
           }; // Create JWT payload
 
-          // Sign token
-          jwt.sign(payload, keys.secretOrKey, (err, token) => {
-            res.json({
-              success: true,
-              token: "Bearer " + token
+          if (req.body.remember_me === true) {
+            // Sign token
+            jwt.sign(payload, keys.secretOrKey, (err, token) => {
+              res.json({
+                success: true,
+                token: "Bearer " + token
+              });
             });
-          });
+          } else {
+            // Sign token
+            jwt.sign(
+              payload,
+              keys.secretOrKey,
+              {
+                expiresIn: 36000
+              },
+              (err, token) => {
+                res.json({
+                  success: true,
+                  token: "Bearer " + token
+                });
+              }
+            );
+          }
         } else {
           errors.password = "Password incorrect";
           return res.status(400).json(errors);
@@ -282,6 +347,25 @@ router.post("/login", (req, res) => {
   }
 });
 
-// TODO: Delete user by id, email or username - Needs to have admin_role set to true
+// @route   DELETE api/user/remove/:id
+// @desc    Remove user with given id
+// @access  Private
+router.delete(
+  "/remove/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    if (req.user.admin_role === false) {
+      return res.status(401).json({ authorized: false });
+    }
+
+    User.findById(req.params.id)
+      .then(user => {
+        user.remove().then(() => res.json({ success: true }));
+      })
+      .catch(err =>
+        res.status(404).json({ usernotfound: "User not found with that ID" })
+      );
+  }
+);
 
 module.exports = router;

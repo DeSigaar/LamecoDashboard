@@ -16,6 +16,9 @@ module.exports = function validateLoginInput(data) {
     errors.password = "Password field is required";
   }
 
+  // Check for anything wrong with the remember_me
+  data.remember_me = !isEmpty(data.remember_me) ? data.remember_me : false;
+
   return {
     errors,
     isValid: isEmpty(errors)

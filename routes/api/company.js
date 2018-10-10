@@ -1,11 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const gravatar = require("gravatar");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const keys = require("../../config/keys");
 const passport = require("passport");
-const Validator = require("validator");
 const isEmpty = require("../../validation/is-empty");
 
 // Load input validation
@@ -13,6 +8,32 @@ const validateCompanyInput = require("../../validation/company");
 
 // Load Company model
 const Company = require("../../models/Company");
+
+// @route   GET api/company/:id
+// @desc    Get company by given id
+// @access  Private
+router.get(
+  "/:id",
+  passport.authenticate("jwt", {
+    session: false
+  }),
+  (req, res) => {
+    if (req.user.admin_role === false) {
+      return res.status(401).json({ authorized: false });
+    }
+
+    Company.findById(req.params.id)
+      .then(company => {
+        company.__v = undefined;
+        res.json(company);
+      })
+      .catch(err =>
+        res
+          .status(404)
+          .json({ nocompanyfound: "No company found with that ID" })
+      );
+  }
+);
 
 // @route   GET api/company/all
 // @desc    Get all companies
@@ -23,6 +44,10 @@ router.get(
     session: false
   }),
   (req, res) => {
+    if (req.user.admin_role === false) {
+      return res.status(401).json({ authorized: false });
+    }
+
     Company.find().then(companies => res.json(companies));
   }
 );
@@ -36,19 +61,79 @@ router.post(
     session: false
   }),
   (req, res) => {
-    const newCompany = new Company({
-      name: req.body.name
-    });
+    if (req.user.admin_role === false) {
+      return res.status(401).json({ authorized: false });
+    }
 
-    newCompany.save().then(company => res.json(company));
+    const { errors, isValid } = validateCompanyInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    req.body.name = req.body.name
+      .toLowerCase()
+      .split(" ")
+      .map(x => x.charAt(0).toUpperCase() + x.substring(1))
+      .join(" ");
+    req.body.handle = req.body.handle.toLowerCase();
+
+    Company.findOne({
+      name: req.body.name
+    }).then(company => {
+      if (company) {
+        errors.name = "Name already exists";
+      }
+      Company.findOne({
+        handle: req.body.handle
+      }).then(company => {
+        if (company) {
+          errors.handle = "Handle already exists";
+          return res.status(400).json(errors);
+        } else if (!isEmpty(errors)) {
+          return res.status(400).json(errors);
+        } else {
+          const newCompany = new Company({
+            name: req.body.name,
+            handle: req.body.handle
+          });
+
+          newCompany.save().then(company => res.json(company));
+        }
+      });
+    });
   }
 );
 
 // @route   DELETE api/company/remove/:id
-// @desc    Remove a company
-// @access  Make private
+// @desc    Remove company with given id
+// @access  Private
 router.delete(
   "/remove/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    if (req.user.admin_role === false) {
+      return res.status(401).json({ authorized: false });
+    }
+
+    Company.findById(req.params.id)
+      .then(company => {
+        company.remove().then(() => res.json({ success: true }));
+      })
+      .catch(err =>
+        res
+          .status(404)
+          .json({ companynotfound: "Company not found with that ID" })
+      );
+  }
+);
+
+// @route   POST api/company/update/:id
+// @desc    Update company with given id
+// @access  Private
+router.post(
+  "/update/:id",
   passport.authenticate("jwt", {
     session: false
   }),
@@ -57,21 +142,47 @@ router.delete(
       return res.status(401).json({ authorized: false });
     }
 
-    Company.findById(req.params.id)
-      .then(company => company.remove().then(() => res.json({ success: true })))
-      .catch(err => res.status(404).json({ success: false }));
+    const { errors, isValid } = validateCompanyInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    const companyFields = {};
+    companyFields.company = req.params.id;
+    if (req.body.name)
+      companyFields.name = req.body.name
+        .toLowerCase()
+        .split(" ")
+        .map(x => x.charAt(0).toUpperCase() + x.substring(1))
+        .join(" ");
+    if (req.body.handle) companyFields.handle = req.body.handle.toLowerCase();
+
+    Company.findOne({
+      name: companyFields.name
+    }).then(company => {
+      if (company && company.id !== companyFields.company) {
+        errors.name = "Name already exists";
+      }
+      Company.findOne({
+        handle: companyFields.handle
+      }).then(company => {
+        if (company && company.id !== companyFields.company) {
+          errors.handle = "Handle already exists";
+          return res.status(400).json(errors);
+        } else if (!isEmpty(errors)) {
+          return res.status(400).json(errors);
+        } else {
+          Company.findOneAndUpdate(
+            { _id: companyFields.company },
+            { $set: companyFields },
+            { new: true }
+          ).then(company => res.json(company));
+        }
+      });
+    });
   }
 );
-
-// @route   POST api/company/update/:id
-// @desc    Update a company
-// @access  Private
-
-//
-//  TODO:
-//  Update function for company
-//  What updates:   name
-//  Needed params:  companyId & companyName
-//
 
 module.exports = router;
