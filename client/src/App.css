@@ -308,3 +308,101 @@ li {
   background: #565656;
   transition: all 200ms ease;
   transition-property: left, top; }
+
+.loginImage {
+  position: relative;
+  display: inline-block;
+  background-image: url(img/lamecoLoginImg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 65vw; }
+  .loginImage .imageText {
+    position: absolute;
+    top: 50vh;
+    left: 65px;
+    color: white; }
+  .loginImage .overlayImage {
+    background-color: rgba(207, 31, 62, 0.6);
+    height: inherit;
+    width: inherit; }
+
+.loginContainer {
+  position: relative;
+  display: inline-block;
+  width: 34vw;
+  height: 100vh; }
+  .loginContainer .formContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+    .loginContainer .formContainer h3 {
+      text-transform: uppercase;
+      margin-bottom: 70px; }
+    .loginContainer .formContainer form {
+      width: 390px;
+      height: auto; }
+      .loginContainer .formContainer form input {
+        margin-bottom: 45px;
+        width: inherit;
+        background: transparent;
+        border: 0;
+        outline: 0;
+        border-bottom: 1px solid #cf1f3e; }
+      .loginContainer .formContainer form ::placeholder {
+        color: #b9b9b9; }
+      .loginContainer .formContainer form span a {
+        position: relative;
+        color: #cf1f3e;
+        text-decoration: none; }
+      .loginContainer .formContainer form button {
+        position: absolute; }
+
+.rememberContainer {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+  .rememberContainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0; }
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.rememberContainer:hover input ~ .checkmark {
+  background-color: #ccc; }
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none; }
+
+.rememberContainer input:checked ~ .checkmark:after {
+  display: block; }
+
+.rememberContainer .checkmark:after {
+  left: 8.5px;
+  top: 2px;
+  width: 8px;
+  height: 17px;
+  border: solid #cf1f3e;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg); }
