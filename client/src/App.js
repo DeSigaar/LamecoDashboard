@@ -1,17 +1,19 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
-import { clearCurrentProfile } from "./actions/profileActions";
 
 import { Provider } from "react-redux";
 import store from "./store";
+
+import PrivateRoute from "./components/common/PrivateRouter";
 
 import Login from "./components/pages/Login";
 import Dashboard from "./components/pages/Dashboard";
 
 import "./App.css";
+
 // Check for token
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -26,8 +28,6 @@ if (localStorage.jwtToken) {
   if (decoded.exp < currentTime) {
     // Logout user
     store.dispatch(logoutUser());
-    // Clear current Profile
-    store.dispatch(clearCurrentProfile());
     // Redirect to login
     window.location.href = "/login";
   }
@@ -39,8 +39,11 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <Route exact path="/" component={Dashboard} />
-            <Route exact path="/login" component={Login} />
+            <Switch>
+              <Route exact path="/login" component={Login} />
+              <PrivateRoute exact path="/" component={Dashboard} />
+              <Route component={Login} />
+            </Switch>
           </div>
         </Router>
       </Provider>

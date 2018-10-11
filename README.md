@@ -22,7 +22,7 @@ This project was made by some students from the [Fontys Hogeschool ICT](https://
 
 ## Prerequisites
 
-- Node.js
+- [Node.js](https://nodejs.org/)
 
 ## Installation
 
@@ -57,8 +57,17 @@ This starts the backend on port 5000 and the frontend on port 3000 concurrently.
 
 ## Built with
 
+### Most important stuff
+
+- [MongoDB](https://www.mongodb.com/)
+- [Express](https://expressjs.com/)
+- [React](https://reactjs.org/)
+- [Redux](https://redux.js.org/)
 - [Node.js](https://nodejs.org/)
-- [ReactJS](https://reactjs.org/)
+- [SASS](https://sass-lang.com/)
+
+### Additional stuff
+
 - [React-Grid-Layout](https://github.com/STRML/react-grid-layout/)  
   Some more stuff here :)
 
@@ -74,7 +83,7 @@ See the whole list of [contributors](https://github.com/MaxAltena/LamecoDashboar
 
 ## Recognitions
 
-Big thanks to the creators of the [Laméco Dashboard](https://git.fhict.nl/I403606/LamecoLayout/).
+Thanks to the creators of the [Laméco Dashboard](https://git.fhict.nl/I403606/LamecoLayout/).
 
 ### Developers
 
