@@ -5,7 +5,14 @@ const Schema = mongoose.Schema;
 const CompanySchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    min: 6
+  },
+  handle: {
+    type: String,
+    required: true,
+    min: 3,
+    max: 30
   }
 });
 
