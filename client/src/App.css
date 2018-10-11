@@ -309,100 +309,119 @@ li {
   transition: all 200ms ease;
   transition-property: left, top; }
 
-.loginImage {
-  position: relative;
-  display: inline-block;
-  background-image: url(img/lamecoLoginImg.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
+.login {
+  width: 100%;
   height: 100vh;
-  width: 65vw; }
-  .loginImage .imageText {
-    position: absolute;
-    top: 50vh;
-    left: 65px;
-    color: white; }
-  .loginImage .overlayImage {
-    background-color: rgba(207, 31, 62, 0.6);
-    height: inherit;
-    width: inherit; }
-
-.loginContainer {
-  position: relative;
-  display: inline-block;
-  width: 34vw;
-  height: 100vh; }
-  .loginContainer .formContainer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); }
-    .loginContainer .formContainer h3 {
-      text-transform: uppercase;
-      margin-bottom: 70px; }
-    .loginContainer .formContainer form {
-      width: 390px;
-      height: auto; }
-      .loginContainer .formContainer form input {
-        margin-bottom: 45px;
-        width: inherit;
-        background: transparent;
-        border: 0;
-        outline: 0;
-        border-bottom: 1px solid #cf1f3e; }
-      .loginContainer .formContainer form ::placeholder {
-        color: #b9b9b9; }
-      .loginContainer .formContainer form span a {
-        position: relative;
-        color: #cf1f3e;
-        text-decoration: none; }
-      .loginContainer .formContainer form button {
-        position: absolute; }
+  display: grid;
+  grid-template-columns: 65% 35%;
+  grid-template-rows: 100%;
+  grid-template-areas: "image container"; }
+  .login .loginImage {
+    position: relative;
+    grid-area: image;
+    background-image: url(img/lamecoLoginImg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+    .login .loginImage .imageText {
+      margin-left: 50px;
+      padding: 0 15px;
+      color: white;
+      z-index: 1; }
+    .login .loginImage .overlayImage {
+      position: absolute;
+      background-color: rgba(207, 31, 62, 0.6);
+      width: 100%;
+      height: 100vh; }
+  .login .loginContainer {
+    grid-area: container;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .login .loginContainer form {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around; }
+      .login .loginContainer form h3 {
+        text-transform: uppercase; }
+      .login .loginContainer form .middleForm {
+        height: 15vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; }
+        .login .loginContainer form .middleForm .formField {
+          height: 7.5vh; }
+          .login .loginContainer form .middleForm .formField input {
+            width: 100%;
+            background: transparent;
+            border: 0;
+            outline: 0;
+            border-bottom: 2px solid rgba(207, 31, 62, 0.6); }
+          .login .loginContainer form .middleForm .formField ::placeholder {
+            color: #b9b9b9; }
+          .login .loginContainer form .middleForm .formField .invalid {
+            margin-top: 2px;
+            font-size: 0.8em;
+            color: #cf1f3e; }
+      .login .loginContainer form .bottomForm {
+        height: 10vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-content: center; }
+        .login .loginContainer form .bottomForm div {
+          display: flex;
+          justify-content: space-between; }
+          .login .loginContainer form .bottomForm div span a {
+            text-align: right;
+            color: #cf1f3e;
+            text-decoration: none;
+            line-height: 25px; }
+        .login .loginContainer form .bottomForm button {
+          width: 30%;
+          margin: 0 35%; }
 
 .rememberContainer {
   display: block;
   position: relative;
   padding-left: 35px;
-  margin-bottom: 12px;
+  margin-bottom: 0;
   cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none; }
+  .rememberContainer:hover input ~ .checkmark {
+    background-color: #ccc; }
   .rememberContainer input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
     height: 0;
     width: 0; }
-
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.1); }
-
-.rememberContainer:hover input ~ .checkmark {
-  background-color: #ccc; }
-
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none; }
-
-.rememberContainer input:checked ~ .checkmark:after {
-  display: block; }
-
-.rememberContainer .checkmark:after {
-  left: 8.5px;
-  top: 2px;
-  width: 8px;
-  height: 17px;
-  border: solid #cf1f3e;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg); }
+  .rememberContainer input:checked ~ .checkmark:after {
+    display: block; }
+  .rememberContainer .otherCheckmarkstuff {
+    line-height: 25px; }
+  .rememberContainer .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.1); }
+  .rememberContainer .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 8.5px;
+    top: 2px;
+    width: 8px;
+    height: 17px;
+    border: solid #cf1f3e;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg); }

@@ -1,6 +1,54 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
+
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      info: "",
+      password: "",
+      remember_me: false,
+      errors: {}
+    };
+  }
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/");
+    }
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+
+    const userData = {
+      info: this.state.info,
+      password: this.state.password,
+      remember_me: this.state.remember_me
+    };
+
+    this.props.loginUser(userData);
+  };
+
   render() {
+    const { errors } = this.state;
+
     return (
       <div className="login">
         <div className="loginImage">
@@ -13,37 +61,70 @@ class Login extends Component {
           </div>
         </div>
         <div className="loginContainer">
-          <div className="formContainer">
+          <form onSubmit={this.onSubmit}>
             <h3>Log in</h3>
-            <form>
-              <input type="text" name="uname" placeholder="Email or Username" />
-              <input
-                type="password"
-                name="psw"
-                placeholder="Password"
-                required
-              />
-              <br />
+            <div className="middleForm">
+              <div className="formField">
+                <input
+                  type="text"
+                  name="info"
+                  placeholder="Email or Username"
+                  onChange={this.onChange}
+                  value={this.state.info}
+                />
+                {errors.info && <div className="invalid"> {errors.info} </div>}
+              </div>
+              <div className="formField">
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  onChange={this.onChange}
+                  value={this.state.password}
+                />
+                {errors.password && (
+                  <div className="invalid"> {errors.password} </div>
+                )}
+              </div>
+            </div>
+            <div className="bottomForm">
               <div className="formBottom">
                 <label className="rememberContainer">
-                  Remember me
-                  <input type="checkbox" />
-                  <span class="checkmark" />
+                  <span className="otherCheckmarkstuff">Remember me</span>
+                  <input
+                    type="checkbox"
+                    onClick={this.onTick}
+                    value={this.state.remember_me}
+                  />
+                  <span className="checkmark" />
                 </label>
                 <span>
-                  <a href="#">Forgot password?</a>
+                  <a href="/login">Forgot password?</a>
                 </span>
               </div>
-              <br />
               <button type="submit" className="btn">
                 Log in
               </button>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(Login);
