@@ -1,22 +1,20 @@
 import React, { Component } from "react";
-
 class Login extends Component {
   render() {
     return (
       <div className="login">
         <div className="loginImage">
-          <img
-              className="backgroundImage"
-              src="img/showcase.jpg"
-              alt="backgroundImage"
-            />
+          <div className="overlayImage" />
           <div className="imageText">
             <h1>Laméco</h1>
-            <h4>Maakt Online Succesvol</h4>
+            <h4>
+              Maakt Online <strong>Succesvol</strong>
+            </h4>
           </div>
         </div>
         <div className="loginContainer">
           <div className="formContainer">
+            <h3>Log in</h3>
             <form>
               <input type="text" name="uname" placeholder="Email or Username" />
               <input
@@ -25,13 +23,21 @@ class Login extends Component {
                 placeholder="Password"
                 required
               />
-              <label>
-                <input type="checkbox" name="remember" required /> Remember me
-              </label>
-              <span>
-                <a href="#">Forgot Password?</a>
-              </span>
-              <button type="submit">Login</button>
+              <br />
+              <div className="formBottom">
+                <label className="rememberContainer">
+                  Remember me
+                  <input type="checkbox" />
+                  <span class="checkmark" />
+                </label>
+                <span>
+                  <a href="#">Forgot password?</a>
+                </span>
+              </div>
+              <br />
+              <button type="submit" className="btn">
+                Log in
+              </button>
             </form>
           </div>
         </div>

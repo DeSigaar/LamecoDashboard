@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 html {
   box-sizing: border-box; }
 
@@ -31,26 +32,26 @@ li {
   font-family: "Montserrat", sans-serif;
   font-weight: medium; }
 
-.z-depth-0 {
+.shadow0 {
   box-shadow: none !important; }
 
-.z-depth-1 {
+.shadow1 {
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.04), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
 
-.z-depth-2 {
+.shadow2 {
   -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3); }
 
-.z-depth-3 {
+.shadow3 {
   -webkit-box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
   box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); }
 
-.z-depth-4 {
+.shadow4 {
   -webkit-box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2);
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2); }
 
-.z-depth-5 {
+.shadow5 {
   -webkit-box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
   box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2); }
 
@@ -77,6 +78,51 @@ li {
   border-radius: 0px !important;
   border: none !important;
   background-color: white !important; }
+
+.btn {
+  position: relative;
+  background-color: transparent;
+  border: 2px solid #cf1f3e;
+  border-radius: 30px;
+  color: #707070;
+  padding: 8px 17px 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  margin: 4px 10px 4px 0;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
+  .btn i {
+    font-size: 17px;
+    margin-right: 5px; }
+  .btn::before {
+    content: "";
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    position: absolute;
+    width: 140%;
+    height: 100%;
+    left: -20%;
+    top: 0;
+    background: #cf1f3e;
+    z-index: -1;
+    -ms-transform: translate(-110%, 0) skew(45deg);
+    -webkit-transform: translate(-110%, 0) skew(45deg);
+    transform: translate(-110%, 0) skew(45deg);
+    box-sizing: border-box; }
+  .btn:hover, .btn:active {
+    color: white; }
+    .btn:hover::before, .btn:active::before {
+      background-color: #cf1f3e;
+      left: 120%; }
+  .btn:focus {
+    outline: none;
+    box-shadow: none; }
+
+.btn.small {
+  padding: 4px 10px 4px 8px; }
 
 .addButton {
   border-radius: 0px;
@@ -118,10 +164,12 @@ li {
   position: fixed;
   top: 0;
   left: 0;
-  width: 30vw;
+  width: 325px;
   background-color: white;
   height: 100vh;
-  margin-top: 56px; }
+  padding: 56px 0 0 15px; }
+  .sideNav .btn {
+    margin-top: 20px; }
 
 .dropdown {
   width: 150px;
@@ -260,3 +308,101 @@ li {
   background: #565656;
   transition: all 200ms ease;
   transition-property: left, top; }
+
+.loginImage {
+  position: relative;
+  display: inline-block;
+  background-image: url(img/lamecoLoginImg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 65vw; }
+  .loginImage .imageText {
+    position: absolute;
+    top: 50vh;
+    left: 65px;
+    color: white; }
+  .loginImage .overlayImage {
+    background-color: rgba(207, 31, 62, 0.6);
+    height: inherit;
+    width: inherit; }
+
+.loginContainer {
+  position: relative;
+  display: inline-block;
+  width: 34vw;
+  height: 100vh; }
+  .loginContainer .formContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+    .loginContainer .formContainer h3 {
+      text-transform: uppercase;
+      margin-bottom: 70px; }
+    .loginContainer .formContainer form {
+      width: 390px;
+      height: auto; }
+      .loginContainer .formContainer form input {
+        margin-bottom: 45px;
+        width: inherit;
+        background: transparent;
+        border: 0;
+        outline: 0;
+        border-bottom: 1px solid #cf1f3e; }
+      .loginContainer .formContainer form ::placeholder {
+        color: #b9b9b9; }
+      .loginContainer .formContainer form span a {
+        position: relative;
+        color: #cf1f3e;
+        text-decoration: none; }
+      .loginContainer .formContainer form button {
+        position: absolute; }
+
+.rememberContainer {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+  .rememberContainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0; }
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.rememberContainer:hover input ~ .checkmark {
+  background-color: #ccc; }
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none; }
+
+.rememberContainer input:checked ~ .checkmark:after {
+  display: block; }
+
+.rememberContainer .checkmark:after {
+  left: 8.5px;
+  top: 2px;
+  width: 8px;
+  height: 17px;
+  border: solid #cf1f3e;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg); }
