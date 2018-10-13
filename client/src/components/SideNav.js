@@ -4,43 +4,49 @@ export class SideNav extends Component {
   constructor() {
     super();
     this.state = {
-      // arrayObject: {
-      //   "Berkvens deursystemen": ["Lobby", "Vergaderruimte", "Werkplaats"],
-      //   "MAN - Truck & Bus": ["test", "dashboard"]
-      // },
-
-      // arrayObject: [
-      //   { id: 1, name: "Dave", dashboards: ["test", "asdfasdf"] },
-      //   { id: 2, name: "Kellie", dashboards: ["test", "asdfasdf"] },
-      //   { id: 3, name: "Max", dashboards: ["test", "asdfasdf"] },
-      //   { id: 2, name: "Jack", dashboards: ["test", "asdfasdf"] }
-      // ],
+      list: [
+        {
+          id: 1,
+          name: "Berkvens deursystemen",
+          dashboards: ["Lobby", "Vergaderruimte", "Kantoor"]
+        },
+        {
+          id: 2,
+          name: "MAN - Truck & Bus",
+          dashboards: ["Front desk", "Werkplaats"]
+        }
+      ],
 
       open: null
     };
 
-    // this.createSideNav = this.createSideNav.bind(this);
-    // this.renderSideNav = this.renderSideNav.bind(this);
+    this.renderCompanyList = this.renderCompanyList.bind(this);
   }
 
-  // createSideNav = callback => {
-  //   return Object.keys(this.state.arrayObject).map(function(key) {
-  //     return this.renderSideNav(key);
-  //   });
-  // };
+  renderCompanyList = () => {
+    return (
+      <ul className="companyList">
+        {this.state.list.map((company, index) => {
+          return (
+            <li>
+              {company.name}
+              {this.renderDashboardList(company)}
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
 
-  // renderSideNav = (key, arrayObject) => {
-  //   return { key };
-  // };
-
-  // openList = () => {
-  //   return (
-  //     <ul style={{ listStyle: "none", border: "1px solid #000" }}>
-  //       <li>User data </li>
-  //       <li>Edit</li>
-  //     </ul>
-  //   );
-  // };
+  renderDashboardList = company => {
+    return (
+      <ul className="subList">
+        {company["dashboards"].map((dashboard, i) => {
+          return <li>{dashboard}</li>;
+        })}
+      </ul>
+    );
+  };
 
   render() {
     return (
@@ -56,55 +62,7 @@ export class SideNav extends Component {
         </button>
 
         {/* List */}
-
-        {/* {this.createSideNav()} */}
-
-        {/* {this.state.arrayList.map((name, index) => {
-          return (
-            <div key={`${name}-${index}`}>
-              <span onClick={this.openDropDown}>{name}</span>
-              {name === this.state.open ? this.openList() : null}
-            </div>
-          );
-        })} */}
-
-        <ul className="companyList">
-          <li>
-            Berkvens Deursystemen
-            <ul className="subList">
-              <li>Lobby</li>
-              <li>Vergaderruimte</li>
-              <li>Werkvloer</li>
-            </ul>
-          </li>
-
-          <li>
-            MAN - Truck &amp; Bus
-            <ul className="subList">
-              <li>Dashboard1</li>
-              <li>Dashboard1</li>
-              <li>Dashboard1</li>
-            </ul>
-          </li>
-
-          <li>
-            Simac
-            <ul className="subList">
-              <li>Dashboard1</li>
-              <li>Dashboard1</li>
-              <li>Dashboard1</li>
-            </ul>
-          </li>
-
-          <li>
-            Flow reizen
-            <ul className="subList">
-              <li>Dashboard1</li>
-              <li>Dashboard1</li>
-              <li>Dashboard1</li>
-            </ul>
-          </li>
-        </ul>
+        {this.renderCompanyList()}
       </div>
     );
   }
