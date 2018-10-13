@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export class SideNav extends Component {
+class SideNav extends Component {
   constructor() {
     super();
     this.state = {
@@ -56,7 +56,7 @@ export class SideNav extends Component {
           <i className="material-icons">add</i>
           <span>Add company</span>
         </button>
-        <button className="btn">
+        <button className="btn small fullColor">
           <i className="material-icons">add</i>
           Add dashboard
         </button>

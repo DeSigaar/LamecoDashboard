@@ -1,0 +1,91 @@
+.login {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 65% 35%;
+  grid-template-rows: 100%;
+  grid-template-areas: "image container";
+  .loginImage {
+    position: relative;
+    grid-area: image;
+    background-image: url(img/lamecoLoginImg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .imageText {
+      margin-left: 50px;
+      padding: 0 15px;
+      color: $color-white;
+      z-index: 1;
+    }
+    .overlayImage {
+      position: absolute;
+      background-color: $color-red-transparent;
+      width: 100%;
+      height: 100vh;
+    }
+  }
+  .loginContainer {
+    grid-area: container;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    form {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      h3 {
+        text-transform: uppercase;
+      }
+      .middleForm {
+        height: 15vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .formField {
+          height: 7.5vh;
+          input {
+            width: 100%;
+            background: transparent;
+            border: 0;
+            outline: 0;
+            border-bottom: 2px solid $color-red-transparent;
+          }
+          ::placeholder {
+            color: rgb(185, 185, 185);
+          }
+          .invalid {
+            margin-top: 2px;
+            font-size: 0.8em;
+            color: $color-red;
+          }
+        }
+      }
+      .bottomForm {
+        div {
+          display: flex;
+          justify-content: space-between;
+          span a {
+            text-align: right;
+            color: $color-red;
+            text-decoration: none;
+            line-height: 25px;
+          }
+        }
+        height: 10vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-content: center;
+        button {
+          width: 30%;
+          margin: 0 35%;
+        }
+      }
+    }
+  }
+}

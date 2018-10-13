@@ -7,7 +7,7 @@ module.exports = function validateLoginInput(data) {
   // Check for anything wrong with the info given
   data.info = !isEmpty(data.info) ? data.info : "";
   if (Validator.isEmpty(data.info)) {
-    errors.info = "Email or username field is required";
+    errors.info = "Email or Username field is required";
   }
 
   // Check for anything wrong with the password
@@ -15,6 +15,9 @@ module.exports = function validateLoginInput(data) {
   if (Validator.isEmpty(data.password)) {
     errors.password = "Password field is required";
   }
+
+  // Check for anything wrong with the remember_me
+  data.remember_me = !isEmpty(data.remember_me) ? data.remember_me : false;
 
   return {
     errors,
