@@ -1,5 +1,6 @@
 .rememberContainer {
-  display: block;
+  display: flex;
+  align-items: center;
   position: relative;
   padding-left: 35px;
   margin-bottom: 0;
@@ -19,14 +20,14 @@
     display: block;
   }
   .otherCheckmarkstuff {
-    line-height: 25px;
+    line-height: 24px;
   }
   .checkmark {
     position: absolute;
     top: 0;
     left: 0;
-    height: 25px;
-    width: 25px;
+    height: 24px;
+    width: 24px;
     border-radius: 10px;
     background-color: $color-black-transparent-10;
   }
@@ -34,10 +35,10 @@
     content: "";
     position: absolute;
     display: none;
-    left: 8.5px;
-    top: 2px;
-    width: 8px;
-    height: 17px;
+    left: 9px;
+    top: 2.5px;
+    width: 7px;
+    height: 16px;
     border: solid $color-red;
     border-width: 0 3px 3px 0;
     -webkit-transform: rotate(45deg);
