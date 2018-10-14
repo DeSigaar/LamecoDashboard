@@ -339,54 +339,220 @@ li {
     grid-area: container;
     display: flex;
     justify-content: center;
-    align-items: center; }
-    .login .loginContainer form {
+    align-items: center;
+    position: relative; }
+    .login .loginContainer div.forgotpassworderror {
+      position: absolute;
+      top: 25vh;
+      left: 17.5%;
+      color: #cf1f3e; }
+    .login .loginContainer form.loginForm {
       width: 65%;
       height: 40vh;
       display: flex;
       flex-direction: column;
       justify-content: space-around; }
-      .login .loginContainer form h3 {
+      .login .loginContainer form.loginForm h3 {
         text-transform: uppercase; }
-      .login .loginContainer form .middleForm {
+      .login .loginContainer form.loginForm .middleForm {
         height: 15vh;
         display: flex;
         flex-direction: column;
         justify-content: space-between; }
-        .login .loginContainer form .middleForm .formField {
+        .login .loginContainer form.loginForm .middleForm .formField {
           height: 7.5vh; }
-          .login .loginContainer form .middleForm .formField input {
+          .login .loginContainer form.loginForm .middleForm .formField input {
             width: 100%;
             background: transparent;
             border: 0;
             outline: 0;
             border-bottom: 2px solid rgba(207, 31, 62, 0.6); }
-          .login .loginContainer form .middleForm .formField ::placeholder {
+          .login .loginContainer form.loginForm .middleForm .formField ::placeholder {
             color: #b9b9b9; }
-          .login .loginContainer form .middleForm .formField .invalid {
+          .login .loginContainer form.loginForm .middleForm .formField .invalid {
             margin-top: 2px;
             font-size: 0.8em;
             color: #cf1f3e; }
-      .login .loginContainer form .bottomForm {
+      .login .loginContainer form.loginForm .bottomForm {
         height: 10vh;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         align-content: center; }
-        .login .loginContainer form .bottomForm div {
+        .login .loginContainer form.loginForm .bottomForm div {
           display: flex;
           justify-content: space-between; }
-          .login .loginContainer form .bottomForm div span a {
+          .login .loginContainer form.loginForm .bottomForm div span a {
             text-align: right;
             color: #cf1f3e;
             text-decoration: none;
-            line-height: 25px; }
-        .login .loginContainer form .bottomForm button {
+            line-height: 24px; }
+          .login .loginContainer form.loginForm .bottomForm div span a:hover {
+            text-decoration: underline; }
+        .login .loginContainer form.loginForm .bottomForm button {
           width: 30%;
           margin: 0 35%; }
+    .login .loginContainer form.forgotForm {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around; }
+      .login .loginContainer form.forgotForm h3 {
+        text-transform: uppercase; }
+      .login .loginContainer form.forgotForm .middleForm {
+        height: 15vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; }
+        .login .loginContainer form.forgotForm .middleForm .formText {
+          height: 5vh; }
+        .login .loginContainer form.forgotForm .middleForm .formField {
+          height: 7.5vh; }
+          .login .loginContainer form.forgotForm .middleForm .formField input {
+            width: 100%;
+            background: transparent;
+            border: 0;
+            outline: 0;
+            border-bottom: 2px solid rgba(207, 31, 62, 0.6); }
+          .login .loginContainer form.forgotForm .middleForm .formField ::placeholder {
+            color: #b9b9b9; }
+          .login .loginContainer form.forgotForm .middleForm .formField .invalid {
+            margin-top: 2px;
+            font-size: 0.8em;
+            color: #cf1f3e; }
+      .login .loginContainer form.forgotForm .bottomForm {
+        height: 10vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-content: center; }
+        .login .loginContainer form.forgotForm .bottomForm a {
+          text-align: left;
+          color: #cf1f3e;
+          text-decoration: none;
+          line-height: 24px;
+          display: flex;
+          justify-content: center;
+          align-self: flex-start; }
+        .login .loginContainer form.forgotForm .bottomForm a i {
+          margin-right: -2px; }
+        .login .loginContainer form.forgotForm .bottomForm a:hover span {
+          text-decoration: underline;
+          margin-left: 5px; }
+        .login .loginContainer form.forgotForm .bottomForm a:hover i {
+          margin-left: -5px; }
+        .login .loginContainer form.forgotForm .bottomForm button {
+          width: 30%;
+          margin: 0 35%; }
+    .login .loginContainer form.passwordReset {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column; }
+      .login .loginContainer form.passwordReset h3 {
+        text-transform: uppercase; }
+      .login .loginContainer form.passwordReset p {
+        height: 5vh; }
+      .login .loginContainer form.passwordReset .middleForm {
+        height: 20vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; }
+        .login .loginContainer form.passwordReset .middleForm .formField {
+          height: 7.5vh; }
+          .login .loginContainer form.passwordReset .middleForm .formField input {
+            width: 100%;
+            background: transparent;
+            border: 0;
+            outline: 0;
+            border-bottom: 2px solid rgba(207, 31, 62, 0.6); }
+          .login .loginContainer form.passwordReset .middleForm .formField ::placeholder {
+            color: #b9b9b9; }
+          .login .loginContainer form.passwordReset .middleForm .formField .invalid {
+            margin-top: 2px;
+            font-size: 0.8em;
+            color: #cf1f3e; }
+      .login .loginContainer form.passwordReset .bottomForm {
+        height: 5vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-content: center; }
+        .login .loginContainer form.passwordReset .bottomForm div {
+          display: flex;
+          justify-content: space-between; }
+          .login .loginContainer form.passwordReset .bottomForm div span a {
+            text-align: right;
+            color: #cf1f3e;
+            text-decoration: none;
+            line-height: 24px; }
+          .login .loginContainer form.passwordReset .bottomForm div span a:hover {
+            text-decoration: underline; }
+        .login .loginContainer form.passwordReset .bottomForm button {
+          width: 30%;
+          margin: 0 35%; }
+    .login .loginContainer div.forgotSuccess {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column; }
+      .login .loginContainer div.forgotSuccess h3 {
+        text-transform: uppercase; }
+      .login .loginContainer div.forgotSuccess p {
+        height: 15vh;
+        text-align: justify; }
+      .login .loginContainer div.forgotSuccess .bottomForm {
+        height: 10vh; }
+        .login .loginContainer div.forgotSuccess .bottomForm a {
+          text-align: left;
+          color: #cf1f3e;
+          text-decoration: none;
+          line-height: 24px;
+          display: flex; }
+        .login .loginContainer div.forgotSuccess .bottomForm a i {
+          margin-right: -2px; }
+        .login .loginContainer div.forgotSuccess .bottomForm a:hover span {
+          text-decoration: underline;
+          margin-left: 5px; }
+        .login .loginContainer div.forgotSuccess .bottomForm a:hover i {
+          margin-left: -5px; }
+    .login .loginContainer div.passwordResetSuccess {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column; }
+      .login .loginContainer div.passwordResetSuccess h3 {
+        text-transform: uppercase; }
+      .login .loginContainer div.passwordResetSuccess p {
+        height: 5vh;
+        text-align: justify; }
+      .login .loginContainer div.passwordResetSuccess a {
+        color: #cf1f3e; }
+      .login .loginContainer div.passwordResetSuccess a:hover {
+        text-decoration: underline; }
+      .login .loginContainer div.passwordResetSuccess .bottomForm {
+        height: 17.5vh; }
+        .login .loginContainer div.passwordResetSuccess .bottomForm a {
+          text-align: left;
+          color: #cf1f3e;
+          text-decoration: none;
+          line-height: 24px;
+          display: flex; }
+        .login .loginContainer div.passwordResetSuccess .bottomForm a i {
+          margin-right: -2px; }
+        .login .loginContainer div.passwordResetSuccess .bottomForm a:hover span {
+          text-decoration: underline;
+          margin-left: 5px; }
+        .login .loginContainer div.passwordResetSuccess .bottomForm a:hover i {
+          margin-left: -5px; }
 
 .rememberContainer {
-  display: block;
+  display: flex;
+  align-items: center;
   position: relative;
   padding-left: 35px;
   margin-bottom: 0;
@@ -403,23 +569,23 @@ li {
   .rememberContainer input:checked ~ .checkmark:after {
     display: block; }
   .rememberContainer .otherCheckmarkstuff {
-    line-height: 25px; }
+    line-height: 24px; }
   .rememberContainer .checkmark {
     position: absolute;
     top: 0;
     left: 0;
-    height: 25px;
-    width: 25px;
+    height: 24px;
+    width: 24px;
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.1); }
   .rememberContainer .checkmark:after {
     content: "";
     position: absolute;
     display: none;
-    left: 8.5px;
-    top: 2px;
-    width: 8px;
-    height: 17px;
+    left: 9px;
+    top: 2.5px;
+    width: 7px;
+    height: 16px;
     border: solid #cf1f3e;
     border-width: 0 3px 3px 0;
     -webkit-transform: rotate(45deg);

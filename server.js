@@ -7,6 +7,7 @@ const path = require("path");
 const user = require("./routes/api/user");
 const company = require("./routes/api/company");
 const dashboard = require("./routes/api/dashboard");
+const forgot = require("./routes/api/forgot");
 
 const app = express();
 
@@ -40,6 +41,7 @@ require("./config/passport")(passport);
 
 // Use routes
 app.use("/api/user", user);
+app.use("/api/forgot", forgot);
 app.use("/api/company", company);
 app.use("/api/dashboard", dashboard);
 
