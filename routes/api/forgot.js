@@ -44,8 +44,7 @@ router.post("/request", (req, res) => {
     // Remove any current forgot requests
 
     var key = "";
-    const possible =
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.";
+    const possible = "abcdefghijklmnopqrstuvwxyz0123456789";
     for (let i = 0; i < 40; i++) {
       key += possible.charAt(Math.floor(Math.random() * possible.length));
     }
@@ -163,6 +162,21 @@ router.delete("/remove/:key", (req, res) => {
         .status(404)
         .json({ requestnotfound: "Request not found with that key" })
     );
+});
+
+// @route   GET api/forgot/:key
+// @desc    See if key exists and return bool
+// @access  Public
+router.get("/:key", (req, res) => {
+  Forgot.findOne({ key: req.params.key })
+    .then(forgot => {
+      if (forgot) {
+        res.json(true);
+      } else {
+        res.json(false);
+      }
+    })
+    .catch(err => res.status(404));
 });
 
 module.exports = router;

@@ -4,14 +4,18 @@ import { connect } from "react-redux";
 import {
   loginUser,
   forgotPassword,
-  updateUserWithEmail
+  updateUserWithEmail,
+  clearErrors
 } from "../../actions/authActions";
 import axios from "axios";
-import LoginForm from "./LoginForm";
-import ForgotForm from "./ForgotForm";
-import ForgotFormSuccess from "./ForgotFormSuccess";
-import PasswordReset from "./PasswordReset";
-import PasswordResetSuccess from "./PasswordResetSuccess";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import LoginImage from "./LoginImage";
+import LoginError from "./container/LoginError";
+import LoginForm from "./container/LoginForm";
+import ForgotForm from "./container/ForgotForm";
+import ForgotFormSuccess from "./container/ForgotFormSuccess";
+import PasswordReset from "./container/PasswordReset";
+import PasswordResetSuccess from "./container/PasswordResetSuccess";
 
 class Login extends Component {
   constructor(props) {
@@ -20,6 +24,7 @@ class Login extends Component {
       info: "",
       password: "",
       remember_me: false,
+      reverse: "",
       email: "",
       time: "",
       key: "",
@@ -27,19 +32,19 @@ class Login extends Component {
       newPassword2: "",
       errors: {}
     };
+    this.loginContainerContent = "";
   }
 
   componentWillMount() {
+    const location = this.props.history.location.pathname;
     if (
-      this.props.history.location.pathname === "/sent-password-reset" &&
+      location === "/sent-password-reset" &&
       this.state.email === "" &&
       this.state.time === ""
     ) {
       this.props.history.push("/login");
-    }
-
-    if (
-      this.props.history.location.pathname === "/password-reset-success" &&
+    } else if (
+      location === "/password-reset-success" &&
       this.state.email === ""
     ) {
       this.props.history.push("/login");
@@ -47,11 +52,17 @@ class Login extends Component {
   }
 
   componentDidMount() {
+    const location = this.props.history.location.pathname;
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
-    }
-
-    if (this.props.history.location.pathname.startsWith("/password-reset/")) {
+    } else if (location.startsWith("/password-reset/")) {
+      axios.get(`/api/forgot/${this.props.match.params.key}`).then(res => {
+        console.log(res);
+        if (!res.data) {
+          this.setState({ reverse: "reverse" });
+          this.props.history.push("/login");
+        }
+      });
       axios
         .get(`/api/forgot/email/${this.props.match.params.key}`)
         .then(res => {
@@ -89,6 +100,8 @@ class Login extends Component {
   onForgot = e => {
     e.preventDefault();
 
+    this.setState({ reverse: "" });
+
     const location = this.props.history.location.pathname;
     if (
       location === "/forgot-password" ||
@@ -119,7 +132,7 @@ class Login extends Component {
 
     passTime.setTime(validDate);
 
-    this.setState({ time: passTime });
+    this.setState({ time: passTime, reverse: "reverse" });
 
     this.props.forgotPassword(
       { email: this.state.email, time: validDate },
@@ -154,21 +167,26 @@ class Login extends Component {
   render() {
     const { errors } = this.state;
 
-    var loginContainerContent = "";
+    let loginContainerErrors = "";
+    if (errors.forgotpassword) {
+      loginContainerErrors = <LoginError error={errors.forgotpassword} />;
+    }
+
     const location = this.props.history.location.pathname;
 
     if (location === "/forgot-password") {
-      loginContainerContent = (
+      this.loginContainerContent = (
         <ForgotForm
           onChange={this.onChange}
           onSubmit={this.onSubmitForgot}
           onForgot={this.onForgot}
+          reverse={this.state.reverse}
           email={this.state.email}
           error={errors.email}
         />
       );
     } else if (location === "/sent-password-reset") {
-      loginContainerContent = (
+      this.loginContainerContent = (
         <ForgotFormSuccess
           email={this.state.email}
           time={this.state.time}
@@ -176,25 +194,26 @@ class Login extends Component {
         />
       );
     } else if (location.startsWith("/password-reset/")) {
-      loginContainerContent = (
+      this.loginContainerContent = (
         <PasswordReset
           email={this.state.email}
           newPassword1={this.state.newPassword1}
           newPassword2={this.state.newPassword2}
+          reverse={this.state.reverse}
           onSubmit={this.onSubmitPassword}
           onChange={this.onChange}
           errors={errors}
         />
       );
     } else if (location === "/password-reset-success") {
-      loginContainerContent = (
+      this.loginContainerContent = (
         <PasswordResetSuccess
           email={this.state.email}
           onForgot={this.onForgot}
         />
       );
     } else {
-      loginContainerContent = (
+      this.loginContainerContent = (
         <LoginForm
           onSubmit={this.onSubmitLogin}
           onChange={this.onChange}
@@ -210,23 +229,17 @@ class Login extends Component {
 
     return (
       <div className="login">
-        <div className="loginImage">
-          <div className="overlayImage" />
-          <div className="imageText">
-            <h1>Laméco</h1>
-            <h4>
-              Maakt Online <strong>Succesvol</strong>
-            </h4>
-          </div>
-        </div>
-        <div className="loginContainer">
-          {loginContainerContent}
-          {errors.forgotpassword && (
-            <div className="invalid forgotpassworderror">
-              {errors.forgotpassword}
-            </div>
-          )}
-        </div>
+        <LoginImage />
+        <TransitionGroup className="loginContainer">
+          <CSSTransition
+            key={this.loginContainerContent.type.name}
+            timeout={400}
+            classNames="slide"
+          >
+            {this.loginContainerContent}
+          </CSSTransition>
+          {loginContainerErrors}
+        </TransitionGroup>
       </div>
     );
   }
@@ -236,6 +249,7 @@ Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   forgotPassword: PropTypes.func.isRequired,
   updateUserWithEmail: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -247,5 +261,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { loginUser, forgotPassword, updateUserWithEmail }
+  { loginUser, forgotPassword, updateUserWithEmail, clearErrors }
 )(Login);

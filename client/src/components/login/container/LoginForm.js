@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import TextField from "../../common/TextField";
 
 const LoginForm = ({
   onSubmit,
@@ -12,33 +13,26 @@ const LoginForm = ({
   errors
 }) => {
   return (
-    <form className="loginForm" onSubmit={onSubmit}>
+    <form noValidate className="loginForm" onSubmit={onSubmit}>
       <h3>Log in</h3>
       <div className="middleForm">
-        <div className="formField">
-          <input
-            type="text"
-            name="info"
-            placeholder="Email or Username"
-            onChange={onChange}
-            value={info}
-            autoComplete="email"
-          />
-          {errors.info && <div className="invalid"> {errors.info} </div>}
-        </div>
-        <div className="formField">
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={onChange}
-            value={password}
-            autoComplete="current-password"
-          />
-          {errors.password && (
-            <div className="invalid"> {errors.password} </div>
-          )}
-        </div>
+        <TextField
+          name="info"
+          placeholder="Email or Username"
+          onChange={onChange}
+          value={info}
+          autoComplete="email"
+          error={errors.info}
+        />
+        <TextField
+          type="password"
+          name="password"
+          placeholder="Password"
+          onChange={onChange}
+          value={password}
+          autoComplete="current-password"
+          error={errors.password}
+        />
       </div>
       <div className="bottomForm">
         <div className="formBottom">
