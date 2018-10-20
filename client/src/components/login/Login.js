@@ -33,6 +33,7 @@ class Login extends Component {
       errors: {}
     };
     this.loginContainerContent = "";
+    this.loginContainerErrors = "";
   }
 
   componentWillMount() {
@@ -89,7 +90,7 @@ class Login extends Component {
     }
 
     if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+      this.setState({ errors: nextProps.errors, reverse: "" });
     }
   }
 
@@ -99,20 +100,21 @@ class Login extends Component {
 
   onForgot = e => {
     e.preventDefault();
-
     this.setState({ reverse: "" });
 
     const location = this.props.history.location.pathname;
-    if (
-      location === "/forgot-password" ||
-      location === "/sent-password-reset" ||
-      location === "/password-reset-success"
-    ) {
-      this.props.history.push("/login");
-      this.setState({ email: "", key: "" });
-    } else if (location === "/login") {
-      this.props.history.push("/forgot-password");
-      this.setState({ info: "", password: "" });
+    switch (true) {
+      case location.startsWith("/forgot-password"):
+      case location.startsWith("/sent-password-reset"):
+      case location.startsWith("/password-reset-success"):
+        this.props.history.push("/login");
+        this.setState({ email: "", key: "" });
+        break;
+      case location.startsWith("/login"):
+      default:
+        this.props.history.push("/forgot-password");
+        this.setState({ info: "", password: "" });
+        break;
     }
   };
 
@@ -164,68 +166,82 @@ class Login extends Component {
     this.props.loginUser(userData);
   };
 
-  render() {
-    const { errors } = this.state;
-
-    let loginContainerErrors = "";
-    if (errors.forgotpassword) {
-      loginContainerErrors = <LoginError error={errors.forgotpassword} />;
+  setupContainerContent = () => {
+    if (this.state.errors.forgotpassword) {
+      this.loginContainerErrors = (
+        <LoginError error={this.state.errors.forgotpassword} />
+      );
     }
 
     const location = this.props.history.location.pathname;
-
-    if (location === "/forgot-password") {
-      this.loginContainerContent = (
-        <ForgotForm
-          onChange={this.onChange}
-          onSubmit={this.onSubmitForgot}
-          onForgot={this.onForgot}
-          reverse={this.state.reverse}
-          email={this.state.email}
-          error={errors.email}
-        />
-      );
-    } else if (location === "/sent-password-reset") {
-      this.loginContainerContent = (
-        <ForgotFormSuccess
-          email={this.state.email}
-          time={this.state.time}
-          onForgot={this.onForgot}
-        />
-      );
-    } else if (location.startsWith("/password-reset/")) {
-      this.loginContainerContent = (
-        <PasswordReset
-          email={this.state.email}
-          newPassword1={this.state.newPassword1}
-          newPassword2={this.state.newPassword2}
-          reverse={this.state.reverse}
-          onSubmit={this.onSubmitPassword}
-          onChange={this.onChange}
-          errors={errors}
-        />
-      );
-    } else if (location === "/password-reset-success") {
-      this.loginContainerContent = (
-        <PasswordResetSuccess
-          email={this.state.email}
-          onForgot={this.onForgot}
-        />
-      );
-    } else {
-      this.loginContainerContent = (
-        <LoginForm
-          onSubmit={this.onSubmitLogin}
-          onChange={this.onChange}
-          onTick={this.onTick}
-          onForgot={this.onForgot}
-          info={this.state.info}
-          password={this.state.password}
-          remember_me={this.state.remember_me}
-          errors={errors}
-        />
-      );
+    switch (true) {
+      case location.startsWith("/forgot-password"):
+        document.title = "Forgot password | Laméco Dashboard";
+        this.loginContainerContent = (
+          <ForgotForm
+            onChange={this.onChange}
+            onSubmit={this.onSubmitForgot}
+            onForgot={this.onForgot}
+            reverse={this.state.reverse}
+            email={this.state.email}
+            error={this.state.errors.email}
+          />
+        );
+        break;
+      case location.startsWith("/sent-password-reset"):
+        document.title = "Password request sent | Laméco Dashboard";
+        this.loginContainerContent = (
+          <ForgotFormSuccess
+            email={this.state.email}
+            time={this.state.time}
+            onForgot={this.onForgot}
+          />
+        );
+        break;
+      case location.startsWith("/password-reset/"):
+        document.title = "Password reset | Laméco Dashboard";
+        this.loginContainerContent = (
+          <PasswordReset
+            email={this.state.email}
+            newPassword1={this.state.newPassword1}
+            newPassword2={this.state.newPassword2}
+            reverse={this.state.reverse}
+            onSubmit={this.onSubmitPassword}
+            onChange={this.onChange}
+            errors={this.state.errors}
+          />
+        );
+        break;
+      case location.startsWith("/password-reset-success"):
+        document.title = "Password reset success | Laméco Dashboard";
+        this.loginContainerContent = (
+          <PasswordResetSuccess
+            email={this.state.email}
+            onForgot={this.onForgot}
+          />
+        );
+        break;
+      case location.startsWith("/login"):
+      default:
+        document.title = "Login | Laméco Dashboard";
+        this.loginContainerContent = (
+          <LoginForm
+            onSubmit={this.onSubmitLogin}
+            onChange={this.onChange}
+            onTick={this.onTick}
+            onForgot={this.onForgot}
+            info={this.state.info}
+            password={this.state.password}
+            remember_me={this.state.remember_me}
+            errors={this.state.errors}
+          />
+        );
+        break;
     }
+  };
+
+  render() {
+    this.setupContainerContent();
 
     return (
       <div className="login">
@@ -238,7 +254,7 @@ class Login extends Component {
           >
             {this.loginContainerContent}
           </CSSTransition>
-          {loginContainerErrors}
+          {this.loginContainerErrors}
         </TransitionGroup>
       </div>
     );

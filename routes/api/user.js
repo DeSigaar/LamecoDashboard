@@ -15,7 +15,7 @@ const validateUserInput = require("../../validation/user");
 // Load User model
 const User = require("../../models/User");
 
-// @route   GET api/user/current
+// @route   GET /api/user/current
 // @desc    Get current user
 // @access  Private
 router.get(
@@ -35,7 +35,7 @@ router.get(
   }
 );
 
-// @route   GET api/user/:id
+// @route   GET /api/user/:id
 // @desc    Get user by given id
 // @access  Private
 router.get(
@@ -60,7 +60,7 @@ router.get(
   }
 );
 
-// @route   GET api/user/all
+// @route   GET /api/user/all
 // @desc    Get all users
 // @access  Private
 router.get(
@@ -82,7 +82,7 @@ router.get(
   }
 );
 
-// @route   POST api/user/register
+// @route   POST /api/user/register
 // @desc    Register user
 // @access  Private
 router.post(
@@ -151,7 +151,7 @@ router.post(
   }
 );
 
-// @route   POST api/user/update/:id
+// @route   POST /api/user/update/:id
 // @desc    Update user with given id
 // @access  Private
 router.post(
@@ -220,7 +220,7 @@ router.post(
   }
 );
 
-// @route   POST api/user/login
+// @route   POST /api/user/login
 // @desc    Login user and return JWT token
 // @access  Public
 router.post("/login", (req, res) => {
@@ -347,7 +347,7 @@ router.post("/login", (req, res) => {
   }
 });
 
-// @route   DELETE api/user/remove/:id
+// @route   DELETE /api/user/remove/:id
 // @desc    Remove user with given id
 // @access  Private
 router.delete(
