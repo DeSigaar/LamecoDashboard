@@ -25,12 +25,34 @@ router.get(
   }),
   (req, res) => {
     res.json({
-      id: req.user.id,
+      admin_role: req.user.admin_role,
+      _id: req.user.id,
       email: req.user.email,
       username: req.user.username,
       name: req.user.name,
-      avatar: req.user.avatar,
-      admin_role: req.user.admin_role
+      avatar: req.user.avatar
+    });
+  }
+);
+
+// @route   GET /api/user/all
+// @desc    Get all users
+// @access  Private
+router.get(
+  "/all",
+  passport.authenticate("jwt", {
+    session: false
+  }),
+  (req, res) => {
+    if (req.user.admin_role === false) {
+      return res.status(401).json({ authorized: false });
+    }
+    User.find().then(users => {
+      users.forEach(user => {
+        user.password = undefined;
+        user.__v = undefined;
+      });
+      res.json(users);
     });
   }
 );
@@ -57,28 +79,6 @@ router.get(
       .catch(err =>
         res.status(404).json({ nouserfound: "No user found with that ID" })
       );
-  }
-);
-
-// @route   GET /api/user/all
-// @desc    Get all users
-// @access  Private
-router.get(
-  "/all",
-  passport.authenticate("jwt", {
-    session: false
-  }),
-  (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
-    User.find().then(users => {
-      users.forEach(user => {
-        user.password = undefined;
-        user.__v = undefined;
-      });
-      res.json(users);
-    });
   }
 );
 

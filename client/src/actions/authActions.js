@@ -49,19 +49,26 @@ export const logoutUser = () => dispatch => {
 };
 
 // Request forgot password
-export const forgotPassword = (data, history) => dispatch => {
+export const forgotPassword = (
+  data,
+  history,
+  reverseFalse,
+  reverseTrue
+) => dispatch => {
   dispatch(clearErrors());
   axios
     .post("/api/forgot/request", data)
     .then(res => {
+      reverseTrue();
       history.push("/sent-password-reset");
     })
-    .catch(err =>
+    .catch(err => {
+      reverseFalse();
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
-    );
+      });
+    });
 };
 
 // Update user by email from request

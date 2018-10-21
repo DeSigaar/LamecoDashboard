@@ -6,7 +6,7 @@ const LoginError = ({ error }) => {
 };
 
 LoginError.propTypes = {
-  error: PropTypes.string.isRequired
+  error: PropTypes.string
 };
 
 export default LoginError;

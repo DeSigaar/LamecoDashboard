@@ -30,10 +30,10 @@ class Login extends Component {
       key: "",
       newPassword1: "",
       newPassword2: "",
-      errors: {}
+      errors: {},
+      forgotpassword: ""
     };
     this.loginContainerContent = "";
-    this.loginContainerErrors = "";
   }
 
   componentWillMount() {
@@ -58,29 +58,27 @@ class Login extends Component {
       this.props.history.push("/");
     } else if (location.startsWith("/password-reset/")) {
       axios.get(`/api/forgot/${this.props.match.params.key}`).then(res => {
-        console.log(res);
         if (!res.data) {
           this.setState({ reverse: "reverse" });
           this.props.history.push("/login");
         }
       });
-      axios
-        .get(`/api/forgot/email/${this.props.match.params.key}`)
-        .then(res => {
-          const currentTime = Date.now() / 1000;
-          if (res.data.time < currentTime) {
-            axios.delete(`/api/forgot/remove/${this.props.match.params.key}`);
-            this.props.history.push("/login");
-            this.setState({
-              errors: { forgotpassword: "Password reset link has expired" }
-            });
-          } else {
-            this.setState({
-              key: this.props.match.params.key,
-              email: res.data.email
-            });
-          }
-        });
+      axios.get(`/api/forgot/info/${this.props.match.params.key}`).then(res => {
+        const currentTime = Date.now() / 1000;
+        if (res.data.time < currentTime) {
+          axios.delete(`/api/forgot/remove/${this.props.match.params.key}`);
+          this.setState({
+            forgotpassword: "Password reset link has expired",
+            reverse: "reverse"
+          });
+          this.props.history.push("/login");
+        } else {
+          this.setState({
+            key: this.props.match.params.key,
+            email: res.data.email
+          });
+        }
+      });
     }
   }
 
@@ -90,7 +88,7 @@ class Login extends Component {
     }
 
     if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors, reverse: "" });
+      this.setState({ errors: nextProps.errors });
     }
   }
 
@@ -100,7 +98,8 @@ class Login extends Component {
 
   onForgot = e => {
     e.preventDefault();
-    this.setState({ reverse: "" });
+    this.setState({ forgotpassword: "", reverse: "" });
+    this.props.clearErrors();
 
     const location = this.props.history.location.pathname;
     switch (true) {
@@ -124,6 +123,7 @@ class Login extends Component {
 
   onSubmitForgot = e => {
     e.preventDefault();
+    this.props.clearErrors();
 
     const currentDate = new Date();
     let validDate = new Date(currentDate);
@@ -134,12 +134,18 @@ class Login extends Component {
 
     passTime.setTime(validDate);
 
-    this.setState({ time: passTime, reverse: "reverse" });
+    this.setState({ time: passTime });
 
     this.props.forgotPassword(
       { email: this.state.email, time: validDate },
-      this.props.history
+      this.props.history,
+      () => this.changeReverse(""),
+      () => this.changeReverse("reverse")
     );
+  };
+
+  changeReverse = reverse => {
+    this.setState({ reverse: reverse });
   };
 
   onSubmitPassword = e => {
@@ -166,14 +172,7 @@ class Login extends Component {
     this.props.loginUser(userData);
   };
 
-  setupContainerContent = () => {
-    if (this.state.errors.forgotpassword) {
-      this.loginContainerErrors = (
-        <LoginError error={this.state.errors.forgotpassword} />
-      );
-    }
-
-    const location = this.props.history.location.pathname;
+  setupContainerContent = location => {
     switch (true) {
       case location.startsWith("/forgot-password"):
         document.title = "Forgot password | Laméco Dashboard";
@@ -241,7 +240,7 @@ class Login extends Component {
   };
 
   render() {
-    this.setupContainerContent();
+    this.setupContainerContent(this.props.history.location.pathname);
 
     return (
       <div className="login">
@@ -254,7 +253,7 @@ class Login extends Component {
           >
             {this.loginContainerContent}
           </CSSTransition>
-          {this.loginContainerErrors}
+          <LoginError error={this.state.forgotpassword} />
         </TransitionGroup>
       </div>
     );

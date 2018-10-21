@@ -7,6 +7,13 @@ const Dashboard = require("../../models/Dashboard");
 // Load Company model
 const Company = require("../../models/Company");
 
+// @route   GET /api/dashboard/test
+// @desc    Test routes
+// @access  Public
+router.get("/test", (req, res) => {
+  return res.json({ success: true });
+});
+
 // @route   GET /api/dashboard/:id
 // @desc    Get dashboard by given id
 // @access  Private

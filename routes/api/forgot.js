@@ -106,10 +106,10 @@ router.post("/request", (req, res) => {
   });
 });
 
-// @route   GET /api/forgot/email/:key
+// @route   GET /api/forgot/info/:key
 // @desc    Get email by key
 // @access  Public
-router.get("/email/:key", (req, res) => {
+router.get("/info/:key", (req, res) => {
   Forgot.findOne({ key: req.params.key })
     .then(forgot => {
       forgot.__v = undefined;
