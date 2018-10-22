@@ -5,11 +5,12 @@
 $color-white: rgb(255, 255, 255);
 $color-light-grey: rgb(244, 245, 245);
 $color-grey: rgb(112, 112, 112);
+$color-grey-transparent-50: rgba(112, 112, 112, 0.5);
 $color-grey-hover: rgb(86, 86, 86);
 $color-black: rgb(61, 61, 61);
+$color-black-transparent-10: rgba(0, 0, 0, 0.1);
 $color-red: rgb(207, 31, 62);
 $color-red-transparent: rgba(207, 31, 62, 0.6);
-$color-black-transparent-10: rgba(0, 0, 0, 0.1);
 // Fonts
 $font: "Montserrat",
 sans-serif;
