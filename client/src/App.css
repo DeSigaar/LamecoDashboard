@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css?family=Ubuntu");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 html {
   box-sizing: border-box; }
 
@@ -13,7 +14,46 @@ body {
   overflow-x: hidden;
   height: 100vh;
   max-height: 100vh;
-  background-color: #f2f2f2; }
+  background-color: #f4f5f5; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold; }
+
+p,
+span,
+a,
+li {
+  font-family: "Montserrat", sans-serif;
+  font-weight: medium; }
+
+.shadow0 {
+  box-shadow: none !important; }
+
+.shadow1 {
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.04), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
+
+.shadow2 {
+  -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3); }
+
+.shadow3 {
+  -webkit-box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); }
+
+.shadow4 {
+  -webkit-box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2); }
+
+.shadow5 {
+  -webkit-box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2); }
 
 .rw-main.type-today {
   border-radius: 0px; }
@@ -22,49 +62,157 @@ body {
   transition: height 200ms ease; }
 
 .title {
-  font-family: "Ubuntu";
+  font-family: "Montserrat", sans-serif;
   float: right;
   font-size: 30px;
-  color: #f2f2f2; }
+  color: white;
+  margin-right: 10px; }
 
 .widgetselecter {
-  background-color: #171717;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background-color: #3d3d3d;
+  padding-top: 10px;
+  padding-left: 10px;
   height: 50px; }
-  .widgetselecter > div:nth-child(1) {
-    margin-left: 6px;
-    min-width: 400px;
-    width: 25%;
-    display: flex;
-    justify-content: space-between; }
-  .widgetselecter > div:nth-child(2) {
-    margin-right: 6px; }
+
+.Select-control {
+  border-radius: 0px !important;
+  border: none !important;
+  background-color: white !important; }
+
+.btn {
+  position: relative;
+  background-color: transparent;
+  border: 2px solid #cf1f3e;
+  border-radius: 30px;
+  color: #707070;
+  padding: 8px 17px 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12px;
+  margin: 4px 10px 4px 0;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
+  .btn i {
+    font-size: 17px;
+    margin-right: 5px; }
+  .btn::before {
+    content: "";
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    position: absolute;
+    width: 140%;
+    height: 100%;
+    left: -20%;
+    top: 0;
+    background: #cf1f3e;
+    z-index: -1;
+    -ms-transform: translate(-110%, 0) skew(45deg);
+    -webkit-transform: translate(-110%, 0) skew(45deg);
+    transform: translate(-110%, 0) skew(45deg);
+    box-sizing: border-box; }
+  .btn:hover, .btn:active {
+    color: white; }
+    .btn:hover::before, .btn:active::before {
+      background-color: #cf1f3e;
+      left: 120%; }
+  .btn:focus {
+    outline: none;
+    box-shadow: none; }
+
+.btn.small {
+  padding: 4px 10px 4px 8px; }
+
+.btn.red {
+  color: white;
+  background-color: #cf1f3e; }
 
 .addButton {
   border-radius: 0px;
-  background-color: #f2f2f2;
+  background-color: #707070;
   height: 38px; }
   .addButton:hover {
-    background-color: #cbcbcb;
+    background-color: #565656;
     transition: 0.2s; }
 
 .resetButton {
   border-radius: 0px;
-  background-color: #f2f2f2;
+  background-color: #707070;
   height: 38px; }
   .resetButton:hover {
-    background-color: #cbcbcb;
+    background-color: #565656;
     transition: 0.2s; }
 
+.backButton {
+  margin: 50px 0 0 50px; }
+
+.titleBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1; }
+  .titleBar h1 {
+    color: #707070;
+    padding: 10px;
+    margin-bottom: 0;
+    font-size: 30px; }
+  .titleBar .contentRight {
+    margin-bottom: 0; }
+    .titleBar .contentRight li {
+      padding: 16px 20px;
+      display: inline-block; }
+
+.sideNav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 325px;
+  background-color: white;
+  height: 100vh;
+  padding: 56px 0 0 15px; }
+  .sideNav .btn {
+    margin-top: 20px; }
+  .sideNav .companyList {
+    margin: 20px 0 0 0;
+    padding: 0;
+    color: #cf1f3e;
+    font-weight: bold;
+    list-style-type: none; }
+    .sideNav .companyList li {
+      padding-top: 10px; }
+    .sideNav .companyList .subList {
+      color: #707070;
+      font-weight: normal;
+      list-style-type: none;
+      padding-left: 25px; }
+      .sideNav .companyList .subList li {
+        padding: 5px 5px;
+        position: relative; }
+        .sideNav .companyList .subList li::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -10px;
+          width: 1px;
+          height: 100%;
+          background-color: #cf1f3e; }
+        .sideNav .companyList .subList li:first-child {
+          margin-top: 5px; }
+        .sideNav .companyList .subList li:last-child {
+          margin-bottom: 5px; }
+
 .dropdown {
-  width: 200px;
+  width: 150px;
   display: inline-block; }
 
-.klokje {
+.clock {
   font-size: 35px;
-  color: #171717;
+  color: #3d3d3d;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -78,8 +226,458 @@ body {
   height: 100%;
   z-index: 999; }
 
+.rw-main {
+  color: #fff;
+  width: 100%;
+  height: 320px;
+  background: #4997D8;
+  display: flex; }
+
+.rw-main h2 {
+  margin: 0 0 10px 0;
+  font-weight: 300;
+  font-size: x-large;
+  letter-spacing: 2px; }
+
+.rw-main .hr {
+  width: 100%;
+  height: 0;
+  border-bottom: solid 1px #fff;
+  opacity: 0.4;
+  margin: 10px 0; }
+
+.rw-main p {
+  margin: 0; }
+
+.rw-main.type-today {
+  border-radius: 0px; }
+
+.rw-main.type-5days {
+  border-radius: 0px; }
+
+.rw-main .rw-box-left {
+  padding: 30px;
+  width: 60%; }
+
+.rw-main .rw-box-right {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 0px;
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.rw-main .rw-box-right i {
+  font-size: 80px; }
+
+.rw-main .rw-today .date {
+  color: #B5DEF4; }
+
+.rw-main .rw-today .current {
+  font-size: 45px; }
+
+.rw-main .rw-today .range {
+  color: #B5DEF4;
+  font-size: 12px;
+  margin: 0 0 5px 2px; }
+
+.rw-main .rw-today .desc {
+  color: #B5DEF4;
+  font-size: 16px; }
+
+.rw-main .rw-today .desc i {
+  font-size: 20px;
+  color: #B5DEF4; }
+
+.rw-main .rw-today .info {
+  color: #B5DEF4; }
+
+.rw-main .rw-today .info div {
+  margin-bottom: 5px; }
+
+.rw-box-days {
+  clear: both;
+  display: flex;
+  border-left: solid 1px #ddd;
+  border-right: solid 1px #ddd;
+  border-bottom: solid 1px #ddd;
+  border-radius: 0px;
+  font-size: 11px;
+  color: #777;
+  background-color: #fff; }
+
+.rw-box-days .rw-day {
+  width: calc(100% / 4);
+  text-align: center;
+  margin: 10px; }
+
+.rw-box-days .rw-day:not(:first-child) {
+  border-left: solid 1px #ddd; }
+
+.rw-box-days .rw-date {
+  font-size: 11px;
+  font-weight: bold; }
+
+.rw-box-days .rw-desc {
+  margin: 10px 0 10px 0;
+  font-size: 12px; }
+
+.rw-box-days .rw-range {
+  font-size: 11px; }
+
+.rw-box-days .rw-info {
+  margin-top: 10px;
+  font-size: 12px; }
+
+.rw-box-days .wicon {
+  margin-top: 15px;
+  font-size: 35px;
+  color: #4BC4F7; }
+
+.rw-box {
+  font-family: Helvetica, sans-serif;
+  font-size: 13px; }
+
 .react-grid-item {
   text-align: center;
-  background: #cbcbcb;
+  background: #565656;
   transition: all 200ms ease;
   transition-property: left, top; }
+
+.login {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 65% 35%;
+  grid-template-rows: 100%;
+  grid-template-areas: "image container"; }
+  .login .loginImage {
+    position: relative;
+    grid-area: image;
+    background-image: url(img/lamecoLoginImg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+    .login .loginImage .imageText {
+      margin-left: 50px;
+      padding: 0 15px;
+      color: white;
+      z-index: 1; }
+    .login .loginImage .overlayImage {
+      position: absolute;
+      background-color: rgba(207, 31, 62, 0.6);
+      width: 100%;
+      height: 100vh; }
+  .login .loginContainer {
+    grid-area: container;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; }
+    .login .loginContainer div.forgotpassworderror {
+      position: absolute;
+      top: 25vh;
+      left: 17.5%;
+      color: #cf1f3e; }
+    .login .loginContainer form.loginForm {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around; }
+      .login .loginContainer form.loginForm h3 {
+        text-transform: uppercase; }
+      .login .loginContainer form.loginForm .middleForm {
+        height: 15vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; }
+        .login .loginContainer form.loginForm .middleForm .formField {
+          height: 7.5vh; }
+      .login .loginContainer form.loginForm .bottomForm {
+        height: 10vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-content: center; }
+        .login .loginContainer form.loginForm .bottomForm div {
+          display: flex;
+          justify-content: space-between; }
+          .login .loginContainer form.loginForm .bottomForm div span a {
+            text-align: right;
+            color: #cf1f3e;
+            text-decoration: none;
+            line-height: 24px; }
+          .login .loginContainer form.loginForm .bottomForm div span a:hover {
+            text-decoration: underline; }
+        .login .loginContainer form.loginForm .bottomForm button {
+          width: 30%;
+          margin: 0 35%; }
+    .login .loginContainer form.forgotForm {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around; }
+      .login .loginContainer form.forgotForm h3 {
+        text-transform: uppercase; }
+      .login .loginContainer form.forgotForm .middleForm {
+        height: 15vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; }
+        .login .loginContainer form.forgotForm .middleForm .formText {
+          height: 5vh; }
+        .login .loginContainer form.forgotForm .middleForm .formField {
+          height: 7.5vh; }
+          .login .loginContainer form.forgotForm .middleForm .formField input {
+            width: 100%;
+            background: transparent;
+            border: 0;
+            outline: 0;
+            border-bottom: 2px solid rgba(207, 31, 62, 0.6); }
+          .login .loginContainer form.forgotForm .middleForm .formField ::placeholder {
+            color: #b9b9b9; }
+          .login .loginContainer form.forgotForm .middleForm .formField .invalid {
+            margin-top: 2px;
+            font-size: 0.8em;
+            color: #cf1f3e; }
+      .login .loginContainer form.forgotForm .bottomForm {
+        height: 10vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-content: center; }
+        .login .loginContainer form.forgotForm .bottomForm a {
+          text-align: left;
+          color: #cf1f3e;
+          text-decoration: none;
+          line-height: 24px;
+          display: flex;
+          justify-content: center;
+          align-self: flex-start; }
+        .login .loginContainer form.forgotForm .bottomForm a i {
+          margin-right: -2px; }
+        .login .loginContainer form.forgotForm .bottomForm a:hover span {
+          text-decoration: underline;
+          margin-left: 5px; }
+        .login .loginContainer form.forgotForm .bottomForm a:hover i {
+          margin-left: -5px; }
+        .login .loginContainer form.forgotForm .bottomForm button {
+          width: 30%;
+          margin: 0 35%; }
+    .login .loginContainer form.passwordReset {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column; }
+      .login .loginContainer form.passwordReset h3 {
+        text-transform: uppercase; }
+      .login .loginContainer form.passwordReset p {
+        height: 5vh; }
+      .login .loginContainer form.passwordReset .middleForm {
+        height: 20vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; }
+        .login .loginContainer form.passwordReset .middleForm .formField {
+          height: 7.5vh; }
+          .login .loginContainer form.passwordReset .middleForm .formField input {
+            width: 100%;
+            background: transparent;
+            border: 0;
+            outline: 0;
+            border-bottom: 2px solid rgba(207, 31, 62, 0.6); }
+          .login .loginContainer form.passwordReset .middleForm .formField ::placeholder {
+            color: #b9b9b9; }
+          .login .loginContainer form.passwordReset .middleForm .formField .invalid {
+            margin-top: 2px;
+            font-size: 0.8em;
+            color: #cf1f3e; }
+      .login .loginContainer form.passwordReset .bottomForm {
+        height: 5vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-content: center; }
+        .login .loginContainer form.passwordReset .bottomForm div {
+          display: flex;
+          justify-content: space-between; }
+          .login .loginContainer form.passwordReset .bottomForm div span a {
+            text-align: right;
+            color: #cf1f3e;
+            text-decoration: none;
+            line-height: 24px; }
+          .login .loginContainer form.passwordReset .bottomForm div span a:hover {
+            text-decoration: underline; }
+        .login .loginContainer form.passwordReset .bottomForm button {
+          width: 30%;
+          margin: 0 35%; }
+    .login .loginContainer div.forgotSuccess {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column; }
+      .login .loginContainer div.forgotSuccess h3 {
+        text-transform: uppercase; }
+      .login .loginContainer div.forgotSuccess p {
+        height: 15vh;
+        text-align: justify; }
+      .login .loginContainer div.forgotSuccess .bottomForm {
+        height: 10vh; }
+        .login .loginContainer div.forgotSuccess .bottomForm a {
+          text-align: left;
+          color: #cf1f3e;
+          text-decoration: none;
+          line-height: 24px;
+          display: flex; }
+        .login .loginContainer div.forgotSuccess .bottomForm a i {
+          margin-right: -2px; }
+        .login .loginContainer div.forgotSuccess .bottomForm a:hover span {
+          text-decoration: underline;
+          margin-left: 5px; }
+        .login .loginContainer div.forgotSuccess .bottomForm a:hover i {
+          margin-left: -5px; }
+    .login .loginContainer div.passwordResetSuccess {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column; }
+      .login .loginContainer div.passwordResetSuccess h3 {
+        text-transform: uppercase; }
+      .login .loginContainer div.passwordResetSuccess p {
+        height: 5vh;
+        text-align: justify; }
+      .login .loginContainer div.passwordResetSuccess a {
+        color: #cf1f3e; }
+      .login .loginContainer div.passwordResetSuccess a:hover {
+        text-decoration: underline; }
+      .login .loginContainer div.passwordResetSuccess .bottomForm {
+        height: 17.5vh; }
+        .login .loginContainer div.passwordResetSuccess .bottomForm a {
+          text-align: left;
+          color: #cf1f3e;
+          text-decoration: none;
+          line-height: 24px;
+          display: flex; }
+        .login .loginContainer div.passwordResetSuccess .bottomForm a i {
+          margin-right: -2px; }
+        .login .loginContainer div.passwordResetSuccess .bottomForm a:hover span {
+          text-decoration: underline;
+          margin-left: 5px; }
+        .login .loginContainer div.passwordResetSuccess .bottomForm a:hover i {
+          margin-left: -5px; }
+
+.rememberContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 0;
+  cursor: pointer;
+  user-select: none; }
+  .rememberContainer:hover input ~ .checkmark {
+    background-color: #ccc; }
+  .rememberContainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0; }
+  .rememberContainer input:checked ~ .checkmark:after {
+    display: block; }
+  .rememberContainer .otherCheckmarkstuff {
+    line-height: 24px; }
+  .rememberContainer .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.1); }
+  .rememberContainer .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 9px;
+    top: 2.5px;
+    width: 7px;
+    height: 16px;
+    border: solid #cf1f3e;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg); }
+
+.mainContainer {
+  width: 100%;
+  height: 100vh;
+  padding-top: 56px; }
+  .mainContainer .profileForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 250px 0 250px; }
+    .mainContainer .profileForm .adminInfo {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-self: flex-start; }
+      .mainContainer .profileForm .adminInfo .profileImg {
+        background-image: url(img/noProfileImg.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 166px;
+        height: 166px;
+        border-radius: 50%; }
+      .mainContainer .profileForm .adminInfo .info {
+        padding-left: 30px;
+        align-self: center;
+        color: #707070; }
+        .mainContainer .profileForm .adminInfo .info h6 {
+          font-weight: 100;
+          padding-bottom: 20px;
+          color: rgba(112, 112, 112, 0.5); }
+    .mainContainer .profileForm .adminForm {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      padding-top: 9vh; }
+      .mainContainer .profileForm .adminForm .inputFields {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%; }
+        .mainContainer .profileForm .adminForm .inputFields input {
+          margin-bottom: 4.5vh; }
+        .mainContainer .profileForm .adminForm .inputFields h6 {
+          padding-bottom: 3vh;
+          color: #707070; }
+        .mainContainer .profileForm .adminForm .inputFields .adminFormInfo {
+          width: 34.5vw; }
+        .mainContainer .profileForm .adminForm .inputFields .adminFormPassword {
+          width: 34.5vw;
+          align-self: flex-end; }
+
+input[type=text], input[type=password] {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  border-bottom: 2px solid rgba(207, 31, 62, 0.6); }
+
+::placeholder {
+  color: #b9b9b9; }
+
+.invalid {
+  margin-top: 2px;
+  font-size: 0.8em;
+  color: #cf1f3e; }

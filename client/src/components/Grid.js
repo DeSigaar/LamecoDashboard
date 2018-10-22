@@ -2,9 +2,8 @@ import React from "react";
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import Select from "react-select";
-
-import Clock from "./Clock.jsx";
-import Weather from "./Weather.jsx";
+import Clock from "./Clock";
+import Weather from "./Weather";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const originalLayouts = getFromLS("layouts") || [];
@@ -12,14 +11,6 @@ const originalLayouts = getFromLS("layouts") || [];
 /* This class generates the layout for the web app. It renders the grid
  * and it's items, but also button's and a dropdown menu, to control the grid.
  */
-
-const options = [
-  { value: "one", label: "One" },
-  { value: "Clock", label: "Clock" },
-  { value: "Photo", label: "Photo" },
-  { value: "Weather", label: "Weather" }
-];
-
 class Grid extends React.PureComponent {
   static defaultProps = {
     className: "layout",
@@ -45,8 +36,7 @@ class Grid extends React.PureComponent {
           maxH: originalLayouts[key].maxH
         };
       }),
-      selectedOption: null,
-      isSearchable: false,
+      selectedOption: "",
       newCounter: originalLayouts.length
     };
 
@@ -63,7 +53,7 @@ class Grid extends React.PureComponent {
   createElement(el) {
     const removeStyle = {
       position: "absolute",
-      right: "2px",
+      right: 2,
       top: 0,
       cursor: "pointer"
     };
@@ -124,8 +114,7 @@ class Grid extends React.PureComponent {
         minH: widgetProps.minH,
         maxH: widgetProps.maxH
       }),
-      newCounter: this.state.newCounter + 1,
-      selectedOption: null
+      newCounter: this.state.newCounter + 1
     });
   }
 
@@ -179,29 +168,30 @@ class Grid extends React.PureComponent {
 	 */
   render() {
     const { selectedOption } = this.state;
+    const value = selectedOption && selectedOption.value;
 
     return (
       <div>
         <div className="widgetselecter">
-          <div>
-            <Select
-              className="dropdown"
-              name="form-field-name"
-              value={selectedOption}
-              onChange={this.handleChange}
-              isSearchable={this.state.isSearchable}
-              options={options}
-            />
-            <button className="addButton" onClick={this.onAddItem}>
-              Add Item
-            </button>
-            <button className="resetButton" onClick={this.onLayoutReset}>
-              Reset Layout
-            </button>
-          </div>
-          <div>
-            <span className="title">/[company]/[name]</span>
-          </div>
+          <Select
+            className="dropdown"
+            name="form-field-name"
+            value={value}
+            onChange={this.handleChange}
+            options={[
+              { value: "one", label: "One" },
+              { value: "Clock", label: "Clock" },
+              { value: "Photo", label: "Photo" },
+              { value: "Weather", label: "Weather" }
+            ]}
+          />
+          <button className="addButton" onClick={this.onAddItem}>
+            Add Item
+          </button>
+          <button className="reset" onClick={this.onLayoutReset}>
+            Reset Layout
+          </button>
+          <span className="title">/Dashboard_title</span>
         </div>
         <ResponsiveReactGridLayout
           onLayoutChange={this.onLayoutChange}

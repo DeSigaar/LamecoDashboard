@@ -1,25 +1,22 @@
 .title {
-  font-family: $font;
-  float: right;
-  font-size: 30px;
-  color: $color-white;
+	font-family: $font;
+	float: right;
+	font-size: 30px;
+	color: $color-white;
+	margin-right: 10px;
 }
 
 .widgetselecter {
-  background-color: $color-black;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-  height: 50px;
+	background-color: $color-black;
+    padding: {
+        top: 10px;
+        left: 10px;
+    }
+	height: 50px;
+}
 
-	>div:nth-child(1){
-		margin-left: 6px;
-		min-width: 400px;
-		width: 25%;
-		display: flex;
-		justify-content: space-between;
-	}
-	>div:nth-child(2){
-		margin-right: 6px;
-	}
+.Select-control {
+	border-radius: 0px !important;
+	border: none !important;
+	background-color: $color-white !important;
 }

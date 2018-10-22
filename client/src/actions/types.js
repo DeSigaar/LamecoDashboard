@@ -1,9 +1,3 @@
-export const GET_USERS = "GET_USERS";
-export const ADD_USER = "ADD_USER";
-export const DELETE_USER = "DELETE_USER";
-export const UPDATE_USER = "UPDATE_USER";
-
-export const GET_DASHBOARDS = "GET_DASHBOARDS";
-export const ADD_DASHBOARD = "ADD_DASHBOARD";
-export const DELETE_DASHBOARD = "DELETE_DASHBOARD";
-export const UPDATE_DASHBOARD = "UPDATE_DASHBOARD";
+export const GET_ERRORS = "GET_ERRORS";
+export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
