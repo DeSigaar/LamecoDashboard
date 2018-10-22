@@ -12,9 +12,6 @@
   - [Running](#running)
 - [Built with](#built-with)
 - [Creators](#creators)
-- [Recognitions](#recognitions)
-  - [Developers](#developers)
-  - [Designers](#designers)
 
 ## About
 
@@ -80,20 +77,3 @@ This starts the backend on port 5000 and the frontend on port 3000 concurrently.
 - Bart van de Klundert - [GitHub](https://github.com/Bartvdklu)
 
 See the whole list of [contributors](https://github.com/MaxAltena/LamecoDashboard/contributors) who participated in this project.
-
-## Recognitions
-
-Thanks to the creators of the [Laméco Dashboard](https://git.fhict.nl/I403606/LamecoLayout/).
-
-### Developers
-
-- Stijn Albert
-- Steven van der Linden
-- Wesley van Gogh
-
-### Designers
-
-- Charly Vos
-- Jesse Wolters
-- Corinne Dohmen
-- Wesley van Gogh

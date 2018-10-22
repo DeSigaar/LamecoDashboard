@@ -6,6 +6,7 @@
   grid-template-rows: 100%;
   grid-template-areas: "image container";
   .loginImage {
+    z-index: 2;
     position: relative;
     grid-area: image;
     background-image: url(img/lamecoLoginImg.jpg);
@@ -33,11 +34,47 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    div.forgotpassworderror {
+    .loginError {
       position: absolute;
       top: 25vh;
       left: 17.5%;
       color: $color-red;
+    }
+    .loginForm.slide-enter,
+    .forgotForm.reverse.slide-enter,
+    .passwordReset.slide-enter {
+      transform: translateX(-140%);
+    }
+    .forgotForm.slide-enter,
+    .forgotSuccess.slide-enter,
+    .passwordResetSuccess.slide-enter,
+    .passwordReset.reverse.slide-enter {
+      transform: translateX(140%);
+    }
+    .slide-enter {
+      position: absolute;
+    }
+    .slide-enter.slide-enter-active {
+      transform: translateX(0);
+      transition: transform 400ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+    .slide-exit {
+      transform: translateX(0);
+      position: absolute;
+    }
+    .loginForm.slide-exit.slide-exit-active,
+    .forgotForm.reverse.slide-exit.slide-exit-active,
+    .passwordReset.slide-exit.slide-exit-active {
+      transform: translateX(-140%);
+    }
+    .forgotForm.slide-exit.slide-exit-active,
+    .forgotSuccess.slide-exit.slide-exit-active,
+    .passwordResetSuccess.slide-exit.slide-exit-active,
+    .passwordReset.reverse.slide-exit.slide-exit-active {
+      transform: translateX(140%);
+    }
+    .slide-exit.slide-exit-active {
+      transition: transform 400ms cubic-bezier(0.645, 0.045, 0.355, 1);
     }
     form.loginForm {
       width: 65%;
@@ -257,31 +294,29 @@
         height: 5vh;
         text-align: justify;
       }
-      a {
+      a.inForm {
         color: $color-red;
       }
-      a:hover {
+      a.inForm:hover {
         text-decoration: underline;
       }
-      .bottomForm {
-        height: 17.5vh;
-        a {
-          text-align: left;
-          color: $color-red;
-          text-decoration: none;
-          line-height: 24px;
-          display: flex;
-        }
-        a i {
-          margin-right: -2px;
-        }
-        a:hover span {
-          text-decoration: underline;
-          margin-left: 5px;
-        }
-        a:hover i {
-          margin-left: -5px;
-        }
+      a.bottomForm {
+        text-align: left;
+        color: $color-red;
+        text-decoration: none;
+        line-height: 24px;
+        width: 130px;
+        display: flex;
+      }
+      a.bottomForm i {
+        margin-right: -2px;
+      }
+      a.bottomForm:hover span {
+        text-decoration: underline;
+        margin-left: 5px;
+      }
+      a.bottomForm:hover i {
+        margin-left: -5px;
       }
     }
   }

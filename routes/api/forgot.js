@@ -11,7 +11,7 @@ const validatePasswordInput = require("../../validation/forgotpassword");
 const Forgot = require("../../models/Forgot");
 const User = require("../../models/User");
 
-// @route   POST api/forgot/request
+// @route   POST /api/forgot/request
 // @desc    Creates a request link and sends email
 // @access  Public
 router.post("/request", (req, res) => {
@@ -44,8 +44,7 @@ router.post("/request", (req, res) => {
     // Remove any current forgot requests
 
     var key = "";
-    const possible =
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.";
+    const possible = "abcdefghijklmnopqrstuvwxyz0123456789";
     for (let i = 0; i < 40; i++) {
       key += possible.charAt(Math.floor(Math.random() * possible.length));
     }
@@ -73,7 +72,7 @@ router.post("/request", (req, res) => {
     });
 
     let transporter = nodemailer.createTransport({
-      host: "smtp02.hostnet.nl",
+      host: require("../../config/keys").mailHost,
       port: 587,
       secure: false,
       requireTLS: true,
@@ -84,9 +83,11 @@ router.post("/request", (req, res) => {
     });
 
     let mailOptions = {
-      from: '"Laméco Dashboard" <lamecodashboard@maxaltena.com>',
+      from: `"Laméco Dashboard" <${
+        require("../../config/keys").mailAccountUsername
+      }>`,
       to: email,
-      subject: "Laméco Dashboard - Reset password request",
+      subject: `Laméco Dashboard - Reset password request for ${email}`,
       text: `We heard that you lost your Laméco Dashboard password. Sorry about that!\nBut don't worry! You can use the following link to reset your password:\nhttps://lameco-dashboard.herokuapp.com/password-reset/${key}\nIf you don't use this link within 3 hours, it will expire.\nTo get a new password reset link, visit https://lameco-dashboard.herokuapp.com/forgot-password\nThanks,\nLaméco Dashboard`,
       html: `<p>We heard that you lost your <b>Laméco Dashboard</b> password. Sorry about that!</p><p>But don't worry! You can use the following link to reset your password:</p><p>https://lameco-dashboard.herokuapp.com/password-reset/${key}</p><p>If you don't use this link within <b>3 hours</b>, it will expire.</p><p>To get a new password reset link, visit https://lameco-dashboard.herokuapp.com/forgot-password</p><p>Thanks,</p><p>Laméco Dashboard</p>`
     };
@@ -105,10 +106,10 @@ router.post("/request", (req, res) => {
   });
 });
 
-// @route   GET api/forgot/email/:key
+// @route   GET /api/forgot/info/:key
 // @desc    Get email by key
 // @access  Public
-router.get("/email/:key", (req, res) => {
+router.get("/info/:key", (req, res) => {
   Forgot.findOne({ key: req.params.key })
     .then(forgot => {
       forgot.__v = undefined;
@@ -117,7 +118,7 @@ router.get("/email/:key", (req, res) => {
     .catch(err => res.status(404));
 });
 
-// @route   POST api/forgot/update
+// @route   POST /api/forgot/update
 // @desc    Update password and remove request
 // @access  Public
 router.post("/update", (req, res) => {
@@ -150,7 +151,7 @@ router.post("/update", (req, res) => {
   res.json({ success: true });
 });
 
-// @route   DELETE api/forgot/remove/:key
+// @route   DELETE /api/forgot/remove/:key
 // @desc    Remove request with given key
 // @access  Public
 router.delete("/remove/:key", (req, res) => {
@@ -163,6 +164,21 @@ router.delete("/remove/:key", (req, res) => {
         .status(404)
         .json({ requestnotfound: "Request not found with that key" })
     );
+});
+
+// @route   GET /api/forgot/:key
+// @desc    See if key exists and return bool
+// @access  Public
+router.get("/:key", (req, res) => {
+  Forgot.findOne({ key: req.params.key })
+    .then(forgot => {
+      if (forgot) {
+        res.json(true);
+      } else {
+        res.json(false);
+      }
+    })
+    .catch(err => res.status(404));
 });
 
 module.exports = router;

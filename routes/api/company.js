@@ -9,7 +9,7 @@ const validateCompanyInput = require("../../validation/company");
 // Load Company model
 const Company = require("../../models/Company");
 
-// @route   GET api/company/:id
+// @route   GET /api/company/:id
 // @desc    Get company by given id
 // @access  Private
 router.get(

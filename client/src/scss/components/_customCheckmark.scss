@@ -6,7 +6,7 @@
   margin-bottom: 0;
   cursor: pointer;
   user-select: none;
-  &:hover input~.checkmark {
+  &:hover input ~ .checkmark {
     background-color: #ccc;
   }
   input {
@@ -16,7 +16,7 @@
     height: 0;
     width: 0;
   }
-  input:checked~.checkmark:after {
+  input:checked ~ .checkmark:after {
     display: block;
   }
   .otherCheckmarkstuff {

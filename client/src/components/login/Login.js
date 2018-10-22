@@ -4,14 +4,18 @@ import { connect } from "react-redux";
 import {
   loginUser,
   forgotPassword,
-  updateUserWithEmail
+  updateUserWithEmail,
+  clearErrors
 } from "../../actions/authActions";
 import axios from "axios";
-import LoginForm from "./LoginForm";
-import ForgotForm from "./ForgotForm";
-import ForgotFormSuccess from "./ForgotFormSuccess";
-import PasswordReset from "./PasswordReset";
-import PasswordResetSuccess from "./PasswordResetSuccess";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import LoginImage from "./LoginImage";
+import LoginError from "./container/LoginError";
+import LoginForm from "./container/LoginForm";
+import ForgotForm from "./container/ForgotForm";
+import ForgotFormSuccess from "./container/ForgotFormSuccess";
+import PasswordReset from "./container/PasswordReset";
+import PasswordResetSuccess from "./container/PasswordResetSuccess";
 
 class Login extends Component {
   constructor(props) {
@@ -20,26 +24,28 @@ class Login extends Component {
       info: "",
       password: "",
       remember_me: false,
+      reverse: "",
       email: "",
       time: "",
       key: "",
       newPassword1: "",
       newPassword2: "",
-      errors: {}
+      errors: {},
+      forgotpassword: ""
     };
+    this.loginContainerContent = "";
   }
 
   componentWillMount() {
+    const location = this.props.history.location.pathname;
     if (
-      this.props.history.location.pathname === "/sent-password-reset" &&
+      location === "/sent-password-reset" &&
       this.state.email === "" &&
       this.state.time === ""
     ) {
       this.props.history.push("/login");
-    }
-
-    if (
-      this.props.history.location.pathname === "/password-reset-success" &&
+    } else if (
+      location === "/password-reset-success" &&
       this.state.email === ""
     ) {
       this.props.history.push("/login");
@@ -47,28 +53,32 @@ class Login extends Component {
   }
 
   componentDidMount() {
+    const location = this.props.history.location.pathname;
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
-    }
-
-    if (this.props.history.location.pathname.startsWith("/password-reset/")) {
-      axios
-        .get(`/api/forgot/email/${this.props.match.params.key}`)
-        .then(res => {
-          const currentTime = Date.now() / 1000;
-          if (res.data.time < currentTime) {
-            axios.delete(`/api/forgot/remove/${this.props.match.params.key}`);
-            this.props.history.push("/login");
-            this.setState({
-              errors: { forgotpassword: "Password reset link has expired" }
-            });
-          } else {
-            this.setState({
-              key: this.props.match.params.key,
-              email: res.data.email
-            });
-          }
-        });
+    } else if (location.startsWith("/password-reset/")) {
+      axios.get(`/api/forgot/${this.props.match.params.key}`).then(res => {
+        if (!res.data) {
+          this.setState({ reverse: "reverse" });
+          this.props.history.push("/login");
+        }
+      });
+      axios.get(`/api/forgot/info/${this.props.match.params.key}`).then(res => {
+        const currentTime = Date.now() / 1000;
+        if (res.data.time < currentTime) {
+          axios.delete(`/api/forgot/remove/${this.props.match.params.key}`);
+          this.setState({
+            forgotpassword: "Password reset link has expired",
+            reverse: "reverse"
+          });
+          this.props.history.push("/login");
+        } else {
+          this.setState({
+            key: this.props.match.params.key,
+            email: res.data.email
+          });
+        }
+      });
     }
   }
 
@@ -88,18 +98,22 @@ class Login extends Component {
 
   onForgot = e => {
     e.preventDefault();
+    this.setState({ forgotpassword: "", reverse: "" });
+    this.props.clearErrors();
 
     const location = this.props.history.location.pathname;
-    if (
-      location === "/forgot-password" ||
-      location === "/sent-password-reset" ||
-      location === "/password-reset-success"
-    ) {
-      this.props.history.push("/login");
-      this.setState({ email: "", key: "" });
-    } else if (location === "/login") {
-      this.props.history.push("/forgot-password");
-      this.setState({ info: "", password: "" });
+    switch (true) {
+      case location.startsWith("/forgot-password"):
+      case location.startsWith("/sent-password-reset"):
+      case location.startsWith("/password-reset-success"):
+        this.props.history.push("/login");
+        this.setState({ email: "", key: "" });
+        break;
+      case location.startsWith("/login"):
+      default:
+        this.props.history.push("/forgot-password");
+        this.setState({ info: "", password: "" });
+        break;
     }
   };
 
@@ -109,6 +123,7 @@ class Login extends Component {
 
   onSubmitForgot = e => {
     e.preventDefault();
+    this.props.clearErrors();
 
     const currentDate = new Date();
     let validDate = new Date(currentDate);
@@ -123,8 +138,14 @@ class Login extends Component {
 
     this.props.forgotPassword(
       { email: this.state.email, time: validDate },
-      this.props.history
+      this.props.history,
+      () => this.changeReverse(""),
+      () => this.changeReverse("reverse")
     );
+  };
+
+  changeReverse = reverse => {
+    this.setState({ reverse: reverse });
   };
 
   onSubmitPassword = e => {
@@ -151,82 +172,89 @@ class Login extends Component {
     this.props.loginUser(userData);
   };
 
-  render() {
-    const { errors } = this.state;
-
-    var loginContainerContent = "";
-    const location = this.props.history.location.pathname;
-
-    if (location === "/forgot-password") {
-      loginContainerContent = (
-        <ForgotForm
-          onChange={this.onChange}
-          onSubmit={this.onSubmitForgot}
-          onForgot={this.onForgot}
-          email={this.state.email}
-          error={errors.email}
-        />
-      );
-    } else if (location === "/sent-password-reset") {
-      loginContainerContent = (
-        <ForgotFormSuccess
-          email={this.state.email}
-          time={this.state.time}
-          onForgot={this.onForgot}
-        />
-      );
-    } else if (location.startsWith("/password-reset/")) {
-      loginContainerContent = (
-        <PasswordReset
-          email={this.state.email}
-          newPassword1={this.state.newPassword1}
-          newPassword2={this.state.newPassword2}
-          onSubmit={this.onSubmitPassword}
-          onChange={this.onChange}
-          errors={errors}
-        />
-      );
-    } else if (location === "/password-reset-success") {
-      loginContainerContent = (
-        <PasswordResetSuccess
-          email={this.state.email}
-          onForgot={this.onForgot}
-        />
-      );
-    } else {
-      loginContainerContent = (
-        <LoginForm
-          onSubmit={this.onSubmitLogin}
-          onChange={this.onChange}
-          onTick={this.onTick}
-          onForgot={this.onForgot}
-          info={this.state.info}
-          password={this.state.password}
-          remember_me={this.state.remember_me}
-          errors={errors}
-        />
-      );
+  setupContainerContent = location => {
+    switch (true) {
+      case location.startsWith("/forgot-password"):
+        document.title = "Forgot password | Laméco Dashboard";
+        this.loginContainerContent = (
+          <ForgotForm
+            onChange={this.onChange}
+            onSubmit={this.onSubmitForgot}
+            onForgot={this.onForgot}
+            reverse={this.state.reverse}
+            email={this.state.email}
+            error={this.state.errors.email}
+          />
+        );
+        break;
+      case location.startsWith("/sent-password-reset"):
+        document.title = "Password request sent | Laméco Dashboard";
+        this.loginContainerContent = (
+          <ForgotFormSuccess
+            email={this.state.email}
+            time={this.state.time}
+            onForgot={this.onForgot}
+          />
+        );
+        break;
+      case location.startsWith("/password-reset/"):
+        document.title = "Password reset | Laméco Dashboard";
+        this.loginContainerContent = (
+          <PasswordReset
+            email={this.state.email}
+            newPassword1={this.state.newPassword1}
+            newPassword2={this.state.newPassword2}
+            reverse={this.state.reverse}
+            onSubmit={this.onSubmitPassword}
+            onChange={this.onChange}
+            errors={this.state.errors}
+          />
+        );
+        break;
+      case location.startsWith("/password-reset-success"):
+        document.title = "Password reset success | Laméco Dashboard";
+        this.loginContainerContent = (
+          <PasswordResetSuccess
+            email={this.state.email}
+            onForgot={this.onForgot}
+          />
+        );
+        break;
+      case location.startsWith("/login"):
+      default:
+        document.title = "Login | Laméco Dashboard";
+        this.loginContainerContent = (
+          <LoginForm
+            onSubmit={this.onSubmitLogin}
+            onChange={this.onChange}
+            onTick={this.onTick}
+            onForgot={this.onForgot}
+            info={this.state.info}
+            password={this.state.password}
+            remember_me={this.state.remember_me}
+            errors={this.state.errors}
+          />
+        );
+        break;
     }
+  };
+
+  render() {
+    this.setupContainerContent(this.props.history.location.pathname);
 
     return (
       <div className="login">
-        <div className="loginImage">
-          <div className="overlayImage" />
-          <div className="imageText">
-            <h1>Laméco</h1>
-            <h4>
-              Maakt Online <strong>Succesvol</strong>
-            </h4>
-          </div>
-        </div>
-        <div className="loginContainer">
-          {loginContainerContent}
-          {errors.forgotpassword && (
-            <div className="invalid forgotpassworderror">
-              {errors.forgotpassword}
-            </div>
-          )}
-        </div>
+        <LoginImage />
+        <TransitionGroup className="loginContainer">
+          <CSSTransition
+            key={this.loginContainerContent.type.name}
+            timeout={400}
+            classNames="slide"
+          >
+            {this.loginContainerContent}
+          </CSSTransition>
+          <LoginError error={this.state.forgotpassword} />
+        </TransitionGroup>
       </div>
     );
   }
@@ -236,6 +264,7 @@ Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   forgotPassword: PropTypes.func.isRequired,
   updateUserWithEmail: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -247,5 +276,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { loginUser, forgotPassword, updateUserWithEmail }
+  { loginUser, forgotPassword, updateUserWithEmail, clearErrors }
 )(Login);

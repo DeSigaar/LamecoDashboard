@@ -15,7 +15,7 @@ const validateUserInput = require("../../validation/user");
 // Load User model
 const User = require("../../models/User");
 
-// @route   GET api/user/current
+// @route   GET /api/user/current
 // @desc    Get current user
 // @access  Private
 router.get(
@@ -25,17 +25,39 @@ router.get(
   }),
   (req, res) => {
     res.json({
-      id: req.user.id,
+      admin_role: req.user.admin_role,
+      _id: req.user.id,
       email: req.user.email,
       username: req.user.username,
       name: req.user.name,
-      avatar: req.user.avatar,
-      admin_role: req.user.admin_role
+      avatar: req.user.avatar
     });
   }
 );
 
-// @route   GET api/user/:id
+// @route   GET /api/user/all
+// @desc    Get all users
+// @access  Private
+router.get(
+  "/all",
+  passport.authenticate("jwt", {
+    session: false
+  }),
+  (req, res) => {
+    if (req.user.admin_role === false) {
+      return res.status(401).json({ authorized: false });
+    }
+    User.find().then(users => {
+      users.forEach(user => {
+        user.password = undefined;
+        user.__v = undefined;
+      });
+      res.json(users);
+    });
+  }
+);
+
+// @route   GET /api/user/:id
 // @desc    Get user by given id
 // @access  Private
 router.get(
@@ -60,29 +82,7 @@ router.get(
   }
 );
 
-// @route   GET api/user/all
-// @desc    Get all users
-// @access  Private
-router.get(
-  "/all",
-  passport.authenticate("jwt", {
-    session: false
-  }),
-  (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
-    User.find().then(users => {
-      users.forEach(user => {
-        user.password = undefined;
-        user.__v = undefined;
-      });
-      res.json(users);
-    });
-  }
-);
-
-// @route   POST api/user/register
+// @route   POST /api/user/register
 // @desc    Register user
 // @access  Private
 router.post(
@@ -151,7 +151,7 @@ router.post(
   }
 );
 
-// @route   POST api/user/update/:id
+// @route   POST /api/user/update/:id
 // @desc    Update user with given id
 // @access  Private
 router.post(
@@ -220,7 +220,7 @@ router.post(
   }
 );
 
-// @route   POST api/user/login
+// @route   POST /api/user/login
 // @desc    Login user and return JWT token
 // @access  Public
 router.post("/login", (req, res) => {
@@ -347,7 +347,7 @@ router.post("/login", (req, res) => {
   }
 });
 
-// @route   DELETE api/user/remove/:id
+// @route   DELETE /api/user/remove/:id
 // @desc    Remove user with given id
 // @access  Private
 router.delete(
