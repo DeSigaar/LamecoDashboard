@@ -3,8 +3,9 @@
   background-color: transparent;
   border: 2px solid $color-red;
   border-radius: 30px;
+  background-clip: padding-box;
   color: $color-grey;
-  padding: 8px 17px 8px 12px;
+  padding: 8px 17px 8px 17px;
   text-align: center;
   text-decoration: none;
   font-size: 12px;
@@ -13,11 +14,16 @@
   display: inline-flex;
   justify-content: center;
   overflow: hidden;
-  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  min-width: 120px;
 
-  i {
-    font-size: 17px;
-    margin-right: 5px;
+  &.icon {
+    padding: 8px 17px 8px 12px;
+
+    i {
+      font-size: 17px;
+      margin-right: 5px;
+    }
   }
 
   &::before {
@@ -34,6 +40,7 @@
     -webkit-transform: translate(-110%, 0) skew(45deg);
     transform: translate(-110%, 0) skew(45deg);
     box-sizing: border-box;
+    background-clip: padding-box;
   }
 
   &:hover,
@@ -42,7 +49,7 @@
 
     &::before {
       background-color: $color-red;
-      left: 120%;
+      left: 130%;
     }
   }
 
