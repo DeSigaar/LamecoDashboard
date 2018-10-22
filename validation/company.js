@@ -7,7 +7,7 @@ module.exports = function validateCompanyInput(data) {
   // Check for anything wrong with the name
   data.name = !isEmpty(data.name) ? data.name : "";
   if (Validator.isEmpty(data.name)) {
-    errors.name = "Username field is required";
+    errors.name = "Name field is required";
   } else if (
     !Validator.isLength(data.name, {
       min: 6

@@ -84,7 +84,7 @@ li {
   background-color: transparent;
   border: 2px solid #cf1f3e;
   border-radius: 30px;
-  color: #707070;
+  color: #cf1f3e;
   padding: 8px 17px 8px 12px;
   text-align: center;
   text-decoration: none;
@@ -352,6 +352,7 @@ li {
   grid-template-rows: 100%;
   grid-template-areas: "image container"; }
   .login .loginImage {
+    z-index: 2;
     position: relative;
     grid-area: image;
     background-image: url(img/lamecoLoginImg.jpg);
@@ -376,11 +377,39 @@ li {
     justify-content: center;
     align-items: center;
     position: relative; }
-    .login .loginContainer div.forgotpassworderror {
+    .login .loginContainer .loginError {
       position: absolute;
       top: 25vh;
       left: 17.5%;
       color: #cf1f3e; }
+    .login .loginContainer .loginForm.slide-enter,
+    .login .loginContainer .forgotForm.reverse.slide-enter,
+    .login .loginContainer .passwordReset.slide-enter {
+      transform: translateX(-140%); }
+    .login .loginContainer .forgotForm.slide-enter,
+    .login .loginContainer .forgotSuccess.slide-enter,
+    .login .loginContainer .passwordResetSuccess.slide-enter,
+    .login .loginContainer .passwordReset.reverse.slide-enter {
+      transform: translateX(140%); }
+    .login .loginContainer .slide-enter {
+      position: absolute; }
+    .login .loginContainer .slide-enter.slide-enter-active {
+      transform: translateX(0);
+      transition: transform 400ms cubic-bezier(0.645, 0.045, 0.355, 1); }
+    .login .loginContainer .slide-exit {
+      transform: translateX(0);
+      position: absolute; }
+    .login .loginContainer .loginForm.slide-exit.slide-exit-active,
+    .login .loginContainer .forgotForm.reverse.slide-exit.slide-exit-active,
+    .login .loginContainer .passwordReset.slide-exit.slide-exit-active {
+      transform: translateX(-140%); }
+    .login .loginContainer .forgotForm.slide-exit.slide-exit-active,
+    .login .loginContainer .forgotSuccess.slide-exit.slide-exit-active,
+    .login .loginContainer .passwordResetSuccess.slide-exit.slide-exit-active,
+    .login .loginContainer .passwordReset.reverse.slide-exit.slide-exit-active {
+      transform: translateX(140%); }
+    .login .loginContainer .slide-exit.slide-exit-active {
+      transition: transform 400ms cubic-bezier(0.645, 0.045, 0.355, 1); }
     .login .loginContainer form.loginForm {
       width: 65%;
       height: 40vh;
@@ -553,25 +582,24 @@ li {
       .login .loginContainer div.passwordResetSuccess p {
         height: 5vh;
         text-align: justify; }
-      .login .loginContainer div.passwordResetSuccess a {
+      .login .loginContainer div.passwordResetSuccess a.inForm {
         color: #cf1f3e; }
-      .login .loginContainer div.passwordResetSuccess a:hover {
+      .login .loginContainer div.passwordResetSuccess a.inForm:hover {
         text-decoration: underline; }
-      .login .loginContainer div.passwordResetSuccess .bottomForm {
-        height: 17.5vh; }
-        .login .loginContainer div.passwordResetSuccess .bottomForm a {
-          text-align: left;
-          color: #cf1f3e;
-          text-decoration: none;
-          line-height: 24px;
-          display: flex; }
-        .login .loginContainer div.passwordResetSuccess .bottomForm a i {
-          margin-right: -2px; }
-        .login .loginContainer div.passwordResetSuccess .bottomForm a:hover span {
-          text-decoration: underline;
-          margin-left: 5px; }
-        .login .loginContainer div.passwordResetSuccess .bottomForm a:hover i {
-          margin-left: -5px; }
+      .login .loginContainer div.passwordResetSuccess a.bottomForm {
+        text-align: left;
+        color: #cf1f3e;
+        text-decoration: none;
+        line-height: 24px;
+        width: 130px;
+        display: flex; }
+      .login .loginContainer div.passwordResetSuccess a.bottomForm i {
+        margin-right: -2px; }
+      .login .loginContainer div.passwordResetSuccess a.bottomForm:hover span {
+        text-decoration: underline;
+        margin-left: 5px; }
+      .login .loginContainer div.passwordResetSuccess a.bottomForm:hover i {
+        margin-left: -5px; }
 
 .rememberContainer {
   display: flex;

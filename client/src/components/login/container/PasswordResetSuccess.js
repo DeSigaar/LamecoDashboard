@@ -7,17 +7,15 @@ const PasswordResetSuccess = ({ email, onForgot }) => {
       <p>
         The password for <strong>{email}</strong> has been reset. You can now
         log in with the new password which you have just created. Go to the{" "}
-        <a href="/login" onClick={onForgot}>
+        <a href="/login" onClick={onForgot} className="inForm">
           login here
         </a>
         .
       </p>
-      <div className="bottomForm">
-        <a href="/login" onClick={onForgot}>
-          <i className="material-icons">arrow_back_ios</i>
-          <span>Back to login</span>
-        </a>
-      </div>
+      <a href="/login" onClick={onForgot} className="bottomForm">
+        <i className="material-icons">arrow_back_ios</i>
+        <span>Back to login</span>
+      </a>
     </div>
   );
 };
