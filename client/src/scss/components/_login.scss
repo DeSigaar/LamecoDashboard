@@ -309,31 +309,29 @@
         height: 5vh;
         text-align: justify;
       }
-      a {
+      a.inForm {
         color: $color-red;
       }
-      a:hover {
+      a.inForm:hover {
         text-decoration: underline;
       }
-      .bottomForm {
-        height: 17.5vh;
-        a {
-          text-align: left;
-          color: $color-red;
-          text-decoration: none;
-          line-height: 24px;
-          display: flex;
-        }
-        a i {
-          margin-right: -2px;
-        }
-        a:hover span {
-          text-decoration: underline;
-          margin-left: 5px;
-        }
-        a:hover i {
-          margin-left: -5px;
-        }
+      a.bottomForm {
+        text-align: left;
+        color: $color-red;
+        text-decoration: none;
+        line-height: 24px;
+        width: 130px;
+        display: flex;
+      }
+      a.bottomForm i {
+        margin-right: -2px;
+      }
+      a.bottomForm:hover span {
+        text-decoration: underline;
+        margin-left: 5px;
+      }
+      a.bottomForm:hover i {
+        margin-left: -5px;
       }
     }
   }

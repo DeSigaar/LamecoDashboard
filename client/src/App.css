@@ -84,7 +84,7 @@ li {
   background-color: transparent;
   border: 2px solid #cf1f3e;
   border-radius: 30px;
-  color: #707070;
+  color: #cf1f3e;
   padding: 8px 17px 8px 12px;
   text-align: center;
   text-decoration: none;
@@ -587,25 +587,24 @@ li {
       .login .loginContainer div.passwordResetSuccess p {
         height: 5vh;
         text-align: justify; }
-      .login .loginContainer div.passwordResetSuccess a {
+      .login .loginContainer div.passwordResetSuccess a.inForm {
         color: #cf1f3e; }
-      .login .loginContainer div.passwordResetSuccess a:hover {
+      .login .loginContainer div.passwordResetSuccess a.inForm:hover {
         text-decoration: underline; }
-      .login .loginContainer div.passwordResetSuccess .bottomForm {
-        height: 17.5vh; }
-        .login .loginContainer div.passwordResetSuccess .bottomForm a {
-          text-align: left;
-          color: #cf1f3e;
-          text-decoration: none;
-          line-height: 24px;
-          display: flex; }
-        .login .loginContainer div.passwordResetSuccess .bottomForm a i {
-          margin-right: -2px; }
-        .login .loginContainer div.passwordResetSuccess .bottomForm a:hover span {
-          text-decoration: underline;
-          margin-left: 5px; }
-        .login .loginContainer div.passwordResetSuccess .bottomForm a:hover i {
-          margin-left: -5px; }
+      .login .loginContainer div.passwordResetSuccess a.bottomForm {
+        text-align: left;
+        color: #cf1f3e;
+        text-decoration: none;
+        line-height: 24px;
+        width: 130px;
+        display: flex; }
+      .login .loginContainer div.passwordResetSuccess a.bottomForm i {
+        margin-right: -2px; }
+      .login .loginContainer div.passwordResetSuccess a.bottomForm:hover span {
+        text-decoration: underline;
+        margin-left: 5px; }
+      .login .loginContainer div.passwordResetSuccess a.bottomForm:hover i {
+        margin-left: -5px; }
 
 .rememberContainer {
   display: flex;
