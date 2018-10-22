@@ -124,6 +124,10 @@ li {
 .btn.small {
   padding: 4px 10px 4px 8px; }
 
+.btn.red {
+  color: white;
+  background-color: #cf1f3e; }
+
 .addButton {
   border-radius: 0px;
   background-color: #707070;
@@ -461,7 +465,7 @@ li {
       justify-content: flex-start;
       align-self: flex-start; }
       .mainContainer .profileForm .adminInfo .profileImg {
-        background-image: url(img/lamecoLoginImg.jpg);
+        background-image: url(img/noProfileImg.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         width: 166px;
