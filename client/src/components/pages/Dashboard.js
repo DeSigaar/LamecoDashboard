@@ -4,6 +4,7 @@ import SideNav from "../bars/SideNav";
 
 class Dashboard extends Component {
   render() {
+    document.title = "Dashboard | Laméco Dashboard";
     return (
       <div className="dashboard">
         <TitleBar />
