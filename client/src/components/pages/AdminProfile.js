@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import TitleBar from "../TitleBar";
+import TitleBar from "../bars/TitleBar";
 
 class AdminProfile extends Component {
   render() {
