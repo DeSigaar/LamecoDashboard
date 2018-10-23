@@ -167,7 +167,6 @@ router.post(
     var passwordChange = false;
     if (!isEmpty(req.body.password)) {
       passwordChange = true;
-      console.log("bla");
     }
 
     const { errors, isValid } = validateUserInput(req.body, passwordChange);
