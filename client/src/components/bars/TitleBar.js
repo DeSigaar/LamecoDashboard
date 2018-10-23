@@ -1,29 +1,50 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import TitleBarDropdown from "./TitleBarDropdown";
 import { connect } from "react-redux";
-import { logoutUser } from "../../actions/authActions";
 
 class TitleBar extends Component {
-  onLogoutClick = () => {
-    this.props.logoutUser();
+  constructor(props) {
+    super(props);
+    this.state = {
+      dropdownToggle: false
+    };
+  }
+
+  onDropdownToggle = () => {
+    this.setState({ dropdownToggle: !this.state.dropdownToggle });
   };
 
   render() {
+    const avatarUrl = `https:${this.props.auth.user.avatar}`;
+    let titleBarDropdown;
+    if (this.state.dropdownToggle) {
+      titleBarDropdown = <TitleBarDropdown />;
+    }
     return (
       <div className="titleBar shadow1">
-        <h1 onClick={this.onLogoutClick} style={{ cursor: "pointer" }}>
-          Laméco
+        <h1>
+          <Link to="/">Laméco</Link>
         </h1>
         <ul className="contentRight">
+          {/* <li>
+            <Link to="/search">
+              <i className="material-icons">search</i>
+            </Link>
+          </li> */}
           <li>
-            <Link to="/search">Search</Link>
+            <Link to="/AdminProfile">
+              <img
+                className="profilePicture"
+                alt="Gravatar profile"
+                src={avatarUrl}
+              />
+            </Link>
           </li>
-          <li>
-            <Link to="/AdminProfile">Profile</Link>
-          </li>
-          <li>
-            <Link to="/DashboardEdit">dots</Link>
+          <li onClick={this.onDropdownToggle}>
+            <i className="material-icons">more_vert</i>
+            {titleBarDropdown}
           </li>
         </ul>
       </div>
@@ -32,7 +53,6 @@ class TitleBar extends Component {
 }
 
 TitleBar.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
@@ -40,9 +60,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    logoutUser
-  }
-)(TitleBar);
+export default connect(mapStateToProps)(TitleBar);
