@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import Select from "react-select";
-import TitleBar from "../TitleBar";
-import Clock from "../Clock";
-import Weather from "../Weather";
+import TitleBar from "../bars/TitleBar";
+import Clock from "../gridItems/Clock";
+import Weather from "../gridItems/Weather";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const originalLayouts = getFromLS("layouts") || [];
@@ -175,7 +175,7 @@ class DashboardEdit extends Component {
       <div className="dashboardEdit">
         <TitleBar />
         <div className="mainContainer">
-          <div className="sideNav">
+          <div className="sideNav shadow2">
             <div className="widgetselecter">
               <Select
                 className="dropdown"
@@ -189,13 +189,12 @@ class DashboardEdit extends Component {
                   { value: "Weather", label: "Weather" }
                 ]}
               />
-              <button className="addButton" onClick={this.onAddItem}>
+              <button className="btn" onClick={this.onAddItem}>
                 Add Item
               </button>
-              <button className="reset" onClick={this.onLayoutReset}>
+              <button className="btn" onClick={this.onLayoutReset}>
                 Reset Layout
               </button>
-              <span className="title">/Dashboard_title</span>
             </div>
           </div>
           <div className="DashboardGrid">
