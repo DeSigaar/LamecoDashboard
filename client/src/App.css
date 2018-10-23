@@ -176,7 +176,11 @@ li {
           color: #565656; }
   .titleBar .profilePicture {
     width: 30px;
-    height: 30px; }
+    height: 30px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */ }
 
 .titleBar .subnav {
   position: absolute;

@@ -58,5 +58,6 @@
   .profilePicture {
     width: 30px;
     height: 30px;
+    @include border-radius(50px);
   }
 }
