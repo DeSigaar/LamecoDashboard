@@ -174,9 +174,12 @@ class DashboardEdit extends Component {
       <div className="dashboardEdit">
         <TitleBar />
         <div className="mainContainer">
-          <div className="sideNav shadow2">
+          <div className="sideNav">
             {/* Back button */}
-            <div className="backButton" onClick={() => this.props.history.push("/")}>
+            <div
+              className="backButton"
+              onClick={() => this.props.history.push("/")}
+            >
               <button className="btn icon red">
                 <i className="material-icons">arrow_back</i>
                 <span>Back</span>
@@ -207,7 +210,7 @@ class DashboardEdit extends Component {
           <div className="DashboardGrid">
             {/* Information about dashboard and button to add widget */}
             <div className="TopDashboard">
-              <h3>Company name</h3> 
+              <h3>Company name</h3>
               <button className="btn icon red" onClick={this.onAddItem}>
                 <i className="material-icons">add</i>
                 <span>Add widget</span>
@@ -218,7 +221,8 @@ class DashboardEdit extends Component {
               <ResponsiveReactGridLayout
                 onLayoutChange={this.onLayoutChange}
                 onBreakPointChange={this.onBreakPointChange}
-                {...this.props}>
+                {...this.props}
+              >
                 {_.map(this.state.items, el => this.createElement(el))}
               </ResponsiveReactGridLayout>
             </div>

@@ -1,3 +1,19 @@
+/*
+* Border radius mixin
+* Usage:
+* @include border-radius($1);
+*/
+/*
+* User select mixin
+* Usage:
+* @include user-select($1);
+*/
+/*
+* Shadow mixin
+* Usage:
+* @include shadow($1);
+* most likely to be used with shadow variables set in the variables file
+*/
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 html {
@@ -31,29 +47,6 @@ a,
 li {
   font-family: "Montserrat", sans-serif;
   font-weight: medium; }
-
-.shadow0 {
-  box-shadow: none !important; }
-
-.shadow1 {
-  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.04), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
-
-.shadow2 {
-  -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3); }
-
-.shadow3 {
-  -webkit-box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2); }
-
-.shadow4 {
-  -webkit-box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2); }
-
-.shadow5 {
-  -webkit-box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2); }
 
 .flex-center {
   display: flex;
@@ -132,6 +125,92 @@ li {
 .backButton {
   margin: 50px 0 0 50px; }
 
+.rememberContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 0;
+  cursor: pointer;
+  user-select: none; }
+  .rememberContainer:hover input ~ .checkmark {
+    background-color: #ccc; }
+  .rememberContainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0; }
+  .rememberContainer input:checked ~ .checkmark:after {
+    display: block; }
+  .rememberContainer .otherCheckmarkstuff {
+    line-height: 24px; }
+  .rememberContainer .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.1); }
+  .rememberContainer .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 9px;
+    top: 2.5px;
+    width: 7px;
+    height: 16px;
+    border: solid #cf1f3e;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg); }
+
+input[type=text], input[type=password] {
+  width: 90%;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  border-bottom: 2px solid rgba(207, 31, 62, 0.6); }
+
+::placeholder {
+  color: #b9b9b9; }
+
+.invalid {
+  margin-top: 2px;
+  font-size: 0.8em;
+  color: #cf1f3e; }
+
+.List {
+  margin: 20px 0 0 0;
+  padding: 0;
+  color: #cf1f3e;
+  font-weight: bold;
+  list-style-type: none; }
+  .List li {
+    padding-top: 10px; }
+  .List .subList {
+    color: #707070;
+    font-weight: normal;
+    list-style-type: none;
+    padding-left: 25px; }
+    .List .subList li {
+      padding: 5px 5px;
+      position: relative; }
+      .List .subList li::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -10px;
+        width: 1px;
+        height: 100%;
+        background-color: #cf1f3e; }
+      .List .subList li:first-child {
+        margin-top: 5px; }
+      .List .subList li:last-child {
+        margin-bottom: 5px; }
+
 .titleBar {
   position: fixed;
   top: 0;
@@ -146,7 +225,9 @@ li {
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none; }
+  user-select: none;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
   .titleBar h1 {
     color: #707070;
     padding: 10px 15px;
@@ -218,13 +299,11 @@ li {
   width: 325px;
   background-color: white;
   height: 100vh;
-  padding: 56px 0 0 15px; }
+  padding: 56px 0 0 15px;
+  -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3); }
   .sideNav .btn {
     margin-top: 20px; }
-
-.dropdown {
-  width: 150px;
-  display: inline-block; }
 
 .clock {
   font-size: 35px;
@@ -619,48 +698,6 @@ li {
       .login .loginContainer div.passwordResetSuccess a.bottomForm:hover i {
         margin-left: -5px; }
 
-.rememberContainer {
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding-left: 35px;
-  margin-bottom: 0;
-  cursor: pointer;
-  user-select: none; }
-  .rememberContainer:hover input ~ .checkmark {
-    background-color: #ccc; }
-  .rememberContainer input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0; }
-  .rememberContainer input:checked ~ .checkmark:after {
-    display: block; }
-  .rememberContainer .otherCheckmarkstuff {
-    line-height: 24px; }
-  .rememberContainer .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 24px;
-    width: 24px;
-    border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.1); }
-  .rememberContainer .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-    left: 9px;
-    top: 2.5px;
-    width: 7px;
-    height: 16px;
-    border: solid #cf1f3e;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg); }
-
 .mainContainer {
   width: 100%;
   height: 100vh;
@@ -758,22 +795,6 @@ li {
   .dashboardEdit .react-grid-layout {
     transition: height 200ms ease; }
 
-input[type=text], input[type=password] {
-  width: 90%;
-  background: transparent;
-  border: 0;
-  outline: 0;
-  border-bottom: 2px solid rgba(207, 31, 62, 0.6); }
-
-::placeholder {
-  color: #b9b9b9; }
-
-.invalid {
-  margin-top: 2px;
-  font-size: 0.8em;
-  color: #cf1f3e; }
-
-<<<<<<< HEAD
 .card {
   width: 100vw;
   height: 100%;
@@ -786,50 +807,18 @@ input[type=text], input[type=password] {
   justify-content: center;
   align-items: center; }
   .card .cardContent {
-    width: 30vw;
-    height: 40vh;
-    background-color: white;
-    display: flex;
-    flex-direction: column; }
+    width: 35vw;
+    height: 70vh;
+    background-color: white; }
     .card .cardContent .cardHeader {
-      height: 50vh;
-      width: 100vw;
+      height: 50%;
+      width: auto;
       display: flex;
       justify-content: center;
       align-items: center; }
     .card .cardContent .cardContent {
-      height: 50vh;
-      width: 100vw; }
+      height: 50%;
+      width: auto; }
       .card .cardContent .cardContent button {
         width: 200px;
         height: 100px; }
-=======
-.List {
-  margin: 20px 0 0 0;
-  padding: 0;
-  color: #cf1f3e;
-  font-weight: bold;
-  list-style-type: none; }
-  .List li {
-    padding-top: 10px; }
-  .List .subList {
-    color: #707070;
-    font-weight: normal;
-    list-style-type: none;
-    padding-left: 25px; }
-    .List .subList li {
-      padding: 5px 5px;
-      position: relative; }
-      .List .subList li::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -10px;
-        width: 1px;
-        height: 100%;
-        background-color: #cf1f3e; }
-      .List .subList li:first-child {
-        margin-top: 5px; }
-      .List .subList li:last-child {
-        margin-bottom: 5px; }
->>>>>>> 7f55f9afd9945a33f3e94c9d99ea0dfe096f38e0
