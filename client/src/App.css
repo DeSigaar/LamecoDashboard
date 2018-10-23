@@ -140,7 +140,13 @@ li {
   background-color: white;
   display: flex;
   justify-content: space-between;
-  z-index: 1; }
+  z-index: 1;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
   .titleBar h1 {
     color: #707070;
     padding: 10px 15px;

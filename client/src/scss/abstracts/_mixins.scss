@@ -3,3 +3,12 @@
   border-radius: $radius;
   background-clip: padding-box; /* stops bg color from leaking outside the border: */
 }
+
+@mixin user-select($value) {
+  -webkit-touch-callout: $value;
+  -webkit-user-select: $value;
+  -khtml-user-select: $value;
+  -moz-user-select: $value;
+  -ms-user-select: $value;
+  user-select: $value;
+}
