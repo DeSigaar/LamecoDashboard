@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import TitleBar from "../TitleBar";
 import TextFieldGroup from "../common/TextField";
-import { getCurrentProfile, updateProfile } from "../../actions/profileActions";
+import { getCurrentProfile, updateProfile } from "../../actions/authActions";
 
 class AdminProfile extends Component {
   constructor(props) {
@@ -35,7 +35,7 @@ class AdminProfile extends Component {
   };
   onSubmit = e => {
     e.preventDefault();
-
+    console.log(this.props);
     const profileData = {
       id: this.props.user._id,
       name: this.state.name,
