@@ -20,7 +20,7 @@ class TitleBar extends Component {
             <Link to="/search">Search</Link>
           </li>
           <li>
-            <Link to="/AdminProfile">Profile</Link>
+            <Link to="/profile/AdminProfile">Profile</Link>
           </li>
           <li>
             <Link to="/dots">dots</Link>
