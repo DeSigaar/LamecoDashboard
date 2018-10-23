@@ -143,14 +143,63 @@ li {
   z-index: 1; }
   .titleBar h1 {
     color: #707070;
-    padding: 10px;
-    margin-bottom: 0;
+    padding: 10px 15px;
+    margin: 0;
     font-size: 30px; }
+    .titleBar h1 a {
+      text-decoration: none;
+      color: #707070; }
   .titleBar .contentRight {
-    margin-bottom: 0; }
-    .titleBar .contentRight li {
-      padding: 16px 20px;
-      display: inline-block; }
+    margin-bottom: 0;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0;
+    align-items: center; }
+    .titleBar .contentRight > li {
+      display: flex;
+      justify-content: center;
+      padding: 0 3px;
+      cursor: pointer; }
+      .titleBar .contentRight > li:first-child {
+        padding-right: 14px; }
+      .titleBar .contentRight > li:last-child {
+        padding-right: 18px; }
+      .titleBar .contentRight > li a {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        color: #707070;
+        text-decoration: none;
+        padding: 5px; }
+        .titleBar .contentRight > li a:hover {
+          text-decoration: none;
+          color: #565656; }
+  .titleBar .profilePicture {
+    width: 30px;
+    height: 30px; }
+
+.titleBar .subnav {
+  position: absolute;
+  right: 10px;
+  top: 70px;
+  padding: 0; }
+  .titleBar .subnav li {
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    width: 40px;
+    height: 40px;
+    background-color: #cf1f3e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 0;
+    margin-bottom: 10px; }
+    .titleBar .subnav li i {
+      padding-right: 0;
+      font-size: 20px; }
 
 .sideNav {
   position: fixed;
