@@ -7,7 +7,7 @@ const LoginImage = () => {
       <div className="imageText">
         <h1>Laméco</h1>
         <h4>
-          Makes online <strong>successful</strong>
+          Making online <strong>successful</strong>
         </h4>
       </div>
     </div>
