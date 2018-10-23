@@ -15,6 +15,7 @@ class AdminProfile extends Component {
             </button>
           </div>
           <div className="profileForm">
+            {/* Information about the admin with picture */}
             <div className="adminInfo">
               <div className="profileImg" />
               <div className="info">
@@ -23,6 +24,7 @@ class AdminProfile extends Component {
                 <button className="btn">Upload Image</button>
               </div>
             </div>
+            {/* Form to change admins account */}
             <form className="adminForm">
               <div className="inputFields">
                 <div className="adminFormInfo">

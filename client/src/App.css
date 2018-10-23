@@ -55,30 +55,6 @@ li {
   -webkit-box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
   box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2); }
 
-.rw-main.type-today {
-  border-radius: 0px; }
-
-.react-grid-layout {
-  transition: height 200ms ease; }
-
-.title {
-  font-family: "Montserrat", sans-serif;
-  float: right;
-  font-size: 30px;
-  color: white;
-  margin-right: 10px; }
-
-.widgetselecter {
-  background-color: #3d3d3d;
-  padding-top: 10px;
-  padding-left: 10px;
-  height: 50px; }
-
-.Select-control {
-  border-radius: 0px !important;
-  border: none !important;
-  background-color: white !important; }
-
 .btn {
   position: relative;
   background-color: transparent;
@@ -390,6 +366,8 @@ li {
         justify-content: space-between; }
         .login .loginContainer form .middleForm .formField {
           height: 7.5vh; }
+          .login .loginContainer form .middleForm .formField input {
+            width: 100%; }
       .login .loginContainer form .bottomForm {
         height: 10vh;
         display: flex;
@@ -501,8 +479,35 @@ li {
           width: 34.5vw;
           align-self: flex-end; }
 
+.dashboardEdit {
+  overflow-y: hidden; }
+  .dashboardEdit .mainContainer {
+    display: grid;
+    grid-template-columns: 325px auto;
+    grid-template-rows: 100vh;
+    grid-template-areas: "sideBar dashboard"; }
+    .dashboardEdit .mainContainer .title {
+      font-family: "Montserrat", sans-serif;
+      float: right;
+      font-size: 30px;
+      color: white;
+      margin-right: 10px; }
+    .dashboardEdit .mainContainer .widgetselecter {
+      background-color: white;
+      padding-top: 10px;
+      padding-left: 10px;
+      height: 50px; }
+    .dashboardEdit .mainContainer .Select-control {
+      border-radius: 0px !important;
+      border: none !important;
+      background-color: white !important; }
+    .dashboardEdit .mainContainer .sideNav {
+      grid-area: sideBar; }
+    .dashboardEdit .mainContainer .DashboardGrid {
+      grid-area: dashboard; }
+
 input[type=text], input[type=password] {
-  width: 100%;
+  width: 90%;
   background: transparent;
   border: 0;
   outline: 0;

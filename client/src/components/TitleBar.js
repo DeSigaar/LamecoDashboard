@@ -23,7 +23,7 @@ class TitleBar extends Component {
             <Link to="/AdminProfile">Profile</Link>
           </li>
           <li>
-            <Link to="/dots">dots</Link>
+            <Link to="/DashboardEdit">dots</Link>
           </li>
         </ul>
       </div>

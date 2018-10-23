@@ -12,6 +12,7 @@ import PrivateRoute from "./components/common/PrivateRouter";
 import Login from "./components/pages/Login";
 import Dashboard from "./components/pages/Dashboard";
 import AdminProfile from "./components/pages/AdminProfile";
+import DashboardEdit from "./components/pages/DashboardEdit";
 
 import "./App.css";
 
@@ -43,6 +44,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/login" component={Login} />
               <PrivateRoute exact path="/" component={Dashboard} />
+              <PrivateRoute exact path="/DashboardEdit" component={DashboardEdit} />
               <PrivateRoute
                 exact
                 path="/adminProfile"

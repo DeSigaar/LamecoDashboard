@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import Select from "react-select";
-import Clock from "./Clock";
-import Weather from "./Weather";
+import TitleBar from "../TitleBar";
+import Clock from "../Clock";
+import Weather from "../Weather";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const originalLayouts = getFromLS("layouts") || [];
@@ -11,7 +12,7 @@ const originalLayouts = getFromLS("layouts") || [];
 /* This class generates the layout for the web app. It renders the grid
  * and it's items, but also button's and a dropdown menu, to control the grid.
  */
-class Grid extends React.PureComponent {
+class DashboardEdit extends Component {
   static defaultProps = {
     className: "layout",
     cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
@@ -122,7 +123,7 @@ class Grid extends React.PureComponent {
 	 * It clears the localStorage and then issues a window refresh.
 	 */
   onLayoutReset() {
-    localStorage.clear();
+    localStorage.removeItem("rgl-8");
     window.location.reload();
   }
 
@@ -171,35 +172,41 @@ class Grid extends React.PureComponent {
     const value = selectedOption && selectedOption.value;
 
     return (
-      <div>
-        <div className="widgetselecter">
-          <Select
-            className="dropdown"
-            name="form-field-name"
-            value={value}
-            onChange={this.handleChange}
-            options={[
-              { value: "one", label: "One" },
-              { value: "Clock", label: "Clock" },
-              { value: "Photo", label: "Photo" },
-              { value: "Weather", label: "Weather" }
-            ]}
-          />
-          <button className="addButton" onClick={this.onAddItem}>
-            Add Item
-          </button>
-          <button className="reset" onClick={this.onLayoutReset}>
-            Reset Layout
-          </button>
-          <span className="title">/Dashboard_title</span>
+      <div className="dashboardEdit">
+        <TitleBar />
+        <div className="mainContainer">
+          <div className="sideNav">
+            <div className="widgetselecter">
+              <Select
+                className="dropdown"
+                name="form-field-name"
+                value={value}
+                onChange={this.handleChange}
+                options={[
+                  { value: "one", label: "One" },
+                  { value: "Clock", label: "Clock" },
+                  { value: "Photo", label: "Photo" },
+                  { value: "Weather", label: "Weather" }
+                ]}
+              />
+              <button className="addButton" onClick={this.onAddItem}>
+                Add Item
+              </button>
+              <button className="reset" onClick={this.onLayoutReset}>
+                Reset Layout
+              </button>
+              <span className="title">/Dashboard_title</span>
+            </div>
+          </div>
+          <div className="DashboardGrid">
+            <ResponsiveReactGridLayout
+              onLayoutChange={this.onLayoutChange}
+              onBreakPointChange={this.onBreakPointChange}
+              {...this.props}>
+              {_.map(this.state.items, el => this.createElement(el))}
+            </ResponsiveReactGridLayout>
+          </div>
         </div>
-        <ResponsiveReactGridLayout
-          onLayoutChange={this.onLayoutChange}
-          onBreakPointChange={this.onBreakPointChange}
-          {...this.props}
-        >
-          {_.map(this.state.items, el => this.createElement(el))}
-        </ResponsiveReactGridLayout>
       </div>
     );
   }
@@ -262,4 +269,4 @@ function returnProps(selection) {
   }
 }
 
-export default Grid;
+export default DashboardEdit;

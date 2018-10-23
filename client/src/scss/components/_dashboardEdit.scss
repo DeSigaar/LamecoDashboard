@@ -1,0 +1,41 @@
+.dashboardEdit{
+  overflow-y:hidden;
+
+  .mainContainer{
+    display: grid;
+    grid-template-columns: 325px auto;
+    grid-template-rows: 100vh;
+    grid-template-areas: "sideBar dashboard";
+
+    .title {
+      font-family: $font;
+      float: right;
+      font-size: 30px;
+      color: $color-white;
+      margin-right: 10px;
+    }
+
+    .widgetselecter {
+      background-color: $color-white;
+        padding: {
+            top: 10px;
+            left: 10px;
+        }
+      height: 50px;
+    }
+
+    .Select-control {
+      border-radius: 0px !important;
+      border: none !important;
+      background-color: $color-white !important;
+    }
+
+    .sideNav{
+      grid-area: sideBar;
+    }
+
+    .DashboardGrid{
+      grid-area: dashboard;
+    }
+  }
+}
