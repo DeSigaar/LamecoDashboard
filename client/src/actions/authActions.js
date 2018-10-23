@@ -2,7 +2,13 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, CLEAR_ERRORS, SET_CURRENT_USER } from "./types";
+import {
+  GET_ERRORS,
+  CLEAR_ERRORS,
+  SET_CURRENT_USER,
+  GET_PROFILE,
+  PROFILE_LOADING
+} from "./types";
 
 // Login - Get User Token
 export const loginUser = userData => dispatch => {
@@ -90,5 +96,45 @@ export const updateUserWithEmail = (data, history) => dispatch => {
 export const clearErrors = () => {
   return {
     type: CLEAR_ERRORS
+  };
+};
+
+export const getCurrentProfile = () => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get("/api/user/current")
+    .then(res =>
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_PROFILE,
+        payload: {}
+      })
+    );
+};
+
+export const updateProfile = (data, history) => dispatch => {
+  axios
+    .post(`/api/user/update/${data.id}`, data)
+    .then(res => {
+      dispatch(getCurrentProfile());
+      history.push("/profile/AdminProfile");
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Profile loading
+export const setProfileLoading = () => {
+  return {
+    type: PROFILE_LOADING
   };
 };
