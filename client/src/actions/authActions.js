@@ -122,7 +122,7 @@ export const updateProfile = (data, history) => dispatch => {
     .post(`/api/user/update/${data.id}`, data)
     .then(res => {
       dispatch(getCurrentProfile());
-      history.push("/profile/AdminProfile");
+      history.push("/dashboard");
     })
     .catch(err =>
       dispatch({

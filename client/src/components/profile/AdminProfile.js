@@ -35,7 +35,6 @@ class AdminProfile extends Component {
   };
   onSubmit = e => {
     e.preventDefault();
-    console.log(this.props);
     const profileData = {
       id: this.props.user._id,
       name: this.state.name,
@@ -46,6 +45,7 @@ class AdminProfile extends Component {
     };
 
     this.props.updateProfile(profileData, this.props.history);
+    alert("Profile updated 😂😂😂😂");
   };
   render() {
     const { errors } = this.state;
