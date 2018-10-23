@@ -102,9 +102,11 @@ class Login extends Component {
                   <a href="/login">Forgot password?</a>
                 </span>
               </div>
-              <button type="submit" className="btn">
-                Log in
-              </button>
+              <div class="flex-center">
+                <button type="submit" className="btn">
+                  Log in
+                </button>
+              </div>
             </div>
           </form>
         </div>

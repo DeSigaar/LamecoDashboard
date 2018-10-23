@@ -19,8 +19,6 @@ class SideNav extends Component {
 
       open: null
     };
-
-    this.renderCompanyList = this.renderCompanyList.bind(this);
   }
 
   renderCompanyList = () => {
@@ -52,11 +50,11 @@ class SideNav extends Component {
     return (
       <div className="sideNav shadow2">
         {/* Top buttons */}
-        <button className="btn">
+        <button className="btn icon">
           <i className="material-icons">add</i>
           <span>Add company</span>
         </button>
-        <button className="btn small fullColor">
+        <button className="btn icon">
           <i className="material-icons">add</i>
           Add dashboard
         </button>

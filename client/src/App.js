@@ -9,7 +9,7 @@ import store from "./store";
 
 import PrivateRoute from "./components/common/PrivateRouter";
 
-import Login from "./components/pages/Login";
+import Login from "./components/login/Login";
 import Dashboard from "./components/pages/Dashboard";
 import AdminProfile from "./components/pages/AdminProfile";
 import DashboardEdit from "./components/pages/DashboardEdit";
@@ -43,6 +43,10 @@ class App extends Component {
           <div className="App">
             <Switch>
               <Route exact path="/login" component={Login} />
+              <Route exact path="/forgot-password" component={Login} />
+              <Route exact path="/sent-password-reset" component={Login} />
+              <Route exact path="/password-reset/:key" component={Login} />
+              <Route exact path="/password-reset-success" component={Login} />
               <PrivateRoute exact path="/" component={Dashboard} />
               <PrivateRoute exact path="/DashboardEdit" component={DashboardEdit} />
               <PrivateRoute

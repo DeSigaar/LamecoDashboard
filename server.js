@@ -7,6 +7,7 @@ const path = require("path");
 const user = require("./routes/api/user");
 const company = require("./routes/api/company");
 const dashboard = require("./routes/api/dashboard");
+const forgot = require("./routes/api/forgot");
 
 const app = express();
 
@@ -29,7 +30,7 @@ mongoose
       useNewUrlParser: true
     }
   )
-  .then(() => console.log("MongoDB connected...\n"))
+  .then(() => console.log("MongoDB connected..."))
   .catch(err => console.log(err));
 
 // Passport middleware
@@ -40,6 +41,7 @@ require("./config/passport")(passport);
 
 // Use routes
 app.use("/api/user", user);
+app.use("/api/forgot", forgot);
 app.use("/api/company", company);
 app.use("/api/dashboard", dashboard);
 
@@ -54,4 +56,4 @@ if (process.env.NODE_ENV === "production") {
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`\nServer running on port ${port}`));
+app.listen(port, () => console.log(`Server running on port ${port}`));

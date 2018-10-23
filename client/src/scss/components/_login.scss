@@ -6,6 +6,7 @@
   grid-template-rows: 100%;
   grid-template-areas: "image container";
   .loginImage {
+    z-index: 2;
     position: relative;
     grid-area: image;
     background-image: url(img/lamecoLoginImg.jpg);
@@ -32,7 +33,50 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    form {
+    position: relative;
+    .loginError {
+      position: absolute;
+      top: 25vh;
+      left: 17.5%;
+      color: $color-red;
+    }
+    .loginForm.slide-enter,
+    .forgotForm.reverse.slide-enter,
+    .passwordReset.slide-enter {
+      transform: translateX(-140%);
+    }
+    .forgotForm.slide-enter,
+    .forgotSuccess.slide-enter,
+    .passwordResetSuccess.slide-enter,
+    .passwordReset.reverse.slide-enter {
+      transform: translateX(140%);
+    }
+    .slide-enter {
+      position: absolute;
+    }
+    .slide-enter.slide-enter-active {
+      transform: translateX(0);
+      transition: transform 400ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+    .slide-exit {
+      transform: translateX(0);
+      position: absolute;
+    }
+    .loginForm.slide-exit.slide-exit-active,
+    .forgotForm.reverse.slide-exit.slide-exit-active,
+    .passwordReset.slide-exit.slide-exit-active {
+      transform: translateX(-140%);
+    }
+    .forgotForm.slide-exit.slide-exit-active,
+    .forgotSuccess.slide-exit.slide-exit-active,
+    .passwordResetSuccess.slide-exit.slide-exit-active,
+    .passwordReset.reverse.slide-exit.slide-exit-active {
+      transform: translateX(140%);
+    }
+    .slide-exit.slide-exit-active {
+      transition: transform 400ms cubic-bezier(0.645, 0.045, 0.355, 1);
+    }
+    form.loginForm {
       width: 65%;
       height: 40vh;
       display: flex;
@@ -62,7 +106,10 @@
             text-align: right;
             color: $color-red;
             text-decoration: none;
-            line-height: 25px;
+            line-height: 24px;
+          }
+          span a:hover {
+            text-decoration: underline;
           }
         }
         height: 10vh;
@@ -74,6 +121,206 @@
           width: 30%;
           margin: 0 35%;
         }
+      }
+    }
+    form.forgotForm {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      h3 {
+        text-transform: uppercase;
+      }
+      .middleForm {
+        height: 15vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .formText {
+          height: 5vh;
+        }
+        .formField {
+          height: 7.5vh;
+          input {
+            width: 100%;
+            background: transparent;
+            border: 0;
+            outline: 0;
+            border-bottom: 2px solid $color-red-transparent;
+          }
+          ::placeholder {
+            color: rgb(185, 185, 185);
+          }
+          .invalid {
+            margin-top: 2px;
+            font-size: 0.8em;
+            color: $color-red;
+          }
+        }
+      }
+      .bottomForm {
+        height: 10vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-content: center;
+        a {
+          text-align: left;
+          color: $color-red;
+          text-decoration: none;
+          line-height: 24px;
+          display: flex;
+          justify-content: center;
+          align-self: flex-start;
+        }
+        a i {
+          margin-right: -2px;
+        }
+        a:hover span {
+          text-decoration: underline;
+          margin-left: 5px;
+        }
+        a:hover i {
+          margin-left: -5px;
+        }
+        button {
+          width: 30%;
+          margin: 0 35%;
+        }
+      }
+    }
+    form.passwordReset {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column;
+      h3 {
+        text-transform: uppercase;
+      }
+      p {
+        height: 5vh;
+      }
+      .middleForm {
+        height: 20vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .formField {
+          height: 7.5vh;
+          input {
+            width: 100%;
+            background: transparent;
+            border: 0;
+            outline: 0;
+            border-bottom: 2px solid $color-red-transparent;
+          }
+          ::placeholder {
+            color: rgb(185, 185, 185);
+          }
+          .invalid {
+            margin-top: 2px;
+            font-size: 0.8em;
+            color: $color-red;
+          }
+        }
+      }
+      .bottomForm {
+        div {
+          display: flex;
+          justify-content: space-between;
+          span a {
+            text-align: right;
+            color: $color-red;
+            text-decoration: none;
+            line-height: 24px;
+          }
+          span a:hover {
+            text-decoration: underline;
+          }
+        }
+        height: 5vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-content: center;
+        button {
+          width: 30%;
+          margin: 0 35%;
+        }
+      }
+    }
+    div.forgotSuccess {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column;
+      h3 {
+        text-transform: uppercase;
+      }
+      p {
+        height: 15vh;
+        text-align: justify;
+      }
+      .bottomForm {
+        height: 10vh;
+        a {
+          text-align: left;
+          color: $color-red;
+          text-decoration: none;
+          line-height: 24px;
+          display: flex;
+        }
+        a i {
+          margin-right: -2px;
+        }
+        a:hover span {
+          text-decoration: underline;
+          margin-left: 5px;
+        }
+        a:hover i {
+          margin-left: -5px;
+        }
+      }
+    }
+    div.passwordResetSuccess {
+      width: 65%;
+      height: 40vh;
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column;
+      h3 {
+        text-transform: uppercase;
+      }
+      p {
+        height: 5vh;
+        text-align: justify;
+      }
+      a.inForm {
+        color: $color-red;
+      }
+      a.inForm:hover {
+        text-decoration: underline;
+      }
+      a.bottomForm {
+        text-align: left;
+        color: $color-red;
+        text-decoration: none;
+        line-height: 24px;
+        width: 130px;
+        display: flex;
+      }
+      a.bottomForm i {
+        margin-right: -2px;
+      }
+      a.bottomForm:hover span {
+        text-decoration: underline;
+        margin-left: 5px;
+      }
+      a.bottomForm:hover i {
+        margin-left: -5px;
       }
     }
   }
