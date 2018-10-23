@@ -9,33 +9,7 @@ const validateCompanyInput = require("../../validation/company");
 // Load Company model
 const Company = require("../../models/Company");
 
-// @route   GET /api/company/:id
-// @desc    Get company by given id
-// @access  Private
-router.get(
-  "/:id",
-  passport.authenticate("jwt", {
-    session: false
-  }),
-  (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
-
-    Company.findById(req.params.id)
-      .then(company => {
-        company.__v = undefined;
-        res.json(company);
-      })
-      .catch(err =>
-        res
-          .status(404)
-          .json({ nocompanyfound: "No company found with that ID" })
-      );
-  }
-);
-
-// @route   GET api/company/all
+// @route   GET /api/company/all
 // @desc    Get all companies
 // @access  Private
 router.get(
@@ -52,7 +26,7 @@ router.get(
   }
 );
 
-// @route   POST api/company/add
+// @route   POST /api/company/add
 // @desc    Create a company
 // @access  Private
 router.post(
@@ -106,7 +80,33 @@ router.post(
   }
 );
 
-// @route   DELETE api/company/remove/:id
+// @route   GET /api/company/:id
+// @desc    Get company by given id
+// @access  Private
+router.get(
+  "/:id",
+  passport.authenticate("jwt", {
+    session: false
+  }),
+  (req, res) => {
+    if (req.user.admin_role === false) {
+      return res.status(401).json({ authorized: false });
+    }
+
+    Company.findById(req.params.id)
+      .then(company => {
+        company.__v = undefined;
+        res.json(company);
+      })
+      .catch(err =>
+        res
+          .status(404)
+          .json({ nocompanyfound: "No company found with that ID" })
+      );
+  }
+);
+
+// @route   DELETE /api/company/remove/:id
 // @desc    Remove company with given id
 // @access  Private
 router.delete(
@@ -129,7 +129,7 @@ router.delete(
   }
 );
 
-// @route   POST api/company/update/:id
+// @route   POST /api/company/update/:id
 // @desc    Update company with given id
 // @access  Private
 router.post(
