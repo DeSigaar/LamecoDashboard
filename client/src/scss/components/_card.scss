@@ -11,22 +11,19 @@
   align-items: center;
 
   .cardContent {
-    width: 30vw;
-    height: 40vh;
+    width: 35vw;
+    height: 70vh;
     background-color: $color-white;
-    display: flex;
-    flex-direction: column;
-
     .cardHeader {
-      height: 50vh;
-      width: 100vw;
+      height: 50%;
+      width: auto;
       display: flex;
       justify-content: center;
       align-items: center;
     }
     .cardContent {
-      height: 50vh;
-      width: 100vw;
+      height: 50%;
+      width: auto;
 
       button {
         width: 200px;
