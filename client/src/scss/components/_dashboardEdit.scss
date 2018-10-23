@@ -7,21 +7,23 @@
     grid-template-rows: 100vh;
     grid-template-areas: "sideBar dashboard";
 
-    .title {
-      font-family: $font;
-      float: right;
-      font-size: 30px;
-      color: $color-white;
-      margin-right: 10px;
-    }
-
     .widgetselecter {
-      background-color: $color-white;
-        padding: {
-            top: 10px;
-            left: 10px;
-        }
-      height: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: none;
+      margin: 30px 0;
+      padding-right: 15px;
+      height: 780px;
+
+      .dropdown {
+        width: auto;
+        display: inline-block;
+      }
+
+      .reset{
+        align-self: flex-start;
+      }
     }
 
     .Select-control {
@@ -32,10 +34,40 @@
 
     .sideNav{
       grid-area: sideBar;
+
+      .backButton{
+        margin: 0;
+      }
     }
 
     .DashboardGrid{
       grid-area: dashboard;
+
+      .TopDashboard{
+        padding: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        h3{
+          color: $color-grey;
+        }
+      }
+
+      .BottomDashboard{
+        padding: 0 40px;
+        
+      }
     }
   }
+
+  .rw-main.type-today {
+	  border-radius: 0px;
+  }
+
+  .react-grid-layout {
+    transition: height 200ms ease;
+  }
+  
 }

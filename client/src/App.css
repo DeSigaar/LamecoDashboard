@@ -59,30 +59,6 @@ li {
   display: flex;
   justify-content: center !important; }
 
-.rw-main.type-today {
-  border-radius: 0px; }
-
-.react-grid-layout {
-  transition: height 200ms ease; }
-
-.title {
-  font-family: "Montserrat", sans-serif;
-  float: right;
-  font-size: 30px;
-  color: white;
-  margin-right: 10px; }
-
-.widgetselecter {
-  background-color: #3d3d3d;
-  padding-top: 10px;
-  padding-left: 10px;
-  height: 50px; }
-
-.Select-control {
-  border-radius: 0px !important;
-  border: none !important;
-  background-color: white !important; }
-
 .btn {
   position: relative;
   background-color: transparent;
@@ -186,34 +162,6 @@ li {
   padding: 56px 0 0 15px; }
   .sideNav .btn {
     margin-top: 20px; }
-  .sideNav .companyList {
-    margin: 20px 0 0 0;
-    padding: 0;
-    color: #cf1f3e;
-    font-weight: bold;
-    list-style-type: none; }
-    .sideNav .companyList li {
-      padding-top: 10px; }
-    .sideNav .companyList .subList {
-      color: #707070;
-      font-weight: normal;
-      list-style-type: none;
-      padding-left: 25px; }
-      .sideNav .companyList .subList li {
-        padding: 5px 5px;
-        position: relative; }
-        .sideNav .companyList .subList li::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: -10px;
-          width: 1px;
-          height: 100%;
-          background-color: #cf1f3e; }
-        .sideNav .companyList .subList li:first-child {
-          margin-top: 5px; }
-        .sideNav .companyList .subList li:last-child {
-          margin-bottom: 5px; }
 
 .dropdown {
   width: 150px;
@@ -713,25 +661,43 @@ li {
     grid-template-columns: 325px auto;
     grid-template-rows: 100vh;
     grid-template-areas: "sideBar dashboard"; }
-    .dashboardEdit .mainContainer .title {
-      font-family: "Montserrat", sans-serif;
-      float: right;
-      font-size: 30px;
-      color: white;
-      margin-right: 10px; }
     .dashboardEdit .mainContainer .widgetselecter {
-      background-color: white;
-      padding-top: 10px;
-      padding-left: 10px;
-      height: 50px; }
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: none;
+      margin: 30px 0;
+      padding-right: 15px;
+      height: 780px; }
+      .dashboardEdit .mainContainer .widgetselecter .dropdown {
+        width: auto;
+        display: inline-block; }
+      .dashboardEdit .mainContainer .widgetselecter .reset {
+        align-self: flex-start; }
     .dashboardEdit .mainContainer .Select-control {
       border-radius: 0px !important;
       border: none !important;
       background-color: white !important; }
     .dashboardEdit .mainContainer .sideNav {
       grid-area: sideBar; }
+      .dashboardEdit .mainContainer .sideNav .backButton {
+        margin: 0; }
     .dashboardEdit .mainContainer .DashboardGrid {
       grid-area: dashboard; }
+      .dashboardEdit .mainContainer .DashboardGrid .TopDashboard {
+        padding: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center; }
+        .dashboardEdit .mainContainer .DashboardGrid .TopDashboard h3 {
+          color: #707070; }
+      .dashboardEdit .mainContainer .DashboardGrid .BottomDashboard {
+        padding: 0 40px; }
+  .dashboardEdit .rw-main.type-today {
+    border-radius: 0px; }
+  .dashboardEdit .react-grid-layout {
+    transition: height 200ms ease; }
 
 input[type=text], input[type=password] {
   width: 90%;
@@ -747,3 +713,32 @@ input[type=text], input[type=password] {
   margin-top: 2px;
   font-size: 0.8em;
   color: #cf1f3e; }
+
+.List {
+  margin: 20px 0 0 0;
+  padding: 0;
+  color: #cf1f3e;
+  font-weight: bold;
+  list-style-type: none; }
+  .List li {
+    padding-top: 10px; }
+  .List .subList {
+    color: #707070;
+    font-weight: normal;
+    list-style-type: none;
+    padding-left: 25px; }
+    .List .subList li {
+      padding: 5px 5px;
+      position: relative; }
+      .List .subList li::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -10px;
+        width: 1px;
+        height: 100%;
+        background-color: #cf1f3e; }
+      .List .subList li:first-child {
+        margin-top: 5px; }
+      .List .subList li:last-child {
+        margin-bottom: 5px; }
