@@ -164,7 +164,13 @@ router.post(
       return res.status(401).json({ authorized: false });
     }
 
-    const { errors, isValid } = validateUserInput(req.body);
+    var passwordChange = false;
+    if (!isEmpty(req.body.password)) {
+      passwordChange = true;
+      console.log("bla");
+    }
+
+    const { errors, isValid } = validateUserInput(req.body, passwordChange);
 
     // Check validation
     if (!isValid) {
@@ -201,19 +207,28 @@ router.post(
             d: "mm" // Default
           });
 
-          bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(userFields.password, salt, (err, hash) => {
-              if (err) throw err;
-              userFields.password = hash;
+          if (passwordChange) {
+            bcrypt.genSalt(10, (err, salt) => {
+              bcrypt.hash(userFields.password, salt, (err, hash) => {
+                if (err) throw err;
+                userFields.password = hash;
 
-              // Update
-              User.findOneAndUpdate(
-                { _id: userFields.user },
-                { $set: userFields },
-                { new: true }
-              ).then(user => res.json(user));
+                // Update
+                User.findOneAndUpdate(
+                  { _id: userFields.user },
+                  { $set: userFields },
+                  { new: true }
+                ).then(user => res.json(user));
+              });
             });
-          });
+          } else {
+            // Update
+            User.findOneAndUpdate(
+              { _id: userFields.user },
+              { $set: userFields },
+              { new: true }
+            ).then(user => res.json(user));
+          }
         }
       });
     });
