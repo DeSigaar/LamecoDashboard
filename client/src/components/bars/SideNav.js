@@ -31,7 +31,7 @@ class SideNav extends Component {
 
   renderCompanyList = () => {
     return (
-      <ul className="companyList">
+      <ul className="List">
         {this.state.list.map((company, index) => {
           return (
             <li>

@@ -9,7 +9,7 @@ class AdminProfile extends Component {
         <div className="mainContainer">
           {/* Back button */}
           <div className="backButton">
-            <button className="btn red">
+            <button className="btn icon red">
               <i className="material-icons">arrow_back</i>
               <span>Back</span>
             </button>

@@ -169,41 +169,59 @@ class DashboardEdit extends Component {
 	 */
   render() {
     const { selectedOption } = this.state;
-    const value = selectedOption && selectedOption.value;
 
     return (
       <div className="dashboardEdit">
         <TitleBar />
         <div className="mainContainer">
           <div className="sideNav shadow2">
+            {/* Back button */}
+            <div className="backButton" onClick={() => this.props.history.push("/")}>
+              <button className="btn icon red">
+                <i className="material-icons">arrow_back</i>
+                <span>Back</span>
+              </button>
+            </div>
+            {/* Dropdown menu for widgets */}
             <div className="widgetselecter">
               <Select
                 className="dropdown"
                 name="form-field-name"
-                value={value}
+                value={selectedOption}
                 onChange={this.handleChange}
                 options={[
-                  { value: "one", label: "One" },
+                  { value: "One", label: "One" },
                   { value: "Clock", label: "Clock" },
                   { value: "Photo", label: "Photo" },
                   { value: "Weather", label: "Weather" }
                 ]}
               />
-              <button className="btn" onClick={this.onAddItem}>
-                Add Item
-              </button>
-              <button className="btn" onClick={this.onLayoutReset}>
-                Reset Layout
-              </button>
+              {/* Deleting everything from grid */}
+              <div className="reset">
+                <button className="btn" onClick={this.onLayoutReset}>
+                  Reset Layout
+                </button>
+              </div>
             </div>
           </div>
           <div className="DashboardGrid">
-            <ResponsiveReactGridLayout
-              onLayoutChange={this.onLayoutChange}
-              onBreakPointChange={this.onBreakPointChange}
-              {...this.props}>
-              {_.map(this.state.items, el => this.createElement(el))}
-            </ResponsiveReactGridLayout>
+            {/* Information about dashboard and button to add widget */}
+            <div className="TopDashboard">
+              <h3>Company name</h3> 
+              <button className="btn icon red" onClick={this.onAddItem}>
+                <i className="material-icons">add</i>
+                <span>Add widget</span>
+              </button>
+            </div>
+            {/* Grid with widgets */}
+            <div className="BottomDashboard">
+              <ResponsiveReactGridLayout
+                onLayoutChange={this.onLayoutChange}
+                onBreakPointChange={this.onBreakPointChange}
+                {...this.props}>
+                {_.map(this.state.items, el => this.createElement(el))}
+              </ResponsiveReactGridLayout>
+            </div>
           </div>
         </div>
       </div>

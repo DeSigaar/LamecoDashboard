@@ -1,0 +1,40 @@
+.List {
+    margin: 20px 0 0 0;
+    padding: 0;
+    color: $color-red;
+    font-weight: bold;
+    list-style-type: none;
+
+    li {
+      padding-top: 10px;
+    }
+
+    .subList {
+      color: $color-grey;
+      font-weight: normal;
+      list-style-type: none;
+      padding-left: 25px;
+
+      li {
+        padding: 5px 5px;
+        position: relative;
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -10px;
+          width: 1px;
+          height: 100%;
+          background-color: $color-red;
+        }
+
+        &:first-child {
+          margin-top: 5px;
+        }
+        &:last-child {
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
