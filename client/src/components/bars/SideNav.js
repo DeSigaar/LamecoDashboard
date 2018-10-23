@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import Company from "../popups/Company";
 
 class SideNav extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       list: [
         {
@@ -17,9 +18,16 @@ class SideNav extends Component {
         }
       ],
 
-      open: null
+      open: null,
+      popupState: false
     };
+
+    this.addCompany = this.addCompany.bind(this);
   }
+
+  addCompany = () => {
+    this.setState({ popupState: !this.state.popupState });
+  };
 
   renderCompanyList = () => {
     return (
@@ -47,10 +55,14 @@ class SideNav extends Component {
   };
 
   render() {
+    let popupState;
+    if (this.state.popupState) {
+      popupState = <Company />;
+    }
     return (
       <div className="sideNav shadow2">
         {/* Top buttons */}
-        <button className="btn icon">
+        <button className="btn icon" onClick={this.addCompany}>
           <i className="material-icons">add</i>
           <span>Add company</span>
         </button>
@@ -61,6 +73,8 @@ class SideNav extends Component {
 
         {/* List */}
         {this.renderCompanyList()}
+
+        {popupState}
       </div>
     );
   }
