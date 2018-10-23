@@ -55,37 +55,18 @@ li {
   -webkit-box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
   box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2); }
 
-.rw-main.type-today {
-  border-radius: 0px; }
-
-.react-grid-layout {
-  transition: height 200ms ease; }
-
-.title {
-  font-family: "Montserrat", sans-serif;
-  float: right;
-  font-size: 30px;
-  color: white;
-  margin-right: 10px; }
-
-.widgetselecter {
-  background-color: #3d3d3d;
-  padding-top: 10px;
-  padding-left: 10px;
-  height: 50px; }
-
-.Select-control {
-  border-radius: 0px !important;
-  border: none !important;
-  background-color: white !important; }
+.flex-center {
+  display: flex;
+  justify-content: center !important; }
 
 .btn {
   position: relative;
   background-color: transparent;
   border: 2px solid #cf1f3e;
   border-radius: 30px;
-  color: #cf1f3e;
-  padding: 8px 17px 8px 12px;
+  background-clip: padding-box;
+  color: #3d3d3d;
+  padding: 8px 17px 8px 17px;
   text-align: center;
   text-decoration: none;
   font-size: 12px;
@@ -94,10 +75,13 @@ li {
   display: inline-flex;
   justify-content: center;
   overflow: hidden;
-  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
-  .btn i {
-    font-size: 17px;
-    margin-right: 5px; }
+  transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  min-width: 120px; }
+  .btn.icon {
+    padding: 8px 17px 8px 12px; }
+    .btn.icon i {
+      font-size: 17px;
+      margin-right: 5px; }
   .btn::before {
     content: "";
     transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
@@ -111,12 +95,13 @@ li {
     -ms-transform: translate(-110%, 0) skew(45deg);
     -webkit-transform: translate(-110%, 0) skew(45deg);
     transform: translate(-110%, 0) skew(45deg);
-    box-sizing: border-box; }
+    box-sizing: border-box;
+    background-clip: padding-box; }
   .btn:hover, .btn:active {
     color: white; }
     .btn:hover::before, .btn:active::before {
       background-color: #cf1f3e;
-      left: 120%; }
+      left: 130%; }
   .btn:focus {
     outline: none;
     box-shadow: none; }
@@ -158,14 +143,67 @@ li {
   z-index: 1; }
   .titleBar h1 {
     color: #707070;
-    padding: 10px;
-    margin-bottom: 0;
+    padding: 10px 15px;
+    margin: 0;
     font-size: 30px; }
+    .titleBar h1 a {
+      text-decoration: none;
+      color: #707070; }
   .titleBar .contentRight {
-    margin-bottom: 0; }
-    .titleBar .contentRight li {
-      padding: 16px 20px;
-      display: inline-block; }
+    margin-bottom: 0;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0;
+    align-items: center; }
+    .titleBar .contentRight > li {
+      display: flex;
+      justify-content: center;
+      padding: 0 3px;
+      cursor: pointer; }
+      .titleBar .contentRight > li:first-child {
+        padding-right: 14px; }
+      .titleBar .contentRight > li:last-child {
+        padding-right: 18px; }
+      .titleBar .contentRight > li a {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        color: #707070;
+        text-decoration: none;
+        padding: 5px; }
+        .titleBar .contentRight > li a:hover {
+          text-decoration: none;
+          color: #565656; }
+  .titleBar .profilePicture {
+    width: 30px;
+    height: 30px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */ }
+
+.titleBar .subnav {
+  position: absolute;
+  right: 10px;
+  top: 70px;
+  padding: 0; }
+  .titleBar .subnav li {
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background-clip: padding-box;
+    /* stops bg color from leaking outside the border: */
+    width: 40px;
+    height: 40px;
+    background-color: #cf1f3e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 0;
+    margin-bottom: 10px; }
+    .titleBar .subnav li i {
+      padding-right: 0;
+      font-size: 20px; }
 
 .sideNav {
   position: fixed;
@@ -177,34 +215,6 @@ li {
   padding: 56px 0 0 15px; }
   .sideNav .btn {
     margin-top: 20px; }
-  .sideNav .companyList {
-    margin: 20px 0 0 0;
-    padding: 0;
-    color: #cf1f3e;
-    font-weight: bold;
-    list-style-type: none; }
-    .sideNav .companyList li {
-      padding-top: 10px; }
-    .sideNav .companyList .subList {
-      color: #707070;
-      font-weight: normal;
-      list-style-type: none;
-      padding-left: 25px; }
-      .sideNav .companyList .subList li {
-        padding: 5px 5px;
-        position: relative; }
-        .sideNav .companyList .subList li::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: -10px;
-          width: 1px;
-          height: 100%;
-          background-color: #cf1f3e; }
-        .sideNav .companyList .subList li:first-child {
-          margin-top: 5px; }
-        .sideNav .companyList .subList li:last-child {
-          margin-bottom: 5px; }
 
 .dropdown {
   width: 150px;
@@ -425,6 +435,8 @@ li {
         justify-content: space-between; }
         .login .loginContainer form.loginForm .middleForm .formField {
           height: 7.5vh; }
+          .login .loginContainer form.loginForm .middleForm .formField input {
+            width: 100%; }
       .login .loginContainer form.loginForm .bottomForm {
         height: 10vh;
         display: flex;
@@ -695,8 +707,53 @@ li {
           width: 34.5vw;
           align-self: flex-end; }
 
+.dashboardEdit {
+  overflow-y: hidden; }
+  .dashboardEdit .mainContainer {
+    display: grid;
+    grid-template-columns: 325px auto;
+    grid-template-rows: 100vh;
+    grid-template-areas: "sideBar dashboard"; }
+    .dashboardEdit .mainContainer .widgetselecter {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: none;
+      margin: 30px 0;
+      padding-right: 15px;
+      height: 780px; }
+      .dashboardEdit .mainContainer .widgetselecter .dropdown {
+        width: auto;
+        display: inline-block; }
+      .dashboardEdit .mainContainer .widgetselecter .reset {
+        align-self: flex-start; }
+    .dashboardEdit .mainContainer .Select-control {
+      border-radius: 0px !important;
+      border: none !important;
+      background-color: white !important; }
+    .dashboardEdit .mainContainer .sideNav {
+      grid-area: sideBar; }
+      .dashboardEdit .mainContainer .sideNav .backButton {
+        margin: 0; }
+    .dashboardEdit .mainContainer .DashboardGrid {
+      grid-area: dashboard; }
+      .dashboardEdit .mainContainer .DashboardGrid .TopDashboard {
+        padding: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center; }
+        .dashboardEdit .mainContainer .DashboardGrid .TopDashboard h3 {
+          color: #707070; }
+      .dashboardEdit .mainContainer .DashboardGrid .BottomDashboard {
+        padding: 0 40px; }
+  .dashboardEdit .rw-main.type-today {
+    border-radius: 0px; }
+  .dashboardEdit .react-grid-layout {
+    transition: height 200ms ease; }
+
 input[type=text], input[type=password] {
-  width: 100%;
+  width: 90%;
   background: transparent;
   border: 0;
   outline: 0;
@@ -709,3 +766,64 @@ input[type=text], input[type=password] {
   margin-top: 2px;
   font-size: 0.8em;
   color: #cf1f3e; }
+
+<<<<<<< HEAD
+.card {
+  width: 100vw;
+  height: 100%;
+  background-color: #3d3d3d;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0.7;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .card .cardContent {
+    width: 30vw;
+    height: 40vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column; }
+    .card .cardContent .cardHeader {
+      height: 50vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+    .card .cardContent .cardContent {
+      height: 50vh;
+      width: 100vw; }
+      .card .cardContent .cardContent button {
+        width: 200px;
+        height: 100px; }
+=======
+.List {
+  margin: 20px 0 0 0;
+  padding: 0;
+  color: #cf1f3e;
+  font-weight: bold;
+  list-style-type: none; }
+  .List li {
+    padding-top: 10px; }
+  .List .subList {
+    color: #707070;
+    font-weight: normal;
+    list-style-type: none;
+    padding-left: 25px; }
+    .List .subList li {
+      padding: 5px 5px;
+      position: relative; }
+      .List .subList li::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -10px;
+        width: 1px;
+        height: 100%;
+        background-color: #cf1f3e; }
+      .List .subList li:first-child {
+        margin-top: 5px; }
+      .List .subList li:last-child {
+        margin-bottom: 5px; }
+>>>>>>> 7f55f9afd9945a33f3e94c9d99ea0dfe096f38e0
