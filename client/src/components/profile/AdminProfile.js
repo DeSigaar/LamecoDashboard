@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import TitleBar from "../TitleBar";
+import TitleBar from "../bars/TitleBar";
 import TextFieldGroup from "../common/TextField";
 import { getCurrentProfile, updateProfile } from "../../actions/authActions";
 
