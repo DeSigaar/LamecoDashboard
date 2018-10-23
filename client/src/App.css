@@ -773,6 +773,37 @@ input[type=text], input[type=password] {
   font-size: 0.8em;
   color: #cf1f3e; }
 
+<<<<<<< HEAD
+.card {
+  width: 100vw;
+  height: 100%;
+  background-color: #3d3d3d;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0.7;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .card .cardContent {
+    width: 30vw;
+    height: 40vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column; }
+    .card .cardContent .cardHeader {
+      height: 50vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+    .card .cardContent .cardContent {
+      height: 50vh;
+      width: 100vw; }
+      .card .cardContent .cardContent button {
+        width: 200px;
+        height: 100px; }
+=======
 .List {
   margin: 20px 0 0 0;
   padding: 0;
@@ -801,3 +832,4 @@ input[type=text], input[type=password] {
         margin-top: 5px; }
       .List .subList li:last-child {
         margin-bottom: 5px; }
+>>>>>>> 7f55f9afd9945a33f3e94c9d99ea0dfe096f38e0
