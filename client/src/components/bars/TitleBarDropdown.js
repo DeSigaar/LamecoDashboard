@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { logoutUser } from "../../actions/authActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 class TitleBarDropdown extends Component {
   onLogoutClick = () => {
@@ -12,8 +13,11 @@ class TitleBarDropdown extends Component {
     return (
       <ul className="subnav">
         <li>
-          <i className="material-icons">person_add</i>
+          <Link to="/add-user">
+            <i className="material-icons">person_add</i>
+          </Link>
         </li>
+
         <li onClick={this.onLogoutClick}>
           <i className="material-icons">power_settings_new</i>
         </li>
