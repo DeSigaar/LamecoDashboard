@@ -1,26 +1,42 @@
 .card {
   width: 100vw;
   height: 100%;
-  background-color: $color-black;
+  background-color: $color-grey-transparent-50;
   position: absolute;
   left: 0;
   top: 0;
-  opacity: 0.7;
+  // opacity: 0.7;
   display: flex;
   justify-content: center;
   align-items: center;
 
   .cardContent {
-    width: 35vw;
+    width: 20vw;
     height: auto;
     background-color: $color-white;
+
     .cardHeader {
+      background: url(img/lamecoCompany.jpg);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+
       height: 50%;
       width: auto;
       display: flex;
       justify-content: center;
       align-items: center;
+
+      .overlayImage {
+        position: absolute;
+        background-color: $color-red-transparent;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
     }
+
     .cardContent {
       height: 50%;
       width: auto;
