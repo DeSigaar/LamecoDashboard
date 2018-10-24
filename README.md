@@ -50,6 +50,8 @@ npm install axios bcryptjs body-parser concurrently express gravatar jsonwebtoke
 If that doens't work for whatever reason. Copy and paste this in your client: 
 ```
 npm uninstall axios classnames jwt-decode moment node-sass-chokidar npm-run-all react react-dom react-dropdown react-grid-layout react-live-clock react-moment react-open-weather react-redux react-router-dom react-scripts react-select redux redux-thunk
+
+npm install axios classnames jwt-decode moment node-sass-chokidar npm-run-all react react-dom react-dropdown react-grid-layout react-live-clock react-moment react-open-weather react-redux react-router-dom react-scripts react-select redux redux-thunk
 ```
 ### Running
 
