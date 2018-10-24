@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import TitleBar from "../bars/TitleBar";
 import TextFieldGroup from "../common/TextField";
-import { getCurrentProfile, updateProfile } from "../../actions/authActions";
+import { getCurrentProfile, addUser } from "../../actions/authActions";
 
-class AdminProfile extends Component {
+class UpdateProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,18 +18,18 @@ class AdminProfile extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props.getCurrentProfile();
-
-    this.setState({
-      name: this.props.user.name,
-      email: this.props.user.email,
-      username: this.props.user.username
-    });
-  }
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
+    }
+  }
+
+  componentDidMount() {
+    {
+      /* Redirect als user geen admin is. LELIJK tho.*/
+    }
+    if (!this.props.user.admin_role) {
+      window.location.href = "/dashboard";
     }
   }
   onChange = e => {
@@ -46,14 +46,13 @@ class AdminProfile extends Component {
       username: this.state.username
     };
 
-    this.props.updateProfile(profileData, this.props.history);
-    alert("Profile updated 😂😂😂😂");
+    this.props.addUser(profileData, this.props.history);
+    alert("User created??");
   };
   render() {
     const { errors } = this.state;
-    const { user } = this.props;
     return (
-      <div className="adminProfile">
+      <div className="updateProfile">
         <TitleBar />
         <div className="mainContainer">
           {/* Back button */}
@@ -67,17 +66,10 @@ class AdminProfile extends Component {
             </button>
           </div>
           <div className="profileForm">
-            <div className="adminInfo">
-              <div className="imageBox">
-                <img className="profileImg" src={user.avatar} alt="" />
-              </div>
-              <div className="info">
-                <h6>{user.username}</h6>
-              </div>
-            </div>
             <form onSubmit={this.onSubmit} className="adminForm">
               <div className="inputFields">
                 <div className="adminFormInfo">
+                  <h6>Register</h6>
                   <TextFieldGroup
                     placeholder="* Name"
                     name="name"
@@ -101,7 +93,7 @@ class AdminProfile extends Component {
                   />
                 </div>
                 <div className="adminFormPassword">
-                  <h6>Change Password</h6>
+                  <h6>Password</h6>
                   <TextFieldGroup
                     placeholder="* Password"
                     name="password"
@@ -131,11 +123,11 @@ class AdminProfile extends Component {
   }
 }
 
-AdminProfile.propTypes = {
+UpdateProfile.propTypes = {
   user: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
-  updateProfile: PropTypes.func.isRequired
+  addUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -145,5 +137,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile, updateProfile }
-)(AdminProfile);
+  { getCurrentProfile, addUser }
+)(UpdateProfile);

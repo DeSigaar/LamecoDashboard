@@ -13,6 +13,7 @@ import Login from "./components/login/Login";
 import Dashboard from "./components/pages/Dashboard";
 import DashboardEdit from "./components/pages/DashboardEdit";
 import AdminProfile from "./components/profile/AdminProfile";
+import AddUser from "./components/profile/AddUser";
 
 import "./App.css";
 
@@ -47,6 +48,7 @@ class App extends Component {
               <Route exact path="/sent-password-reset" component={Login} />
               <Route exact path="/password-reset/:key" component={Login} />
               <Route exact path="/password-reset-success" component={Login} />
+              <Route exact path="/add-user" component={AddUser} />
               <PrivateRoute exact path="/" component={Dashboard} />
               <PrivateRoute
                 exact
