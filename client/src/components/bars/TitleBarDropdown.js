@@ -12,10 +12,10 @@ class TitleBarDropdown extends Component {
     return (
       <ul className="subnav">
         <li>
-          <i class="material-icons">person_add</i>
+          <i className="material-icons">person_add</i>
         </li>
         <li onClick={this.onLogoutClick}>
-          <i class="material-icons">power_settings_new</i>
+          <i className="material-icons">power_settings_new</i>
         </li>
       </ul>
     );
