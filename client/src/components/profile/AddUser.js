@@ -41,7 +41,6 @@ class UpdateProfile extends Component {
   };
   render() {
     const { errors } = this.state;
-    const { user } = this.props;
     return (
       <div className="updateProfile">
         <TitleBar />
