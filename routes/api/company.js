@@ -39,13 +39,6 @@ router.post(
       return res.status(401).json({ authorized: false });
     }
 
-    const { errors, isValid } = validateCompanyInput(req.body);
-
-    // Check validation
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-
     req.body.name = req.body.name
       .toLowerCase()
       .split(" ")
@@ -55,6 +48,13 @@ router.post(
       .toLowerCase()
       .trim()
       .replace(/\s+/g, "-");
+
+    const { errors, isValid } = validateCompanyInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
 
     Company.findOne({
       name: req.body.name
@@ -109,29 +109,6 @@ router.get(
   }
 );
 
-// @route   DELETE /api/company/remove/:id
-// @desc    Remove company with given id
-// @access  Private
-router.delete(
-  "/remove/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
-
-    Company.findById(req.params.id)
-      .then(company => {
-        company.remove().then(() => res.json({ success: true }));
-      })
-      .catch(err =>
-        res
-          .status(404)
-          .json({ companynotfound: "Company not found with that ID" })
-      );
-  }
-);
-
 // @route   POST /api/company/update/:id
 // @desc    Update company with given id
 // @access  Private
@@ -145,26 +122,28 @@ router.post(
       return res.status(401).json({ authorized: false });
     }
 
-    const { errors, isValid } = validateCompanyInput(req.body);
-
-    // Check validation
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-
     const companyFields = {};
     companyFields.company = req.params.id;
-    if (req.body.name)
+    if (req.body.name) {
       companyFields.name = req.body.name
         .toLowerCase()
         .split(" ")
         .map(x => x.charAt(0).toUpperCase() + x.substring(1))
         .join(" ");
-    if (req.body.handle)
+    }
+    if (req.body.handle) {
       companyFields.handle = req.body.handle
         .toLowerCase()
         .trim()
         .replace(/\s+/g, "-");
+    }
+
+    const { errors, isValid } = validateCompanyInput(companyFields);
+
+    // Check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
 
     Company.findOne({
       name: companyFields.name
@@ -189,6 +168,29 @@ router.post(
         }
       });
     });
+  }
+);
+
+// @route   DELETE /api/company/remove/:id
+// @desc    Remove company with given id
+// @access  Private
+router.delete(
+  "/remove/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    if (req.user.admin_role === false) {
+      return res.status(401).json({ authorized: false });
+    }
+
+    Company.findById(req.params.id)
+      .then(company => {
+        company.remove().then(() => res.json({ success: true }));
+      })
+      .catch(err =>
+        res
+          .status(404)
+          .json({ companynotfound: "Company not found with that ID" })
+      );
   }
 );
 

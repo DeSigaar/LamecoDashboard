@@ -96,15 +96,15 @@ router.post(
       return res.status(401).json({ authorized: false });
     }
 
+    req.body.email = req.body.email.toLowerCase();
+    req.body.username = req.body.username.toLowerCase();
+
     const { errors, isValid } = validateUserInput(req.body);
 
     // Check validation
     if (!isValid) {
       return res.status(400).json(errors);
     }
-
-    req.body.email = req.body.email.toLowerCase();
-    req.body.username = req.body.username.toLowerCase();
 
     User.findOne({
       email: req.body.email
@@ -209,18 +209,6 @@ router.post(
       return res.status(401).json({ authorized: false });
     }
 
-    var passwordChange = false;
-    if (!isEmpty(req.body.password)) {
-      passwordChange = true;
-    }
-
-    const { errors, isValid } = validateUserInput(req.body, passwordChange);
-
-    // Check validation
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-
     const userFields = {};
     userFields.user = req.params.id;
     if (req.body.email) userFields.email = req.body.email.toLowerCase();
@@ -228,6 +216,18 @@ router.post(
       userFields.username = req.body.username.toLowerCase();
     if (req.body.name) userFields.name = req.body.name;
     if (req.body.password) userFields.password = req.body.password;
+
+    var passwordChange = false;
+    if (!isEmpty(req.body.password)) {
+      passwordChange = true;
+    }
+
+    const { errors, isValid } = validateUserInput(userFields, passwordChange);
+
+    // Check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
 
     User.findOne({
       email: userFields.email
@@ -283,6 +283,8 @@ router.post(
 // @desc    Login user and return JWT token
 // @access  Public
 router.post("/login", (req, res) => {
+  req.body.info = req.body.info.toLowerCase();
+
   const { errors, isValid } = validateLoginInput(req.body);
 
   // Check validation
@@ -290,11 +292,8 @@ router.post("/login", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  const info = req.body.info.toLowerCase();
-  const password = req.body.password;
-
-  if (Validator.isEmail(info)) {
-    const email = info;
+  if (Validator.isEmail(req.body.info)) {
+    const email = req.body.info;
     // Find user by email given
     User.findOne({
       email
@@ -306,10 +305,54 @@ router.post("/login", (req, res) => {
       }
 
       // Check password
-      bcrypt.compare(password, user.password).then(isMatch => {
+      bcrypt.compare(req.body.password, user.password).then(isMatch => {
         if (isMatch) {
-          // Check if user is admin_role
-          if (user.admin_role) {
+          // Check what type of login it is - admin_login or regular_login?
+          // admin_login is for the backend of the system
+          // regular_login is any login
+
+          if (req.body.type === "admin_login") {
+            // Check if user is admin_role
+            if (user.admin_role) {
+              // User matched
+              const payload = {
+                id: user.id,
+                email: user.email,
+                username: user.username,
+                name: user.name,
+                avatar: user.avatar,
+                admin_role: user.admin_role
+              }; // Create JWT payload
+
+              if (req.body.remember_me) {
+                // Sign token
+                jwt.sign(payload, keys.secretOrKey, (err, token) => {
+                  res.json({
+                    success: true,
+                    token: "Bearer " + token
+                  });
+                });
+              } else {
+                // Sign token
+                jwt.sign(
+                  payload,
+                  keys.secretOrKey,
+                  {
+                    expiresIn: 36000
+                  },
+                  (err, token) => {
+                    res.json({
+                      success: true,
+                      token: "Bearer " + token
+                    });
+                  }
+                );
+              }
+            } else {
+              errors.info = "Not an admin";
+              return res.status(400).json(errors);
+            }
+          } else {
             // User matched
             const payload = {
               id: user.id,
@@ -344,9 +387,6 @@ router.post("/login", (req, res) => {
                 }
               );
             }
-          } else {
-            errors.info = "Not an admin";
-            return res.status(400).json(errors);
           }
         } else {
           errors.password = "Password incorrect";
@@ -367,41 +407,88 @@ router.post("/login", (req, res) => {
       }
 
       // Check password
-      bcrypt.compare(password, user.password).then(isMatch => {
+      bcrypt.compare(req.body.password, user.password).then(isMatch => {
         if (isMatch) {
-          // User matched
-          const payload = {
-            id: user.id,
-            email: user.email,
-            username: user.username,
-            name: user.name,
-            avatar: user.avatar,
-            admin_role: user.admin_role
-          }; // Create JWT payload
+          // Check what type of login it is - admin_login or regular_login?
+          // admin_login is for the backend of the system
+          // regular_login is any login
 
-          if (req.body.remember_me) {
-            // Sign token
-            jwt.sign(payload, keys.secretOrKey, (err, token) => {
-              res.json({
-                success: true,
-                token: "Bearer " + token
-              });
-            });
+          if (req.body.type === "admin_login") {
+            // Check if user is admin_role
+            if (user.admin_role) {
+              // User matched
+              const payload = {
+                id: user.id,
+                email: user.email,
+                username: user.username,
+                name: user.name,
+                avatar: user.avatar,
+                admin_role: user.admin_role
+              }; // Create JWT payload
+
+              if (req.body.remember_me) {
+                // Sign token
+                jwt.sign(payload, keys.secretOrKey, (err, token) => {
+                  res.json({
+                    success: true,
+                    token: "Bearer " + token
+                  });
+                });
+              } else {
+                // Sign token
+                jwt.sign(
+                  payload,
+                  keys.secretOrKey,
+                  {
+                    expiresIn: 36000
+                  },
+                  (err, token) => {
+                    res.json({
+                      success: true,
+                      token: "Bearer " + token
+                    });
+                  }
+                );
+              }
+            } else {
+              errors.info = "Not an admin";
+              return res.status(400).json(errors);
+            }
           } else {
-            // Sign token
-            jwt.sign(
-              payload,
-              keys.secretOrKey,
-              {
-                expiresIn: 36000
-              },
-              (err, token) => {
+            // User matched
+            const payload = {
+              id: user.id,
+              email: user.email,
+              username: user.username,
+              name: user.name,
+              avatar: user.avatar,
+              admin_role: user.admin_role
+            }; // Create JWT payload
+
+            if (req.body.remember_me) {
+              // Sign token
+              jwt.sign(payload, keys.secretOrKey, (err, token) => {
                 res.json({
                   success: true,
                   token: "Bearer " + token
                 });
-              }
-            );
+              });
+            } else {
+              // Sign token
+              jwt.sign(
+                payload,
+                keys.secretOrKey,
+                {
+                  expiresIn: 36000
+                },
+                (err, token) => {
+                  res.json({
+                    success: true,
+                    token: "Bearer " + token
+                  });
+                }
+              );
+            }
           }
         } else {
           errors.password = "Password incorrect";
