@@ -51,7 +51,10 @@ router.post(
       .split(" ")
       .map(x => x.charAt(0).toUpperCase() + x.substring(1))
       .join(" ");
-    req.body.handle = req.body.handle.toLowerCase();
+    req.body.handle = req.body.handle
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "-");
 
     Company.findOne({
       name: req.body.name
@@ -157,7 +160,11 @@ router.post(
         .split(" ")
         .map(x => x.charAt(0).toUpperCase() + x.substring(1))
         .join(" ");
-    if (req.body.handle) companyFields.handle = req.body.handle.toLowerCase();
+    if (req.body.handle)
+      companyFields.handle = req.body.handle
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, "-");
 
     Company.findOne({
       name: companyFields.name

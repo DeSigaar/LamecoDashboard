@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
 const Validator = require("validator");
+const nodemailer = require("nodemailer");
 const isEmpty = require("../../validation/is-empty");
 
 // Load input validation
@@ -152,11 +153,21 @@ router.post(
               require("../../config/keys").mailAccountUsername
             }>`,
             to: newUser.email,
-            subject: `Laméco Dashboard - Registration of ${email}`,
-            text: `Welcome!\nWe're excited to have you get started. First, you need to confirm your account. Click the following link to confirm your account:\nhttps://lameco-dashboard.herokuapp.com/confirm-account/${key}\nCheers,\nThe Laméco Dashboard Team`,
+            subject: `Laméco Dashboard - Registration of ${newUser.email}`,
+            text: `Welcome!\nWe're thrilled to have you here! Get ready to dive into your new account.\nEmail: ${
+              newUser.email
+            }\nUsername: ${newUser.username}\nPassword: ${
+              newUser.password
+            }\nTo log in to your new account visit:\nhttps://lameco-dashboard.herokuapp.com/login\nCheers,\nThe Laméco Dashboard Team`,
             html: `<!DOCTYPE html><html><head><title>Laméco Dashboard - Registration of ${
               newUser.email
-            }</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=edge"/><style type="text/css"> @media screen{@font-face{font-family: 'Montserrat'; font-style: normal; font-weight: 400; src: local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v12/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2) format('woff2');}}body, table, td, a{-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;}table, td{mso-table-lspace: 0pt; mso-table-rspace: 0pt;}img{-ms-interpolation-mode: bicubic;}img{border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none;}table{border-collapse: collapse !important;}body{height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important;}a[x-apple-data-detectors]{color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important;}@media screen and (max-width:600px){h1{font-size: 32px !important; line-height: 32px !important;}}div[style*="margin: 16px 0;"]{margin: 0 !important;}</style></head><body style="background-color: #F4F5F5; margin: 0 !important; padding: 0 !important;"><div style="display: none; font-size: 1px; color: #FEFEFE; line-height: 1px; font-family: 'Montserrat', Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;"> We're thrilled to have you here! Get ready to dive into your new account.</div><table border="0" cellpadding="0" cellspacing="0" width="100%"> <tr> <td bgcolor="#CF1F3E" align="center"><!--[if (gte mso 9)|(IE)]> <table align="center" border="0" cellspacing="0" cellpadding="0" width="600"> <tr> <td align="center" valign="top" width="600"><![endif]--> <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" > <tr> <td align="center" valign="top" style="padding: 40px 10px 40px 10px;"> <a href="https://lameco-dashboard.herokuapp.com/" target="_blank"> <img alt="Logo" src="https://www.lameco.nl/favicon.ico?v1" width="40" height="40" style="display: block; width: 40px; max-width: 40px; min-width: 40px; font-family: 'Montserrat', Arial, sans-serif; color: #FFFFFF; font-size: 18px;" border="0"> </a> </td></tr></table><!--[if (gte mso 9)|(IE)]> </td></tr></table><![endif]--> </td></tr><tr> <td bgcolor="#CF1F3E" align="center" style="padding: 0px 10px 0px 10px;"><!--[if (gte mso 9)|(IE)]> <table align="center" border="0" cellspacing="0" cellpadding="0" width="600"> <tr> <td align="center" valign="top" width="600"><![endif]--> <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" > <tr> <td bgcolor="#FFFFFF" align="center" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Montserrat', Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;"> <h1 style="font-size: 48px; font-weight: 400; margin: 0;">Welcome!</h1> </td></tr></table><!--[if (gte mso 9)|(IE)]> </td></tr></table><![endif]--> </td></tr><tr> <td bgcolor="#F4F5F5" align="center" style="padding: 0px 10px 0px 10px;"><!--[if (gte mso 9)|(IE)]> <table align="center" border="0" cellspacing="0" cellpadding="0" width="600"> <tr> <td align="center" valign="top" width="600"><![endif]--> <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" > <tr> <td bgcolor="#FFFFFF" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" > <p style="margin: 0;">We're excited to have you get started. First, you need to confirm your account. Just press the button below.</p></td></tr><tr> <td bgcolor="#FFFFFF" align="left"> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td bgcolor="#FFFFFF" align="center" style="padding: 20px 30px 60px 30px;"> <table border="0" cellspacing="0" cellpadding="0"> <tr> <td align="center" style="border-radius: 30px;" bgcolor="#CF1F3E"><a href="https://lameco-dashboard.herokuapp.com/confirm-account/${key}" target="_blank" style="font-size: 20px; font-family: Arial, sans-serif; color: #FFFFFF; text-decoration: none; padding: 15px 25px; border-radius: 30px; border: 1px solid #CF1F3E; display: inline-block; background-color:#CF1F3E;">Confirm Account</a></td></tr></table> </td></tr></table> </td></tr><tr> <td bgcolor="#FFFFFF" align="left" style="padding: 0px 30px 0px 30px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" > <p style="margin: 0;">If that doesn't work, copy and paste the following link in your browser:</p></td></tr><tr> <td bgcolor="#FFFFFF" align="left" style="padding: 20px 30px 20px 30px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" > <p style="margin: 0;"><a href="https://lameco-dashboard.herokuapp.com/confirm-account/${key}" target="_blank" style="color: #CF1F3E;">https://lameco-dashboard.herokuapp.com/confirm-account/${key}</a></p></td></tr><tr> <td bgcolor="#FFFFFF" align="left" style="padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" > <p style="margin: 0;">Cheers,<br>The Laméco Dashboard Team</p></td></tr></table><!--[if (gte mso 9)|(IE)]> </td></tr></table><![endif]--> </td></tr><tr> <td bgcolor="#F4F5F5" align="center" style="padding: 0px 10px 0px 10px;"><!--[if (gte mso 9)|(IE)]> <table align="center" border="0" cellspacing="0" cellpadding="0" width="600"> <tr> <td align="center" valign="top" width="600"><![endif]--> <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" > <tr> <td bgcolor="#F4F5F5" align="left" style="padding: 30px 30px 10px 30px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;" > <p style="margin: 0;">You received this email because you've got registered by an admin.</p></td></tr><tr> <td bgcolor="#F4F5F5" align="left" style="padding: 10px 30px 30px 30px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;" > <p style="margin: 0;">Not ${
+            }</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=edge"/><style type="text/css"> @media screen{@font-face{font-family: 'Montserrat'; font-style: normal; font-weight: 400; src: local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v12/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2) format('woff2');}}body, table, td, a{-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;}table, td{mso-table-lspace: 0pt; mso-table-rspace: 0pt;}img{-ms-interpolation-mode: bicubic;}img{border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none;}table{border-collapse: collapse !important;}body{height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important;}a[x-apple-data-detectors]{color: inherit !important; text-decoration: none !important; font-size: inherit !important; font-family: inherit !important; font-weight: inherit !important; line-height: inherit !important;}@media screen and (max-width:600px){h1{font-size: 32px !important; line-height: 32px !important;}}div[style*="margin: 16px 0;"]{margin: 0 !important;}</style></head><body style="background-color: #F4F5F5; margin: 0 !important; padding: 0 !important;"><div style="display: none; font-size: 1px; color: #FEFEFE; line-height: 1px; font-family: 'Montserrat', Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;"> We're thrilled to have you here! Get ready to dive into your new account.</div><table border="0" cellpadding="0" cellspacing="0" width="100%"> <tr> <td bgcolor="#CF1F3E" align="center"><!--[if (gte mso 9)|(IE)]> <table align="center" border="0" cellspacing="0" cellpadding="0" width="600"> <tr> <td align="center" valign="top" width="600"><![endif]--> <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" > <tr> <td align="center" valign="top" style="padding: 40px 10px 40px 10px;"> <a href="https://lameco-dashboard.herokuapp.com/" target="_blank"> <img alt="Logo" src="https://www.lameco.nl/favicon.ico?v1" width="40" height="40" style="display: block; width: 40px; max-width: 40px; min-width: 40px; font-family: 'Montserrat', Arial, sans-serif; color: #FFFFFF; font-size: 18px;" border="0"> </a> </td></tr></table><!--[if (gte mso 9)|(IE)]> </td></tr></table><![endif]--> </td></tr><tr> <td bgcolor="#CF1F3E" align="center" style="padding: 0px 10px 0px 10px;"><!--[if (gte mso 9)|(IE)]> <table align="center" border="0" cellspacing="0" cellpadding="0" width="600"> <tr> <td align="center" valign="top" width="600"><![endif]--> <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" > <tr> <td bgcolor="#FFFFFF" align="center" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Montserrat', Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;"> <h1 style="font-size: 48px; font-weight: 400; margin: 0;">Welcome!</h1> </td></tr></table><!--[if (gte mso 9)|(IE)]> </td></tr></table><![endif]--> </td></tr><tr> <td bgcolor="#F4F5F5" align="center" style="padding: 0px 10px 0px 10px;"><!--[if (gte mso 9)|(IE)]> <table align="center" border="0" cellspacing="0" cellpadding="0" width="600"> <tr> <td align="center" valign="top" width="600"><![endif]--> <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" > <tr> <td bgcolor="#FFFFFF" align="left" style="padding: 20px 30px 20px 30px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" > <p style="margin: 0;">We're thrilled to have you here! Get ready to dive into your new account.</p></td></tr><tr> <td bgcolor="#FFFFFF" align="left" style="padding: 0px 30px 0px 30px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" > <p style="margin: 0;">Email: ${
+              newUser.email
+            }</p></td></tr><tr> <td bgcolor="#FFFFFF" align="left" style="padding: 0px 30px 0px 30px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" > <p style="margin: 0;">Username: ${
+              newUser.username
+            }</p></td></tr><tr> <td bgcolor="#FFFFFF" align="left" style="padding: 0px 30px 20px 30px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" > <p style="margin: 0;">Password: ${
+              newUser.password
+            }</p></td></tr><tr> <td bgcolor="#FFFFFF" align="left"> <table width="100%" border="0" cellspacing="0" cellpadding="0"> <tr> <td bgcolor="#FFFFFF" align="center" style="padding: 0px 30px 30px 30px;"> <table border="0" cellspacing="0" cellpadding="0"> <tr> <td align="center" style="border-radius: 30px;" bgcolor="#CF1F3E"><a href="https://lameco-dashboard.herokuapp.com/login" target="_blank" style="font-size: 20px; font-family: Arial, sans-serif; color: #FFFFFF; text-decoration: none; padding: 15px 25px; border-radius: 30px; border: 1px solid #CF1F3E; display: inline-block; background-color:#CF1F3E;">Log in</a></td></tr></table> </td></tr></table> </td></tr><tr> <td bgcolor="#FFFFFF" align="left" style="padding: 0px 30px 0px 30px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" > <p style="margin: 0;">To log in to your new account visit:</p></td></tr><tr> <td bgcolor="#FFFFFF" align="left" style="padding: 20px 30px 20px 30px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" > <p style="margin: 0;"><a href="https://lameco-dashboard.herokuapp.com/login" target="_blank" style="color: #CF1F3E;">https://lameco-dashboard.herokuapp.com/login</a></p></td></tr><tr> <td bgcolor="#FFFFFF" align="left" style="padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" > <p style="margin: 0;">Cheers,<br>The Laméco Dashboard Team</p></td></tr></table><!--[if (gte mso 9)|(IE)]> </td></tr></table><![endif]--> </td></tr><tr> <td bgcolor="#F4F5F5" align="center" style="padding: 0px 10px 0px 10px;"><!--[if (gte mso 9)|(IE)]> <table align="center" border="0" cellspacing="0" cellpadding="0" width="600"> <tr> <td align="center" valign="top" width="600"><![endif]--> <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" > <tr> <td bgcolor="#F4F5F5" align="left" style="padding: 30px 30px 10px 30px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;" > <p style="margin: 0;">You received this email because you've got registered by an admin.</p></td></tr><tr> <td bgcolor="#F4F5F5" align="left" style="padding: 10px 30px 30px 30px; color: #666666; font-family: 'Montserrat', Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;" > <p style="margin: 0;">Not ${
               newUser.email
             } or ${
               newUser.name
@@ -297,39 +308,45 @@ router.post("/login", (req, res) => {
       // Check password
       bcrypt.compare(password, user.password).then(isMatch => {
         if (isMatch) {
-          // User matched
-          const payload = {
-            id: user.id,
-            email: user.email,
-            username: user.username,
-            name: user.name,
-            avatar: user.avatar,
-            admin_role: user.admin_role
-          }; // Create JWT payload
+          // Check if user is admin_role
+          if (user.admin_role) {
+            // User matched
+            const payload = {
+              id: user.id,
+              email: user.email,
+              username: user.username,
+              name: user.name,
+              avatar: user.avatar,
+              admin_role: user.admin_role
+            }; // Create JWT payload
 
-          if (req.body.remember_me === true) {
-            // Sign token
-            jwt.sign(payload, keys.secretOrKey, (err, token) => {
-              res.json({
-                success: true,
-                token: "Bearer " + token
-              });
-            });
-          } else {
-            // Sign token
-            jwt.sign(
-              payload,
-              keys.secretOrKey,
-              {
-                expiresIn: 36000
-              },
-              (err, token) => {
+            if (req.body.remember_me) {
+              // Sign token
+              jwt.sign(payload, keys.secretOrKey, (err, token) => {
                 res.json({
                   success: true,
                   token: "Bearer " + token
                 });
-              }
-            );
+              });
+            } else {
+              // Sign token
+              jwt.sign(
+                payload,
+                keys.secretOrKey,
+                {
+                  expiresIn: 36000
+                },
+                (err, token) => {
+                  res.json({
+                    success: true,
+                    token: "Bearer " + token
+                  });
+                }
+              );
+            }
+          } else {
+            errors.info = "Not an admin";
+            return res.status(400).json(errors);
           }
         } else {
           errors.password = "Password incorrect";
@@ -362,7 +379,7 @@ router.post("/login", (req, res) => {
             admin_role: user.admin_role
           }; // Create JWT payload
 
-          if (req.body.remember_me === true) {
+          if (req.body.remember_me) {
             // Sign token
             jwt.sign(payload, keys.secretOrKey, (err, token) => {
               res.json({
