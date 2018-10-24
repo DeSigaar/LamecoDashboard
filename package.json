@@ -4,7 +4,6 @@
   "description": "Lameco dashboard system",
   "main": "server.js",
   "author": "Max Altena <Max@MaxAltena.com>",
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MaxAltena/LamecoDashboard.git"
@@ -39,5 +38,10 @@
     "install-all": "npm install && npm install --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run heroku-build --prefix client"
-  }
+  },
+  "engines": {
+    "node": "10.12.0",
+    "npm": "6.4.1"
+  },
+  "homepage": "https://lameco-dashboard.herokuapp.com/"
 }
