@@ -8,8 +8,8 @@ class Company extends Component {
           <div className="cardHeader ">
             <h1>yoyo</h1>
           </div>
-          <div className="overlayImage" />
-          <div className="cardContent">
+
+          <div className="cardBody">
             <button /> <button />
           </div>
         </div>
