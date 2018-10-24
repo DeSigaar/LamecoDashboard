@@ -32,9 +32,9 @@ class SideNav extends Component {
   renderCompanyList = () => {
     return (
       <ul className="List">
-        {this.state.list.map((company, index) => {
+        {this.state.list.map((company, i) => {
           return (
-            <li>
+            <li key={i}>
               {company.name}
               {this.renderDashboardList(company)}
             </li>
@@ -48,7 +48,7 @@ class SideNav extends Component {
     return (
       <ul className="subList">
         {company["dashboards"].map((dashboard, i) => {
-          return <li>{dashboard}</li>;
+          return <li key={i}>{dashboard}</li>;
         })}
       </ul>
     );
