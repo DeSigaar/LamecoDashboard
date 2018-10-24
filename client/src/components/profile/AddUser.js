@@ -12,6 +12,8 @@ class UpdateProfile extends Component {
       name: "",
       email: "",
       username: "",
+      password: "",
+      password2: "",
       errors: {}
     };
   }
