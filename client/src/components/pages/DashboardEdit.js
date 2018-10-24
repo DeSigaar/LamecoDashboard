@@ -174,7 +174,7 @@ class DashboardEdit extends Component {
       <div className="dashboardEdit">
         <TitleBar />
         <div className="mainContainer">
-          <div className="sideNav">
+          <div className="sideNav shadow2">
             {/* Back button */}
             <div
               className="backButton"
