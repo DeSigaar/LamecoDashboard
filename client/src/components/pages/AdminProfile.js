@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import TitleBar from "../TitleBar";
+import TitleBar from "../bars/TitleBar";
 
 class AdminProfile extends Component {
   render() {
@@ -9,12 +9,13 @@ class AdminProfile extends Component {
         <div className="mainContainer">
           {/* Back button */}
           <div className="backButton">
-            <button className="btn red">
+            <button className="btn icon red">
               <i className="material-icons">arrow_back</i>
               <span>Back</span>
             </button>
           </div>
           <div className="profileForm">
+            {/* Information about the admin with picture */}
             <div className="adminInfo">
               <div className="profileImg" />
               <div className="info">
@@ -23,6 +24,7 @@ class AdminProfile extends Component {
                 <button className="btn">Upload Image</button>
               </div>
             </div>
+            {/* Form to change admins account */}
             <form className="adminForm">
               <div className="inputFields">
                 <div className="adminFormInfo">

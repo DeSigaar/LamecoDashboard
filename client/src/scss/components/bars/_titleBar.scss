@@ -1,0 +1,64 @@
+.titleBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: $color-white;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
+  @include user-select(none);
+
+  h1 {
+    color: $color-grey;
+    padding: 10px 15px;
+    margin: 0;
+    font-size: 30px;
+
+    a {
+      text-decoration: none;
+      color: $color-grey;
+    }
+  }
+
+  .contentRight {
+    margin-bottom: 0;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0;
+    align-items: center;
+
+    > li {
+      display: flex;
+      justify-content: center;
+      padding: 0 3px;
+      cursor: pointer;
+
+      &:first-child {
+        padding-right: 14px;
+      }
+      &:last-child {
+        padding-right: 18px;
+      }
+
+      a {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        color: $color-grey;
+        text-decoration: none;
+        padding: 5px;
+
+        &:hover {
+          text-decoration: none;
+          color: $color-grey-hover;
+        }
+      }
+    }
+  }
+  .profilePicture {
+    width: 30px;
+    height: 30px;
+    @include border-radius(50px);
+  }
+}
