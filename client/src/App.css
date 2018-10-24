@@ -211,6 +211,42 @@ input[type=text], input[type=password] {
       .List .subList li:last-child {
         margin-bottom: 5px; }
 
+.loginForm.slide-enter,
+.forgotForm.reverse.slide-enter,
+.passwordReset.slide-enter {
+  transform: translateX(-140%); }
+
+.forgotForm.slide-enter,
+.forgotSuccess.slide-enter,
+.passwordResetSuccess.slide-enter,
+.passwordReset.reverse.slide-enter {
+  transform: translateX(140%); }
+
+.slide-enter {
+  position: absolute; }
+
+.slide-enter.slide-enter-active {
+  transform: translateX(0);
+  transition: transform 400ms cubic-bezier(0.645, 0.045, 0.355, 1); }
+
+.slide-exit {
+  transform: translateX(0);
+  position: absolute; }
+
+.loginForm.slide-exit.slide-exit-active,
+.forgotForm.reverse.slide-exit.slide-exit-active,
+.passwordReset.slide-exit.slide-exit-active {
+  transform: translateX(-140%); }
+
+.forgotForm.slide-exit.slide-exit-active,
+.forgotSuccess.slide-exit.slide-exit-active,
+.passwordResetSuccess.slide-exit.slide-exit-active,
+.passwordReset.reverse.slide-exit.slide-exit-active {
+  transform: translateX(140%); }
+
+.slide-exit.slide-exit-active {
+  transition: transform 400ms cubic-bezier(0.645, 0.045, 0.355, 1); }
+
 .titleBar {
   position: fixed;
   top: 0;
@@ -479,34 +515,6 @@ input[type=text], input[type=password] {
       top: 25vh;
       left: 17.5%;
       color: #cf1f3e; }
-    .login .loginContainer .loginForm.slide-enter,
-    .login .loginContainer .forgotForm.reverse.slide-enter,
-    .login .loginContainer .passwordReset.slide-enter {
-      transform: translateX(-140%); }
-    .login .loginContainer .forgotForm.slide-enter,
-    .login .loginContainer .forgotSuccess.slide-enter,
-    .login .loginContainer .passwordResetSuccess.slide-enter,
-    .login .loginContainer .passwordReset.reverse.slide-enter {
-      transform: translateX(140%); }
-    .login .loginContainer .slide-enter {
-      position: absolute; }
-    .login .loginContainer .slide-enter.slide-enter-active {
-      transform: translateX(0);
-      transition: transform 400ms cubic-bezier(0.645, 0.045, 0.355, 1); }
-    .login .loginContainer .slide-exit {
-      transform: translateX(0);
-      position: absolute; }
-    .login .loginContainer .loginForm.slide-exit.slide-exit-active,
-    .login .loginContainer .forgotForm.reverse.slide-exit.slide-exit-active,
-    .login .loginContainer .passwordReset.slide-exit.slide-exit-active {
-      transform: translateX(-140%); }
-    .login .loginContainer .forgotForm.slide-exit.slide-exit-active,
-    .login .loginContainer .forgotSuccess.slide-exit.slide-exit-active,
-    .login .loginContainer .passwordResetSuccess.slide-exit.slide-exit-active,
-    .login .loginContainer .passwordReset.reverse.slide-exit.slide-exit-active {
-      transform: translateX(140%); }
-    .login .loginContainer .slide-exit.slide-exit-active {
-      transition: transform 400ms cubic-bezier(0.645, 0.045, 0.355, 1); }
     .login .loginContainer form.loginForm {
       width: 65%;
       height: 40vh;
