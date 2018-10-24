@@ -55,8 +55,11 @@ class AdminProfile extends Component {
         <TitleBar />
         <div className="mainContainer">
           {/* Back button */}
-          <div className="backButton">
-            <button className="btn red">
+          <div
+            className="backButton"
+            onClick={() => this.props.history.push("/")}
+          >
+            <button className="btn icon red">
               <i className="material-icons">arrow_back</i>
               <span>Back</span>
             </button>

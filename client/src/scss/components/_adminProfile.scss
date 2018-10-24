@@ -14,9 +14,6 @@
       justify-content: flex-start;
       align-self: flex-start;
       .profileImg {
-        background-image: url(img/noProfileImg.jpg);
-        background-repeat: no-repeat;
-        background-size: cover;
         width: 166px;
         height: 166px;
         border-radius: 50%;
@@ -29,6 +26,7 @@
           font-weight: 100;
           padding-bottom: 20px;
           color: $color-grey-transparent-50;
+          font-size: inherit;
         }
       }
     }
@@ -37,7 +35,7 @@
       flex-direction: column;
       align-items: flex-start;
       width: 100%;
-      padding-top: 9vh;
+      padding-top: 6vh;
       .inputFields {
         display: flex;
         flex-direction: row;
@@ -45,17 +43,19 @@
         width: 100%;
         input {
           margin-bottom: 4.5vh;
+          font-size: inherit;
         }
         h6 {
           padding-bottom: 3vh;
           color: $color-grey;
+          font-size: inherit
         }
         .adminFormInfo {
           width: 34.5vw;
+          align-self: flex-end;
         }
         .adminFormPassword {
           width: 34.5vw;
-          align-self: flex-end;
         }
       }
     }
