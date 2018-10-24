@@ -395,7 +395,7 @@ router.post("/login", (req, res) => {
       });
     });
   } else {
-    const username = info;
+    const username = req.body.info;
     // Find user by username given
     User.findOne({
       username
