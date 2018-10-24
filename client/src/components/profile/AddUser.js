@@ -24,6 +24,14 @@ class UpdateProfile extends Component {
     }
   }
 
+  componentDidMount() {
+    {
+      /* Redirect als user geen admin is. LELIJK tho.*/
+    }
+    if (!this.props.user.admin_role) {
+      window.location.href = "/dashboard";
+    }
+  }
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
