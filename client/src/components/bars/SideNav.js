@@ -68,7 +68,7 @@ class SideNav extends Component {
         </button>
         <button className="btn icon">
           <i className="material-icons">add</i>
-          Add dashboard
+          <span>Add dashboard</span>
         </button>
 
         {/* List */}
