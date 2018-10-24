@@ -64,8 +64,8 @@ class Login extends Component {
         }
       });
       axios.get(`/api/forgot/info/${this.props.match.params.key}`).then(res => {
-        const currentTime = Date.now() / 1000;
-        if (res.data.time < currentTime) {
+        const currentTime = Date.now();
+        if (res.data.time < Math.round(currentTime)) {
           axios.delete(`/api/forgot/remove/${this.props.match.params.key}`);
           this.setState({
             forgotpassword: "Password reset link has expired",
