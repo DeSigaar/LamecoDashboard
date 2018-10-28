@@ -11,20 +11,10 @@ const Company = require("../../models/Company");
 
 // @route   GET /api/company/all
 // @desc    Get all companies
-// @access  Private
-router.get(
-  "/all",
-  passport.authenticate("jwt", {
-    session: false
-  }),
-  (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
-
-    Company.find().then(companies => res.json(companies));
-  }
-);
+// @access  Public
+router.get("/all", (req, res) => {
+  Company.find().then(companies => res.json(companies));
+});
 
 // @route   POST /api/company/add
 // @desc    Create a company

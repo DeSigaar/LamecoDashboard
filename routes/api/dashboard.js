@@ -13,20 +13,10 @@ const Company = require("../../models/Company");
 
 // @route   GET /api/dashboard/all
 // @desc    Get all dashboards
-// @access  Private
-router.get(
-  "/all",
-  passport.authenticate("jwt", {
-    session: false
-  }),
-  (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
-
-    Dashboard.find().then(dashboards => res.json(dashboards));
-  }
-);
+// @access  Public
+router.get("/all", (req, res) => {
+  Dashboard.find().then(dashboards => res.json(dashboards));
+});
 
 // @route   POST /api/dashboard/add
 // @desc    Create a dashboard

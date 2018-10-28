@@ -5,11 +5,18 @@ class Page extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      company: this.props.match.params.company,
-      dashboard: this.props.match.params.dashboard,
       validCompany: false,
       validDashboard: false,
-      loaded: false
+      loaded: false,
+      company: {
+        name: "",
+        handle: this.props.match.params.company
+      },
+      dashboard: {
+        name: "",
+        handle: this.props.match.params.dashboard,
+        content: ""
+      }
     };
 
     let companies = {};
@@ -21,26 +28,36 @@ class Page extends Component {
         dashboards = res.data;
 
         Object.entries(companies).forEach(([key, value]) => {
-          if (value.handle === this.state.company) {
+          if (value.handle === this.state.company.handle) {
             this.setState({
-              validCompany: true
+              validCompany: true,
+              company: {
+                name: value.name,
+                handle: value.handle
+              }
             });
           }
         });
 
         Object.entries(dashboards).forEach(([key, value]) => {
-          if (value.handle === this.state.dashboard) {
+          if (value.handle === this.state.dashboard.handle) {
             this.setState({
-              validDashboard: true
+              validDashboard: true,
+              dashboard: {
+                name: value.name,
+                handle: value.handle,
+                content: value.content
+              }
             });
           }
         });
 
         if (this.state.validCompany && this.state.validDashboard) {
-          // Nothing? Because it is valid?
-          this.setState({ loaded: true });
-          document.title = `${this.state.dashboard} - ${
-            this.state.company
+          this.setState({
+            loaded: true
+          });
+          document.title = `${this.state.dashboard.name} – ${
+            this.state.company.name
           } | Laméco Dashboard`;
         } else {
           this.props.history.push("/");
@@ -50,15 +67,29 @@ class Page extends Component {
   }
 
   render() {
-    // Add loading while we wait for the stuff to happen :)
     let dashboard;
     if (this.state.loaded) {
-      dashboard = (
-        <div>
-          This is a page with the URL: /{this.state.company}/
-          {this.state.dashboard}
-        </div>
-      );
+      if (this.state.dashboard.content) {
+        dashboard = (
+          <div>
+            <p>
+              This is a page with the URL: /{this.state.company.handle}/
+              {this.state.dashboard.handle}
+            </p>
+            <p>Content of dashboard: {this.state.dashboard.content}</p>
+          </div>
+        );
+      } else {
+        dashboard = (
+          <div>
+            <p>
+              This is a page with the URL: /{this.state.company.handle}/
+              {this.state.dashboard.handle}
+            </p>
+            <p>This dashboard has no content</p>
+          </div>
+        );
+      }
     } else {
       dashboard = <div>Loading</div>;
     }
