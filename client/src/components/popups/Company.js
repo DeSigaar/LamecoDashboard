@@ -1,13 +1,12 @@
 import React, { Component } from "react";
+import PopupImage from "./PopupImage";
 
 class Company extends Component {
   render() {
     return (
       <div className="card">
         <div className="cardContent">
-          <div className="cardHeader ">
-            <h1>yoyo</h1>
-          </div>
+          <PopupImage />
 
           <div className="cardBody">
             <button /> <button />
