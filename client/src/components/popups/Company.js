@@ -4,9 +4,9 @@ import PopupImage from "./PopupImage";
 class Company extends Component {
   render() {
     return (
-      <div className="card">
+      <div>
         <div className="cardContent">
-          <PopupImage />
+          <PopupImage title={this.props.title} />
 
           <div className="cardBody">
             <button /> <button />

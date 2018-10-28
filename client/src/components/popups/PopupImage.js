@@ -1,14 +1,13 @@
-import React from "react";
+import React, { Component } from "react";
 
-const PopupImage = () => {
-  return (
-    <div className="popupImage">
-      <div className="overlayImage" />
-      <div className="imageText">
-        <h1>Company</h1>
+class PopupImage extends Component {
+  render() {
+    return (
+      <div className="overlayImage">
+        <h1>{this.props.title}</h1>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default PopupImage;

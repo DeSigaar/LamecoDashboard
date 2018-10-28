@@ -16,34 +16,43 @@
     background-color: $color-white;
 
     .cardHeader {
+      height: 50%;
+      width: auto;
+    }
+    .overlayImage {
       background: url(img/lamecoCompany.jpg);
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      z-index: 20;
 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .overlayImage:after {
+      position: absolute;
+      background-color: $color-red-transparent;
+      content: "";
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .cardBody {
       height: 50%;
       width: auto;
       display: flex;
       justify-content: center;
-      align-items: center;
-
-      .overlayImage {
-        position: absolute;
-        background-color: $color-red-transparent;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-    }
-
-    .cardContent {
-      height: 50%;
-      width: auto;
 
       button {
-        width: 200px;
-        height: 100px;
+        margin: 10px 0px 10px 0px;
+        width: 100px;
+        height: 40px;
       }
     }
   }

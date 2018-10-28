@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Company from "../popups/Company";
+import Popup from "../popups/Popup";
 
 class SideNav extends Component {
   constructor(props) {
@@ -22,10 +22,10 @@ class SideNav extends Component {
       popupState: false
     };
 
-    this.addCompany = this.addCompany.bind(this);
+    this.showPopup = this.showPopup.bind(this);
   }
 
-  addCompany = () => {
+  showPopup = () => {
     this.setState({ popupState: !this.state.popupState });
   };
 
@@ -57,16 +57,16 @@ class SideNav extends Component {
   render() {
     let popupState;
     if (this.state.popupState) {
-      popupState = <Company />;
+      popupState = <Popup />;
     }
     return (
       <div className="sideNav">
         {/* Top buttons */}
-        <button className="btn icon" onClick={this.addCompany}>
+        <button className="btn icon" onClick={this.showPopup}>
           <i className="material-icons">add</i>
           <span>Add company</span>
         </button>
-        <button className="btn icon">
+        <button className="btn icon" onClick={this.showPopup}>
           <i className="material-icons">add</i>
           <span>Add dashboard</span>
         </button>
