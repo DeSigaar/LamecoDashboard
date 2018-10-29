@@ -6,7 +6,7 @@ const isEmpty = require("../../validation/is-empty");
 // Load input validation
 const validateDashboardInput = require("../../validation/dashboard");
 
-// Lad Dashboard model
+// Load Dashboard model
 const Dashboard = require("../../models/Dashboard");
 // Load Company model
 const Company = require("../../models/Company");
@@ -189,7 +189,7 @@ router.post(
   }
 );
 
-/ @route   DELETE /api/dashboard/remove/:id
+// @route   DELETE /api/dashboard/remove/:id
 // @desc    Remove dashboard with given id
 // @access  Private
 router.delete(
