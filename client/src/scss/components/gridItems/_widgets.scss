@@ -1,6 +1,7 @@
 .react-grid-item {
     text-align: center;
-    background: $color-grey-hover;
+    border-radius: 8px;
+    background-color: $color-white;
     transition: all 200ms ease;
     transition-property: left, top;
 }

@@ -113,32 +113,6 @@ router.get(
   }
 );
 
-// @route   GET /api/dashboard/handle/:handle
-// @desc    Get dashboard by given handle
-// @access  Private
-router.get(
-  "/handle/:handle",
-  passport.authenticate("jwt", {
-    session: false
-  }),
-  (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
-
-    Dashboard.findOne({ handle: req.params.handle })
-      .then(dashboard => {
-        dashboard.__v = undefined;
-        res.json(dashboard);
-      })
-      .catch(err =>
-        res
-          .status(404)
-          .json({ nodashboardfound: "No dashboard found with that handle" })
-      );
-  }
-);
-
 // @route   POST /api/dashboard/update/layout/:handle
 // @desc    Update dashboard layout by given handle
 // @access  Private

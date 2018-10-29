@@ -6,7 +6,9 @@ const DashboardEditSideNav = ({
   selectedOption,
   handleChange,
   onAddItem,
-  onLayoutReset
+  onLayoutReset,
+  company,
+  dashboard
 }) => {
   return (
     <div>
@@ -17,8 +19,14 @@ const DashboardEditSideNav = ({
           <span>Back</span>
         </button>
       </div>
-      <div>Company name (edit company?)</div>
-      <div>Dashboard name (edit dashboard?)</div>
+      <div>
+        {company.name} (/
+        {company.handle})
+      </div>
+      <div>
+        {dashboard.name} (/
+        {dashboard.handle})
+      </div>
 
       {/* Dropdown menu for widgets */}
       <div className="widgetselecter">
@@ -29,7 +37,7 @@ const DashboardEditSideNav = ({
           onChange={handleChange}
           isSearchable={false}
           options={[
-            { value: "One", label: "One" },
+            { value: "Text", label: "Text" },
             { value: "Clock", label: "Clock" },
             { value: "Photo", label: "Photo" },
             { value: "Weather", label: "Weather" }
@@ -54,7 +62,9 @@ DashboardEditSideNav.propTypes = {
   selectedOption: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,
-  onLayoutReset: PropTypes.func.isRequired
+  onLayoutReset: PropTypes.func.isRequired,
+  company: PropTypes.object.isRequired,
+  dashboard: PropTypes.object.isRequired
 };
 
 export default DashboardEditSideNav;

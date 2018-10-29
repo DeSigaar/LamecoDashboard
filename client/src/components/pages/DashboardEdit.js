@@ -8,7 +8,7 @@ import Weather from "../gridItems/Weather";
 import DashboardEditSideNav from "../bars/DashboardEditSideNav";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
-const originalLayouts = getFromLS("layouts") || [];
+const layout = [];
 
 /* This class generates the layout for the web app. It renders the grid
  * and it's items, but also button's and a dropdown menu, to control the grid.
@@ -25,46 +25,91 @@ class DashboardEdit extends Component {
     super(props);
 
     this.state = {
-      items: originalLayouts.map(function(i, key, list) {
+      items: layout.map(function(i, key, list) {
         return {
-          i: originalLayouts[key].i,
-          x: originalLayouts[key].x,
-          y: originalLayouts[key].y,
-          w: originalLayouts[key].w,
-          h: originalLayouts[key].h,
-          widget: originalLayouts[key].widget,
-          minW: originalLayouts[key].minW,
-          minH: originalLayouts[key].minH,
-          maxH: originalLayouts[key].maxH
+          i: layout[key].i,
+          x: layout[key].x,
+          y: layout[key].y,
+          w: layout[key].w,
+          h: layout[key].h,
+          widget: layout[key].widget,
+          minW: layout[key].minW,
+          minH: layout[key].minH,
+          maxH: layout[key].maxH
         };
       }),
       selectedOption: { value: "", label: "Select..." },
-      newCounter: originalLayouts.length,
       dashboard: {
+        valid: false,
+        company_id: "",
         id: "",
         handle: this.props.match.params.handle,
-        name: "",
-        content: ""
+        name: ""
+      },
+      company: {
+        id: "",
+        handle: "",
+        name: ""
       },
       loaded: false
     };
 
     if (!this.state.loaded) {
-      axios
-        .get(`/api/dashboard/handle/${this.state.dashboard.handle}`)
-        .then(res => {
-          this.setState({
-            dashboard: {
-              id: res.data._id,
-              handle: res.data.handle,
-              name: res.data.name,
-              content: res.data.content
-            },
-            loaded: true
+      axios.get(`/api/company/all`).then(res => {
+        const companies = res.data;
+        axios.get(`/api/dashboard/all`).then(res => {
+          const dashboards = res.data;
+
+          Object.entries(dashboards).forEach(([key, value]) => {
+            if (value.handle === this.state.dashboard.handle) {
+              if (value.content.length > 0) {
+                var items = JSON.parse(value.content);
+                for (var i = 0; i < items.length; i++) {
+                  if (items[i].y === null) {
+                    items[i].y = Infinity;
+                  }
+                }
+                this.setState({
+                  items
+                });
+              }
+
+              this.setState({
+                dashboard: {
+                  valid: true,
+                  company_id: value.company,
+                  id: value._id,
+                  handle: value.handle,
+                  name: value.name
+                },
+                loaded: true
+              });
+
+              document.title = `${
+                this.state.dashboard.name
+              } | Laméco Dashboard`;
+            }
           });
 
-          document.title = `${this.state.dashboard.name} | Laméco Dashboard`;
+          if (this.state.dashboard.valid) {
+            Object.entries(companies).forEach(([key, value]) => {
+              if (value._id === this.state.dashboard.company_id) {
+                this.setState({
+                  company: {
+                    id: value._id,
+                    handle: value.handle,
+                    name: value.name
+                  }
+                });
+              }
+            });
+            console.log(this.state);
+          } else {
+            // Not a valid handle -> Show error?
+            this.props.history.push("/");
+          }
         });
+      });
     }
   }
 
@@ -75,14 +120,12 @@ class DashboardEdit extends Component {
   createElement = el => {
     const removeStyle = {
       position: "absolute",
-      right: 2,
-      top: 0,
+      right: 10,
+      top: 5,
       cursor: "pointer"
     };
     const i = el.i;
     const widget = el.widget;
-
-    saveToDB(this.state.items, this.state.dashboard.handle);
 
     return (
       <div key={i} data-grid={el}>
@@ -95,7 +138,7 @@ class DashboardEdit extends Component {
             case "Weather":
               return <Weather />;
             default:
-              return <span>{widget}</span>;
+              return <div className="textWidget">{widget}</div>;
           }
         })()}
         <span
@@ -120,9 +163,19 @@ class DashboardEdit extends Component {
 
     if (this.state.selectedOption.value !== "") {
       var widgetProps = returnProps(selection.value);
+
+      var identifier = "";
+      var possible =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+      for (var i = 0; i < 10; i++)
+        identifier += possible.charAt(
+          Math.floor(Math.random() * possible.length)
+        );
+
       this.setState({
         items: this.state.items.concat({
-          i: "n" + this.state.newCounter,
+          i: identifier,
           x: (this.state.items.length * 2) % (this.state.cols || 12),
           y: Infinity,
           w: widgetProps.w,
@@ -135,7 +188,6 @@ class DashboardEdit extends Component {
         selectedOption: { value: "", label: "Select..." },
         newCounter: this.state.newCounter + 1
       });
-      saveToDB(this.state.items, this.state.dashboard.handle);
     }
   };
 
@@ -144,8 +196,10 @@ class DashboardEdit extends Component {
 	 */
   onLayoutReset = () => {
     // remove content from grid && database
-    localStorage.removeItem("rgl-8");
-    window.location.reload();
+    saveToDB(this.state.items, this.state.dashboard.handle, true);
+    this.setState({
+      items: ""
+    });
   };
 
   /* Calls back with breakpoint and new # cols */
@@ -166,8 +220,7 @@ class DashboardEdit extends Component {
     for (var i = 0; i < this.state.items.length; i++) {
       layout[i].widget = this.state.items[i].widget;
     }
-    saveToDB(this.state.items, this.state.dashboard.handle);
-    saveToLS("layouts", layout);
+    saveToDB(layout, this.state.dashboard.handle, false);
   };
 
   /* When a user presses the little 'x' in the top right corner of a grid item,
@@ -175,7 +228,9 @@ class DashboardEdit extends Component {
 	 */
   onRemoveItem = i => {
     this.setState({ items: _.reject(this.state.items, { i: i }) });
-    saveToDB(this.state.items, this.state.dashboard.handle);
+    if (this.state.items.length === 1) {
+      saveToDB(this.state.items, this.state.dashboard.handle, true);
+    }
   };
 
   /* handleChange passes the selected dropdown item to the state. */
@@ -188,25 +243,25 @@ class DashboardEdit extends Component {
 	 * is called for each grid item.
 	 */
   render() {
-    const { selectedOption, items } = this.state;
+    const { selectedOption, items, loaded } = this.state;
 
     let grid;
-    if (items.length > 0) {
-      grid = (
-        <ResponsiveReactGridLayout
-          onLayoutChange={this.onLayoutChange}
-          onBreakPointChange={this.onBreakPointChange}
-          {...this.props}
-        >
-          {_.map(items, el => this.createElement(el))}
-        </ResponsiveReactGridLayout>
-      );
+    if (!loaded) {
+      grid = <div className="noItems">Loading...</div>;
     } else {
-      grid = (
-        <div className="noItems">
-          No widgets have been added to the dashboard yet.
-        </div>
-      );
+      if (items.length > 0) {
+        grid = (
+          <ResponsiveReactGridLayout
+            onLayoutChange={this.onLayoutChange}
+            onBreakPointChange={this.onBreakPointChange}
+            {...this.props}
+          >
+            {_.map(items, el => this.createElement(el))}
+          </ResponsiveReactGridLayout>
+        );
+      } else {
+        grid = <div className="noItems">No widgets on the dashboard yet.</div>;
+      }
     }
 
     return (
@@ -219,6 +274,8 @@ class DashboardEdit extends Component {
               handleChange={this.handleChange}
               onAddItem={this.onAddItem}
               onLayoutReset={this.onLayoutReset}
+              company={this.state.company}
+              dashboard={this.state.dashboard}
             />
           </div>
           <div className="dashboardGrid">
@@ -230,42 +287,19 @@ class DashboardEdit extends Component {
     );
   }
 }
-
-/* Retrieve layout from local storage. */
-function getFromLS(key) {
-  let ls = {};
-  if (global.localStorage) {
-    try {
-      ls = JSON.parse(global.localStorage.getItem("rgl-8")) || {};
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  return ls[key];
-}
-
-/* Save layout to local storage. */
-function saveToLS(key, value) {
-  if (global.localStorage) {
-    global.localStorage.setItem(
-      "rgl-8",
-      JSON.stringify({
-        [key]: value
-      })
-    );
-  }
-}
-
 /* Save layout to database. */
-function saveToDB(content, handle) {
-  content = JSON.stringify(content);
-  axios
-    .post(`/api/dashboard/layout/handle/${handle}`, {
-      content
-    })
-    .then(res => {
-      console.log(res);
-    });
+function saveToDB(content, handle, reset) {
+  if (content.length <= 0) {
+    content = "";
+  } else if (reset) {
+    content = "";
+  } else {
+    content = JSON.stringify(content);
+  }
+
+  axios.post(`/api/dashboard/update/layout/${handle}`, {
+    content
+  });
 }
 
 /* returnProps function returns widget-specific properties like width, min width,
