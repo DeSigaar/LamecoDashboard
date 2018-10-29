@@ -50,7 +50,7 @@ class App extends Component {
               <PrivateRoute exact path="/" component={Dashboard} />
               <PrivateRoute
                 exact
-                path="/dashboard-edit"
+                path="/dashboard-edit/:handle"
                 component={DashboardEdit}
               />
               <PrivateRoute
