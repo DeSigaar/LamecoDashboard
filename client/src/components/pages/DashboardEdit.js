@@ -185,6 +185,9 @@ class DashboardEdit extends Component {
                 <span>Back</span>
               </button>
             </div>
+            <div>Company name (edit company?)</div>
+            <div>Dashboard name (edit dashboard?)</div>
+
             {/* Dropdown menu for widgets */}
             <div className="widgetselecter">
               <Select
@@ -199,6 +202,10 @@ class DashboardEdit extends Component {
                   { value: "Weather", label: "Weather" }
                 ]}
               />
+              <button className="btn icon red" onClick={this.onAddItem}>
+                <i className="material-icons">add</i>
+                <span>Add widget</span>
+              </button>
               {/* Deleting everything from grid */}
               <div className="reset">
                 <button className="btn" onClick={this.onLayoutReset}>
