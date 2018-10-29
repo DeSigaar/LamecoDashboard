@@ -19,16 +19,23 @@ class SideNav extends Component {
       ],
 
       open: null,
-      popupState: false
+      popupState: false,
+      title: ""
     };
 
-    this.togglePopup = this.togglePopup.bind(this);
+    this.togglePopupDashboard = this.togglePopupDashboard.bind(this);
+    this.togglePopupCompany = this.togglePopupCompany.bind(this);
   }
 
-  togglePopup = () => {
-    this.setState({ popupState: !this.state.popupState });
+  togglePopupDashboard = title => {
+    this.setState({ popupState: !this.state.popupState, title });
   };
-
+  togglePopupCompany = title => {
+    this.setState({
+      popupState: !this.state.popupState,
+      title
+    });
+  };
   renderCompanyList = () => {
     return (
       <ul className="List">
@@ -57,16 +64,24 @@ class SideNav extends Component {
   render() {
     let popupState;
     if (this.state.popupState) {
-      popupState = <Popup closePopup={this.togglePopup} />;
+      popupState = (
+        <Popup title={this.state.title} closePopup={this.togglePopupCompany} />
+      );
     }
     return (
       <div className="sideNav">
         {/* Top buttons */}
-        <button className="btn icon" onClick={this.togglePopup}>
+        <button
+          className="btn icon"
+          onClick={this.togglePopupCompany.bind(this, "Add Company")}
+        >
           <i className="material-icons">add</i>
           <span>Add company</span>
         </button>
-        <button className="btn icon" onClick={this.togglePopup}>
+        <button
+          className="btn icon"
+          onClick={this.togglePopupDashboard.bind(this, "Add Dashboard")}
+        >
           <i className="material-icons">add</i>
           <span>Add dashboard</span>
         </button>
