@@ -20,8 +20,7 @@ const DashboardSchema = new Schema({
     max: 30
   },
   content: {
-    type: String,
-    required: true
+    type: String
   }
 });
 
