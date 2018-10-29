@@ -55,9 +55,7 @@ class Login extends Component {
           <div className="overlayImage" />
           <div className="imageText">
             <h1>Laméco</h1>
-            <h4>
-              Maakt Online <strong>Succesvol</strong>
-            </h4>
+            <h3>Maakt Online Succesvol</h3>
           </div>
         </div>
         <div className="loginContainer">
