@@ -2,11 +2,6 @@
   overflow-y: hidden;
 
   .mainContainer {
-    display: grid;
-    grid-template-columns: 325px auto;
-    grid-template-rows: 100vh;
-    grid-template-areas: "sideBar dashboard";
-
     .widgetselecter {
       display: flex;
       flex-direction: column;
@@ -40,9 +35,7 @@
       }
     }
 
-    .DashboardGrid {
-      grid-area: dashboard;
-
+    .dashboardGrid {
       .TopDashboard {
         padding: 40px;
         display: flex;

@@ -5,6 +5,8 @@ import Select from "react-select";
 import TitleBar from "../bars/TitleBar";
 import Clock from "../gridItems/Clock";
 import Weather from "../gridItems/Weather";
+import SideNavContainer from "../bars/SideNavContainer";
+import DashboardGrid from "../dashboard/DashboardGrid";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const originalLayouts = getFromLS("layouts") || [];
@@ -174,7 +176,7 @@ class DashboardEdit extends Component {
       <div className="dashboardEdit">
         <TitleBar />
         <div className="mainContainer">
-          <div className="sideNav shadow2">
+          <SideNavContainer>
             {/* Back button */}
             <div
               className="backButton"
@@ -213,8 +215,8 @@ class DashboardEdit extends Component {
                 </button>
               </div>
             </div>
-          </div>
-          <div className="DashboardGrid">
+          </SideNavContainer>
+          <DashboardGrid>
             {/* Information about dashboard and button to add widget */}
             <div className="TopDashboard">
               <h3>Company name</h3>
@@ -233,7 +235,7 @@ class DashboardEdit extends Component {
                 {_.map(this.state.items, el => this.createElement(el))}
               </ResponsiveReactGridLayout>
             </div>
-          </div>
+          </DashboardGrid>
         </div>
       </div>
     );
