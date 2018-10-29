@@ -73,7 +73,7 @@ This starts the backend on port 5000 and the frontend on port 3000 concurrently.
 - Max Altena - [GitHub](https://github.com/MaxAltena)
 - Dylano Hartman - [GitHub](https://github.com/DylanoH)
 - Mark Hendriks - [GitHub](https://github.com/MariusHendriks)
-- Mike Hendriks - [GitHub](https://github.com/madmike1104)
+- Mike Hendriks - [GitHub](https://github.com/mike-hendriks)
 - Bart van de Klundert - [GitHub](https://github.com/Bartvdklu)
 
 See the whole list of [contributors](https://github.com/MaxAltena/LamecoDashboard/contributors) who participated in this project.
