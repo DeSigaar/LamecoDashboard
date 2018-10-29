@@ -22,10 +22,10 @@ class SideNav extends Component {
       popupState: false
     };
 
-    this.showPopup = this.showPopup.bind(this);
+    this.togglePopup = this.togglePopup.bind(this);
   }
 
-  showPopup = () => {
+  togglePopup = () => {
     this.setState({ popupState: !this.state.popupState });
   };
 
@@ -57,16 +57,16 @@ class SideNav extends Component {
   render() {
     let popupState;
     if (this.state.popupState) {
-      popupState = <Popup />;
+      popupState = <Popup closePopup={this.togglePopup} />;
     }
     return (
       <div className="sideNav">
         {/* Top buttons */}
-        <button className="btn icon" onClick={this.showPopup}>
+        <button className="btn icon" onClick={this.togglePopup}>
           <i className="material-icons">add</i>
           <span>Add company</span>
         </button>
-        <button className="btn icon" onClick={this.showPopup}>
+        <button className="btn icon" onClick={this.togglePopup}>
           <i className="material-icons">add</i>
           <span>Add dashboard</span>
         </button>

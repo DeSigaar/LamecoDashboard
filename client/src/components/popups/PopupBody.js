@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import Company from "./Company";
+import Dashboard from "./Dashboard";
 
 class PopupBody extends Component {
   render() {
     return (
       <div className="cardBody">
-        <button /> <button />
+        <Company />
       </div>
     );
   }
