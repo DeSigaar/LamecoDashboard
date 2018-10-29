@@ -60,7 +60,10 @@ class Page extends Component {
             this.state.company.name
           } | Laméco Dashboard`;
         } else {
-          this.props.history.push("/");
+          document.title = "No dashboard found | Laméco Dashboard";
+          this.setState({
+            loaded: true
+          });
         }
       });
     });
@@ -69,7 +72,7 @@ class Page extends Component {
   render() {
     let dashboard;
     if (this.state.loaded) {
-      if (this.state.dashboard.content) {
+      if (this.state.dashboard.content && this.state.dashboard.name) {
         dashboard = (
           <div>
             <p>
@@ -79,7 +82,7 @@ class Page extends Component {
             <p>Content of dashboard: {this.state.dashboard.content}</p>
           </div>
         );
-      } else {
+      } else if (!this.state.dashboard.content && this.state.dashboard.name) {
         dashboard = (
           <div>
             <p>
@@ -87,6 +90,15 @@ class Page extends Component {
               {this.state.dashboard.handle}
             </p>
             <p>This dashboard has no content</p>
+          </div>
+        );
+      } else {
+        dashboard = (
+          <div>
+            <p>
+              No dashboard found with the URL: /{this.state.company.handle}/
+              {this.state.dashboard.handle}
+            </p>
           </div>
         );
       }
