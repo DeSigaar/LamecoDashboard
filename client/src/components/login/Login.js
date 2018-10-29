@@ -166,7 +166,8 @@ class Login extends Component {
     const userData = {
       info: this.state.info,
       password: this.state.password,
-      remember_me: this.state.remember_me
+      remember_me: this.state.remember_me,
+      type: "admin_login"
     };
 
     this.props.loginUser(userData);

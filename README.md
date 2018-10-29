@@ -10,6 +10,7 @@
   - [Clone](#clone)
   - [Setup](#setup)
   - [Running](#running)
+- [API documentation](#api-documentation)
 - [Built with](#built-with)
 - [Creators](#creators)
 
@@ -62,6 +63,10 @@ $ npm run dev
 ```
 
 This starts the backend on port 5000 and the frontend on port 3000 concurrently.
+
+## API documentation
+
+The API documentation for the API used within the application can be found on Postman [here](https://documenter.getpostman.com/view/5448152/RWgxtZy1).
 
 ## Built with
 
