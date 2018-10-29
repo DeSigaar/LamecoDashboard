@@ -48,24 +48,6 @@
       overflow-x: hidden;
       height: calc(100vh - 55px);
 
-      .textWidget {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        font-size: 3em;
-      }
-
-      .noItems {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        width: 100%;
-        color: $color-grey-hover;
-      }
-
       .react-grid-layout {
         position: relative;
         transition: height 200ms ease;
