@@ -17,6 +17,7 @@
     background-color: $color-white;
     z-index: 0;
     border-radius: 10px;
+    @include shadow($shadow-2);
 
     .cardHeader {
       height: 50%;

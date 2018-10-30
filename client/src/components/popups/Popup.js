@@ -7,12 +7,12 @@ import PopupBody from "./PopupBody";
 class Popup extends Component {
   constructor() {
     super();
-    this.state = { title: "dszfdsz" };
+    this.state = { title: "" };
   }
 
-  handleClick(e) {
+  handleClick = e => {
     this.props.closePopup();
-  }
+  };
   componentDidMount() {
     console.log(this.props.title);
     this.setState({
@@ -25,7 +25,10 @@ class Popup extends Component {
         <div className="cardBackground" onClick={this.handleClick.bind(this)} />
         <div className="cardContent ">
           <PopupHeader title={this.state.title} />
-          <PopupBody title={this.state} />
+          <PopupBody
+            title={this.state.title}
+            closePopup={this.props.closePopup.bind(this)}
+          />
         </div>
       </div>
     );

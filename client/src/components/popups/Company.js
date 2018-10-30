@@ -4,8 +4,8 @@ class Company extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      info: "",
-      password: "",
+      name: "",
+      handle: "",
       remember_me: false,
       errors: {}
     };
@@ -17,6 +17,10 @@ class Company extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+  };
+
+  handleClick = e => {
+    this.props.closePopup();
   };
 
   render() {
@@ -32,30 +36,34 @@ class Company extends Component {
                 <input
                   type="text"
                   name="company"
-                  placeholder="Name"
+                  placeholder="Ex.Fontys University of Applied Sciences"
                   onChange={this.onChange}
-                  value={this.state.info}
+                  value={this.state.name}
                 />
-                {errors.info && <div className="invalid"> {errors.info} </div>}
+                {errors.name && <div className="invalid"> {errors.name} </div>}
               </div>
               <div className="formField">
-                <p>Dashboard</p>
+                <p>Handle</p>
                 <input
                   type="text"
-                  name="dashboard"
-                  placeholder="Name"
+                  name="handle"
+                  placeholder="Ex. Fontys"
                   onChange={this.onChange}
-                  value={this.state.password}
+                  value={this.state.handle}
                 />
-                {errors.password && (
-                  <div className="invalid"> {errors.password} </div>
+                {errors.handle && (
+                  <div className="invalid"> {errors.handle} </div>
                 )}
               </div>
             </div>
             <button className="btn" type="submit">
               <span>Add</span>
             </button>
-            <button className="btn" type="submit">
+            <button
+              className="btn"
+              type="submit"
+              onClick={this.handleClick.bind(this)}
+            >
               <span>Cancel</span>
             </button>
           </form>
