@@ -73,7 +73,7 @@ class SideNav extends Component {
       popupState = <Company />;
     }
     return (
-      <div className="sideNav shadow2">
+      <div>
         {/* Top buttons */}
         <button className="btn icon" onClick={this.addCompany}>
           <i className="material-icons">add</i>

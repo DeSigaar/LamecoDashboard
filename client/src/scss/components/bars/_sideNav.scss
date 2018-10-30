@@ -6,6 +6,7 @@
   background-color: $color-white;
   height: 100vh;
   padding: 56px 0 0 15px;
+  @include shadow($shadow-2);
 
   .btn {
     margin-top: 20px;

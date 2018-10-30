@@ -52,12 +52,12 @@ class App extends Component {
               <PrivateRoute exact path="/" component={Dashboard} />
               <PrivateRoute
                 exact
-                path="/DashboardEdit"
+                path="/dashboard-edit"
                 component={DashboardEdit}
               />
               <PrivateRoute
                 exact
-                path="/profile/adminProfile"
+                path="/profile/admin"
                 component={AdminProfile}
               />
               <Route component={Login} />
