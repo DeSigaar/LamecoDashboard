@@ -31,11 +31,9 @@ class SideNav extends Component {
     this.props.getCompanies();
   }
   componentWillReceiveProps(nextProps) {
-    console.log(this.state.list);
-    console.log(nextProps.company.company);
-    if (nextProps.company.company) {
-      this.setState({ list: nextProps.company.company });
-    }
+    // if (nextProps.company.company) {
+    //   this.setState({ list: nextProps.company.company });
+    // }
   }
   addCompany = () => {
     this.setState({ popupState: !this.state.popupState });
