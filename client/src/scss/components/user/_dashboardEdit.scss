@@ -1,73 +1,137 @@
-.dashboardEdit{
-  overflow-y:hidden;
-
-  .mainContainer{
+.dashboardEdit {
+  overflow-y: hidden;
+  .mainContainer {
     display: grid;
     grid-template-columns: 325px auto;
     grid-template-rows: 100vh;
     grid-template-areas: "sideBar dashboard";
-
     .widgetselecter {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       background-color: none;
       margin: 30px 0;
-      padding-right: 15px;
-      height: 780px;
-
-      .dropdown {
-        width: auto;
-        display: inline-block;
-      }
-
-      .reset{
-        align-self: flex-start;
+      height: calc(100vh - 220px);
+      .widgetAdd {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        .dropdown {
+          width: 100%;
+          display: inline-block;
+        }
+        .AddWidget {
+          align-self: flex-end;
+        }
       }
     }
-
     .Select-control {
       border-radius: 0px !important;
       border: none !important;
       background-color: $color-white !important;
     }
-
-    .sideNav{
+    .sideNav {
       grid-area: sideBar;
-
-      .backButton{
+      .backButton {
         margin: 0;
       }
+      .editDashboardName {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 30px 0;
+        input {
+          font-size: inherit;
+        }
+        i{
+          color: $color-grey;
+        }
+      }
     }
-
-    .DashboardGrid{
+    .dashboardGrid {
       grid-area: dashboard;
-
-      .TopDashboard{
+      .TopDashboard {
         padding: 40px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-
-        h3{
+        h3 {
           color: $color-grey;
         }
       }
-
-      .BottomDashboard{
+      .BottomDashboard {
         padding: 0 40px;
-        
+        .rw-main.type-today {
+          border-radius: 0px;
+        }
+        .react-grid-layout {
+          position: relative;
+          transition: height 200ms ease;
+        }
+        .react-grid-item {
+          transition: all 200ms ease;
+          transition-property: left, top;
+        }
+        .react-grid-item.cssTransforms {
+          transition-property: transform;
+        }
+        .react-grid-item.resizing {
+          z-index: 1;
+          will-change: width, height;
+        }
+        .react-grid-item.react-draggable-dragging {
+          transition: none;
+          z-index: 3;
+          will-change: transform;
+        }
+        .react-grid-item.react-grid-placeholder {
+          background: red;
+          opacity: 0.2;
+          transition-duration: 100ms;
+          z-index: 2;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          -o-user-select: none;
+          user-select: none;
+        }
+        .react-grid-item>.react-resizable-handle {
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          bottom: 0;
+          right: 0;
+          cursor: se-resize;
+        }
+        .react-grid-item>.react-resizable-handle::after {
+          content: "";
+          position: absolute;
+          right: 3px;
+          bottom: 3px;
+          width: 5px;
+          height: 5px;
+          border-right: 2px solid rgba(0, 0, 0, 0.4);
+          border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+        }
+        .react-resizable {
+          position: relative;
+        }
+        .react-resizable-handle {
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          bottom: 0;
+          right: 0;
+          background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2IDYiIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmYwMCIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI2cHgiIGhlaWdodD0iNnB4Ij48ZyBvcGFjaXR5PSIwLjMwMiI+PHBhdGggZD0iTSA2IDYgTCAwIDYgTCAwIDQuMiBMIDQgNC4yIEwgNC4yIDQuMiBMIDQuMiAwIEwgNiAwIEwgNiA2IEwgNiA2IFoiIGZpbGw9IiMwMDAwMDAiLz48L2c+PC9zdmc+");
+          background-position: bottom right;
+          padding: 0 3px 3px 0;
+          background-repeat: no-repeat;
+          background-origin: content-box;
+          box-sizing: border-box;
+          cursor: se-resize;
+        }
       }
     }
   }
-
-  .rw-main.type-today {
-	  border-radius: 0px;
-  }
-
-  .react-grid-layout {
-    transition: height 200ms ease;
-  }
-  
 }

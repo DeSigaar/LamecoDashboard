@@ -16,16 +16,20 @@
   overflow: hidden;
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   min-width: 120px;
-
   &.icon {
     padding: 8px 17px 8px 12px;
-
     i {
       font-size: 17px;
       margin-right: 5px;
     }
   }
-
+  &.small {
+    padding: 4px 10px 4px 8px;
+  }
+  &.red {
+    color: $color-white;
+    background-color: $color-red;
+  }
   &::before {
     content: "";
     transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
@@ -42,31 +46,18 @@
     box-sizing: border-box;
     background-clip: padding-box;
   }
-
   &:hover,
   &:active {
     color: $color-white;
-
     &::before {
       background-color: $color-red;
       left: 130%;
     }
   }
-
   &:focus {
     outline: none;
     box-shadow: none;
   }
-}
-
-// Add small class for smaller button
-.btn.small {
-  padding: 4px 10px 4px 8px;
-}
-
-.btn.red {
-  color: $color-white;
-  background-color: $color-red;
 }
 
 .addButton {

@@ -185,27 +185,29 @@ class DashboardEdit extends Component {
                 <span>Back</span>
               </button>
             </div>
-            <div>Company name (edit company?)</div>
-            <div>Dashboard name (edit dashboard?)</div>
 
             {/* Dropdown menu for widgets */}
             <div className="widgetselecter">
-              <Select
-                className="dropdown"
-                name="form-field-name"
-                value={selectedOption}
-                onChange={this.handleChange}
-                options={[
-                  { value: "One", label: "One" },
-                  { value: "Clock", label: "Clock" },
-                  { value: "Photo", label: "Photo" },
-                  { value: "Weather", label: "Weather" }
-                ]}
-              />
-              <button className="btn icon red" onClick={this.onAddItem}>
-                <i className="material-icons">add</i>
-                <span>Add widget</span>
-              </button>
+              <div className="widgetAdd">
+                <Select
+                  className="dropdown"
+                  name="form-field-name"
+                  value={selectedOption}
+                  onChange={this.handleChange}
+                  options={[
+                    { value: "One", label: "One" },
+                    { value: "Clock", label: "Clock" },
+                    { value: "Photo", label: "Photo" },
+                    { value: "Weather", label: "Weather" }
+                  ]}
+                />
+                <div className="addWidget">
+                  <button className="btn icon red" onClick={this.onAddItem}>
+                    <i className="material-icons">add</i>
+                    <span>Add widget</span>
+                  </button>
+                </div>
+              </div>
               {/* Deleting everything from grid */}
               <div className="reset">
                 <button className="btn" onClick={this.onLayoutReset}>
@@ -214,7 +216,7 @@ class DashboardEdit extends Component {
               </div>
             </div>
           </div>
-          <div className="DashboardGrid">
+          <div className="dashboardGrid">
             {/* Information about dashboard and button to add widget */}
             <div className="TopDashboard">
               <h3>Company name</h3>
@@ -222,6 +224,10 @@ class DashboardEdit extends Component {
                 <i className="material-icons">add</i>
                 <span>Add widget</span>
               </button>
+              <div className="editDashboardName">
+                <input type="text" placeholder="DashboardName" />
+                <i className="material-icons">edit</i>
+              </div>
             </div>
             {/* Grid with widgets */}
             <div className="BottomDashboard">
