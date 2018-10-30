@@ -1,9 +1,19 @@
+/*
+* Border radius mixin
+* Usage:
+* @include border-radius($1);
+*/
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
   border-radius: $radius;
   background-clip: padding-box; /* stops bg color from leaking outside the border: */
 }
 
+/*
+* User select mixin
+* Usage:
+* @include user-select($1);
+*/
 @mixin user-select($value) {
   -webkit-touch-callout: $value;
   -webkit-user-select: $value;
@@ -11,4 +21,15 @@
   -moz-user-select: $value;
   -ms-user-select: $value;
   user-select: $value;
+}
+
+/*
+* Shadow mixin
+* Usage:
+* @include shadow($1);
+* most likely to be used with shadow variables set in the variables file
+*/
+@mixin shadow($value) {
+  -webkit-box-shadow: $value;
+  box-shadow: $value;
 }

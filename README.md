@@ -42,7 +42,18 @@ Install all needed node modules for both frontend and backend.
 ```
 $ npm run install-all
 ```
+If that doens't work for whatever reason. Copy and paste this in your directory: 
+```
+npm uninstall axios bcryptjs body-parser concurrently express gravatar jsonwebtoken jwt-decode mongoose node-sass-chokidar nodemailer npm-run-all passport passport-jwt react-scripts validator
 
+npm install axios bcryptjs body-parser concurrently express gravatar jsonwebtoken jwt-decode mongoose node-sass-chokidar nodemailer npm-run-all passport passport-jwt react-scripts validator
+```
+If that doens't work for whatever reason. Copy and paste this in your client: 
+```
+npm uninstall axios classnames jwt-decode moment node-sass-chokidar npm-run-all react react-dom react-dropdown react-grid-layout react-live-clock react-moment react-open-weather react-redux react-router-dom react-scripts react-select redux redux-thunk
+
+npm install axios classnames jwt-decode moment node-sass-chokidar npm-run-all react react-dom react-dropdown react-grid-layout react-live-clock react-moment react-open-weather react-redux react-router-dom react-scripts react-select redux redux-thunk
+```
 ### Running
 
 For the application to be able to function as normal, it needs to run both the frontend and backend.
@@ -78,7 +89,7 @@ The API documentation for the API used within the application can be found on Po
 - Max Altena - [GitHub](https://github.com/MaxAltena)
 - Dylano Hartman - [GitHub](https://github.com/DylanoH)
 - Mark Hendriks - [GitHub](https://github.com/MariusHendriks)
-- Mike Hendriks - [GitHub](https://github.com/madmike1104)
+- Mike Hendriks - [GitHub](https://github.com/mike-hendriks)
 - Bart van de Klundert - [GitHub](https://github.com/Bartvdklu)
 
 See the whole list of [contributors](https://github.com/MaxAltena/LamecoDashboard/contributors) who participated in this project.

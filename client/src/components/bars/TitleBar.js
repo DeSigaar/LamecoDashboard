@@ -23,7 +23,7 @@ class TitleBar extends Component {
       titleBarDropdown = <TitleBarDropdown />;
     }
     return (
-      <div className="titleBar shadow1">
+      <div className="titleBar">
         <h1>
           <Link to="/">Laméco</Link>
         </h1>

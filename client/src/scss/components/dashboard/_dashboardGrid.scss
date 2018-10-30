@@ -1,0 +1,17 @@
+.mainContainer {
+  display: grid;
+  grid-template-columns: 325px auto;
+  grid-template-rows: 100vh;
+  grid-template-areas: "sideBar dashboard";
+
+  .dashboardGrid {
+    grid-area: dashboard;
+    padding: 0 30px;
+
+    h2 {
+      padding: 10px 0 5px;
+      font-size: 20px;
+      color: $color-grey;
+    }
+  }
+}
