@@ -6,10 +6,14 @@ input[type=password] {
   outline: 0;
   border-bottom: 2px solid $color-red-transparent;
   font-size: inherit;
-}
 
-::placeholder {
-  color: rgb(185, 185, 185);
+  &::placeholder {
+    color: rgb(185, 185, 185);
+  }
+
+  &.dashboardEdit{
+    border-bottom: none;
+  }
 }
 
 .invalid {

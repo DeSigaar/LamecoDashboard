@@ -1,38 +1,11 @@
 .dashboardEdit {
   overflow-y: hidden;
+
   .mainContainer {
     display: grid;
     grid-template-columns: 325px auto;
     grid-template-rows: 100vh;
     grid-template-areas: "sideBar dashboard";
-    .widgetselecter {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background-color: none;
-      margin: 30px 0;
-      height: calc(100vh - 220px);
-      .widgetAdd {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        .dropdown {
-          width: 100%;
-          display: inline-block;
-        }
-        .AddWidget {
-          align-self: flex-end;
-        }
-
-      .dropdown {
-        width: auto;
-        display: inline-block;
-      }
-
-      .reset {
-        align-self: flex-start;
-      }
-    }
     .Select-control {
       border-radius: 0px !important;
       border: none !important;
@@ -40,21 +13,7 @@
     }
     .sideNav {
       grid-area: sideBar;
-      .backButton {
-        margin: 0;
-      }
-      .editDashboardName {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        margin: 30px 0;
-        input {
-          font-size: inherit;
-        }
-        i{
-          color: $color-grey;
-        }
-      }
+      padding: 56px 15px 0 15px;
     }
     .dashboardGrid {
       grid-area: dashboard;
@@ -133,5 +92,5 @@
         cursor: se-resize;
       }
     }
-  }
+    }
 }

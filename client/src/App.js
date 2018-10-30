@@ -11,7 +11,7 @@ import PrivateRoute from "./components/common/PrivateRouter";
 
 import Login from "./components/login/Login";
 import Dashboard from "./components/pages/Dashboard";
-import DashboardEdit from "./components/pages/DashboardEdit";
+import DashboardEdit from "./components/dashboardEdit/DashboardEdit";
 import AdminProfile from "./components/profile/AdminProfile";
 import AddUser from "./components/profile/AddUser";
 import Page from "./components/pages/Page";

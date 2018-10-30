@@ -5,7 +5,7 @@ import axios from "axios";
 import TitleBar from "../bars/TitleBar";
 import Clock from "../gridItems/Clock";
 import Weather from "../gridItems/Weather";
-import DashboardEditSideNav from "../bars/DashboardEditSideNav";
+import DashboardEditSideNav from "./DashboardEditSideNav";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const layout = [];
@@ -270,6 +270,7 @@ class DashboardEdit extends Component {
         <div className="mainContainer">
           <div className="sideNav shadow2">
             <DashboardEditSideNav
+              history={this.props.history}
               selectedOption={selectedOption}
               handleChange={this.handleChange}
               onAddItem={this.onAddItem}
