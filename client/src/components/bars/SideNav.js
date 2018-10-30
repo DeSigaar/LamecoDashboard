@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import Company from "../popups/Company";
+import { getCompanies } from "../../actions/companyActions";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class SideNav extends Component {
   constructor(props) {
@@ -24,7 +27,16 @@ class SideNav extends Component {
 
     this.addCompany = this.addCompany.bind(this);
   }
-
+  componentDidMount() {
+    this.props.getCompanies();
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log(this.state.list);
+    console.log(nextProps.company.company);
+    if (nextProps.company.company) {
+      this.setState({ list: nextProps.company.company });
+    }
+  }
   addCompany = () => {
     this.setState({ popupState: !this.state.popupState });
   };
@@ -55,6 +67,7 @@ class SideNav extends Component {
   };
 
   render() {
+    const { companies } = this.props.company;
     let popupState;
     if (this.state.popupState) {
       popupState = <Company />;
@@ -79,5 +92,13 @@ class SideNav extends Component {
     );
   }
 }
-
-export default SideNav;
+SideNav.propTypes = {
+  getCompanies: PropTypes.func.isRequired
+};
+const mapStateToProps = state => ({
+  company: state.company
+});
+export default connect(
+  mapStateToProps,
+  { getCompanies }
+)(SideNav);
