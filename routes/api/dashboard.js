@@ -113,6 +113,32 @@ router.get(
   }
 );
 
+// @route   POST /api/dashboard/update/layout/:handle
+// @desc    Update dashboard layout by given handle
+// @access  Private
+router.post(
+  "/update/layout/:handle",
+  passport.authenticate("jwt", {
+    session: false
+  }),
+  (req, res) => {
+    if (req.user.admin_role === false) {
+      return res.status(401).json({ authorized: false });
+    }
+
+    const handle = req.params.handle;
+
+    const dashboardFields = {};
+    dashboardFields.content = req.body.content;
+
+    Dashboard.findOneAndUpdate(
+      { handle },
+      { $set: dashboardFields },
+      { new: true }
+    ).then(dashboard => res.json(dashboard));
+  }
+);
+
 // @route   POST /api/dashboard/update/:id
 // @desc    Update dashboard with given id
 // @access  Private
@@ -141,7 +167,6 @@ router.post(
         .trim()
         .replace(/\s+/g, "-");
     if (req.body.content) dashboardFields.content = req.body.content;
-    // Content check?
 
     const { errors, isValid } = validateDashboardInput(dashboardFields);
 

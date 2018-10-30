@@ -11,9 +11,10 @@ import PrivateRoute from "./components/common/PrivateRouter";
 
 import Login from "./components/login/Login";
 import Dashboard from "./components/pages/Dashboard";
-import DashboardEdit from "./components/pages/DashboardEdit";
+import DashboardEdit from "./components/dashboardEdit/DashboardEdit";
 import AdminProfile from "./components/profile/AdminProfile";
 import AddUser from "./components/profile/AddUser";
+import Page from "./components/pages/Page";
 
 import "./App.css";
 
@@ -52,7 +53,7 @@ class App extends Component {
               <PrivateRoute exact path="/" component={Dashboard} />
               <PrivateRoute
                 exact
-                path="/dashboard-edit"
+                path="/dashboard-edit/:handle"
                 component={DashboardEdit}
               />
               <PrivateRoute
@@ -60,6 +61,7 @@ class App extends Component {
                 path="/profile/admin"
                 component={AdminProfile}
               />
+              <Route exact path="/:company/:dashboard" component={Page} />
               <Route component={Login} />
             </Switch>
           </div>
