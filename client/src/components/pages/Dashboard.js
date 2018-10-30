@@ -24,6 +24,13 @@ class Dashboard extends Component {
               <DashboardCard />
               <DashboardCard />
             </DashboardCardHolder>
+            <h2>Fontys</h2>
+            <DashboardCardHolder>
+              <DashboardCard />
+              <DashboardCard />
+              <DashboardCard />
+              <DashboardCard />
+            </DashboardCardHolder>
           </DashboardGrid>
         </div>
       </div>
