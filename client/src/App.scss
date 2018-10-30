@@ -1,22 +1,35 @@
-@import "scss/abstracts/variables";
-@import "scss/abstracts/mixins";
+//       /scss/abstracts
 @import "scss/abstracts/functions";
-@import "scss/base/reset";
-@import "scss/base/typography";
-@import "scss/base/shadows";
+@import "scss/abstracts/mixins";
+@import "scss/abstracts/variables";
+
+//      /scss/base
+@import "scss/base/buttons";
+@import "scss/base/customCheckmark";
 @import "scss/base/globals";
-@import "scss/components/buttons";
+@import "scss/base/inputs";
+@import "scss/base/list";
+@import "scss/base/reset";
+@import "scss/base/shadows";
+@import "scss/base/typography";
+
+//      /scss/components/bars
+@import "scss/components/bars/sideNav";
 @import "scss/components/bars/titleBar";
 @import "scss/components/bars/titleBarDropdown";
-@import "scss/components/bars/sideNav";
-@import "scss/components/clock";
-@import "scss/components/photo";
-@import "scss/components/weather";
-@import "scss/components/widgets";
-@import "scss/components/login";
-@import "scss/components/customCheckmark";
-@import "scss/components/adminProfile";
-@import "scss/components/dashboardEdit";
-@import "scss/components/inputs";
-@import "scss/components/list";
+
+//      /scss/components/gridItems
+@import "scss/components/gridItems/clock";
+@import "scss/components/gridItems/photo";
+@import "scss/components/gridItems/weather";
+@import "scss/components/gridItems/widgets";
+
+//      /scss/components/user
+@import "scss/components/user/adminProfile";
+@import "scss/components/user/dashboardEdit";
+@import "scss/components/user/login";
+
+//      /scss/components
 @import "scss/components/card";
+@import "scss/components/dropdown";
+@import "scss/components/list";
