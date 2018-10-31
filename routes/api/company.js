@@ -70,6 +70,59 @@ router.get(
   }
 );
 
+// @route   GET /api/company/ordered
+// @desc    Get all companies and dashboards ordered in companies
+// @access  Private
+router.get(
+  "/ordered",
+  passport.authenticate("jwt", {
+    session: false
+  }),
+  (req, res) => {
+    if (req.user.admin_role === false) {
+      return res.status(401).json({ authorized: false });
+    }
+
+    Company.find().then(result => {
+      const companies_result = result;
+      Dashboard.find().then(result => {
+        const dashboards_result = result;
+        Object.entries(companies_result).forEach(([key, value]) => {
+          companies_result[key] = {
+            name: companies_result[key].name,
+            handle: companies_result[key].handle,
+            dashboards: []
+          };
+          const company_id = value.id;
+          const company_key = key;
+          let dashboards_array = [];
+
+          Object.entries(dashboards_result).forEach(([key, value]) => {
+            const dashboard_company = value.company;
+
+            if (company_id == dashboard_company) {
+              // If dashboard company is the same as the company id
+              // So the dashboard matches the company
+
+              dashboards_array.push({
+                name: value.name,
+                handle: value.handle
+              });
+
+              companies_result[company_key] = {
+                name: companies_result[company_key].name,
+                handle: companies_result[company_key].handle,
+                dashboards: dashboards_array
+              };
+            }
+          });
+        });
+        res.json({ companies: companies_result });
+      });
+    });
+  }
+);
+
 // @route   POST /api/company/add
 // @desc    Create a company
 // @access  Private
