@@ -3,9 +3,9 @@ import Company from "./Company";
 import Dashboard from "./Dashboard";
 
 class PopupBody extends Component {
-  constructor() {
-    super();
-  }
+  // constructor() {
+  //   super();
+  // }
 
   componentDidMount() {
     console.log(this.props);

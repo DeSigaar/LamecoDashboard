@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Company from "./Company";
-import Dashboard from "./Dashboard";
 import PopupHeader from "./PopupHeader";
 import PopupBody from "./PopupBody";
 
