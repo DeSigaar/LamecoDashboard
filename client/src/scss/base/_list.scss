@@ -1,40 +1,124 @@
-.List {
-    margin: 20px 0 0 0;
-    padding: 0;
-    color: $color-red;
-    font-weight: bold;
+.list {
+  margin: 20px 0 0 0;
+  padding: 0;
+  color: $color-red;
+  font-weight: bold;
+  list-style-type: none;
+
+  li {
+    padding-top: 10px;
+  }
+
+  .subList {
+    color: $color-grey;
+    font-weight: normal;
     list-style-type: none;
+    padding-left: 25px;
 
     li {
-      padding-top: 10px;
-    }
+      padding: 5px 5px;
+      position: relative;
 
-    .subList {
-      color: $color-grey;
-      font-weight: normal;
-      list-style-type: none;
-      padding-left: 25px;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -10px;
+        width: 1px;
+        height: 100%;
+        background-color: $color-red;
+      }
 
-      li {
-        padding: 5px 5px;
-        position: relative;
-
-        &::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: -10px;
-          width: 1px;
-          height: 100%;
-          background-color: $color-red;
-        }
-
-        &:first-child {
-          margin-top: 5px;
-        }
-        &:last-child {
-          margin-bottom: 5px;
-        }
+      &:first-child {
+        margin-top: 5px;
+      }
+      &:last-child {
+        margin-bottom: 5px;
       }
     }
   }
+
+  .listTitle:empty {
+    background: linear-gradient(270deg, #f4f5f5, #d2d3d3);
+    background-size: 600% 600%;
+    width: 60%;
+    height: 20px;
+    margin-bottom: 10px;
+
+    animation: AnimationName 3s 1s ease infinite backwards;
+    @include border-radius(15px);
+  }
+
+  .subList li {
+    height: 25px;
+  }
+
+  .subList li:empty {
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: linear-gradient(270deg, #f4f5f5, #d2d3d3);
+      background-size: 600% 600%;
+      width: 80%;
+      height: 18px;
+      margin-bottom: 5px;
+
+      animation: AnimationName 3s 1s ease infinite normal;
+      @include border-radius(15px);
+    }
+
+    &:nth-child(2)::after {
+      width: 65%;
+    }
+    &:nth-child(3)::after {
+      width: 72%;
+    }
+  }
+
+  @-webkit-keyframes AnimationName {
+    0% {
+      background-position: 0% 51%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 51%;
+    }
+  }
+  @-moz-keyframes AnimationName {
+    0% {
+      background-position: 0% 51%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 51%;
+    }
+  }
+  @-o-keyframes AnimationName {
+    0% {
+      background-position: 0% 51%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 51%;
+    }
+  }
+  @keyframes AnimationName {
+    0% {
+      background-position: 0% 51%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 51%;
+    }
+  }
+}
