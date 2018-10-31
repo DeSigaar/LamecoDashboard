@@ -28,6 +28,7 @@ class Popup extends Component {
           <PopupBody
             title={this.state.title}
             closePopup={this.props.closePopup.bind(this)}
+            companyList={this.props.companyList}
           />
         </div>
       </div>

@@ -4,11 +4,18 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      companyList: [],
       name: "",
       handle: "",
       remember_me: false,
       errors: {}
     };
+  }
+
+  componentDidMount() {
+    console.log(this.props.companyList[0].name);
+    this.setState({ companyList: this.probs.companyList });
+    console.log(this.state.companyList);
   }
 
   onChange = e => {
@@ -25,7 +32,7 @@ class Dashboard extends Component {
 
   render() {
     const { errors } = this.state;
-
+    console.log(this.props.companyList);
     return (
       <div>
         <div className="loginContainer">
@@ -33,13 +40,11 @@ class Dashboard extends Component {
             <div className="middleForm">
               <div className="formField">
                 <p>Select Company</p>
-                <input
-                  type="text"
-                  name="company"
-                  placeholder="Ex.Fontys University of Applied Sciences"
-                  onChange={this.onChange}
-                  value={this.state.name}
-                />
+                <div className="companyList">
+                  <ul>
+                    <li />
+                  </ul>
+                </div>
                 {errors.name && <div className="invalid"> {errors.name} </div>}
               </div>
               <div className="formField">

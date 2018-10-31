@@ -65,7 +65,11 @@ class SideNav extends Component {
     let popupState;
     if (this.state.popupState) {
       popupState = (
-        <Popup title={this.state.title} closePopup={this.togglePopupCompany} />
+        <Popup
+          title={this.state.title}
+          closePopup={this.togglePopupCompany}
+          companyList={this.state.list}
+        />
       );
     }
     return (

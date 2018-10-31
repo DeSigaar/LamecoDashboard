@@ -6,6 +6,14 @@ class PopupBody extends Component {
   constructor() {
     super();
   }
+
+  componentDidMount() {
+    console.log(this.props);
+    this.setState({
+      companyList: this.props.companyList
+    });
+  }
+
   render() {
     let isDashboard = false;
     let isCompany = false;
@@ -26,7 +34,10 @@ class PopupBody extends Component {
     } else if (isDashboard) {
       return (
         <div className="cardBody">
-          <Dashboard closePopup={this.props.closePopup.bind(this)} />
+          <Dashboard
+            closePopup={this.props.closePopup.bind(this)}
+            companyList={this.state.companyList}
+          />
         </div>
       );
     } else {
