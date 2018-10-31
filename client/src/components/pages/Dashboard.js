@@ -3,12 +3,10 @@ import TitleBar from "../bars/TitleBar";
 import SideNav from "../bars/SideNav";
 import SideNavContainer from "../bars/SideNavContainer";
 import DashboardCard from "../dashboard/DashboardCard";
-import DashboardCardHolder from "../dashboard/DashboardCardHolder";
 import DashboardGrid from "../dashboard/DashboardGrid";
 import { getCompanies } from "../../actions/companyActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -37,7 +35,6 @@ class Dashboard extends Component {
       elements = <div>No dashboards</div>;
     } else {
       elements = company["dashboards"].map((dashboard, i) => {
-        let link = `/dashboard-edit/${dashboard.handle}`;
         return (
           <div className="dashboardCard" key={i}>
             <DashboardCard

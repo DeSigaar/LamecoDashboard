@@ -14,8 +14,7 @@ class AdminProfile extends Component {
       username: "",
       password: "",
       password2: "",
-      errors: {},
-      admin_role: true
+      errors: {}
     };
   }
 
@@ -44,8 +43,7 @@ class AdminProfile extends Component {
       email: this.state.email,
       password: this.state.password,
       password2: this.state.password2,
-      username: this.state.username,
-      admin_role: true
+      username: this.state.username
     };
 
     this.props.updateProfile(profileData, this.props.history);

@@ -13,6 +13,7 @@
     "react-dropdown": "^1.6.2",
     "react-grid-layout": "^0.16.6",
     "react-live-clock": "^2.0.3",
+    "react-material-snackbar": "^3.0.1",
     "react-moment": "^0.8.2",
     "react-open-weather": "^0.4.0",
     "react-redux": "^5.1.0",
