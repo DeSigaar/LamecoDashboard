@@ -4,6 +4,7 @@ import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import Clock from "../gridItems/Clock";
 import Weather from "../gridItems/Weather";
+import Loader from "../common/Loader";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const layout = [];
@@ -212,8 +213,8 @@ class Page extends Component {
       }
     } else {
       dashboardContent = (
-        <div className="flex-center-center max-width-height">
-          <p>Loading...</p>
+        <div className="loader-center-vh">
+          <Loader />
         </div>
       );
     }
