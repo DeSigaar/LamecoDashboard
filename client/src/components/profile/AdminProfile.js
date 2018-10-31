@@ -55,7 +55,7 @@ class AdminProfile extends Component {
     return (
       <div className="adminProfile">
         <TitleBar />
-        <div className="mainContainer">
+        <div className="profileContainer">
           {/* Back button */}
           <div
             className="backButton"

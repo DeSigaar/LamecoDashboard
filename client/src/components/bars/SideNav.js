@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Popup from "../popups/Popup";
 import isEmpty from "../../validation/is-empty";
+import { Link } from "react-router-dom";
 
 class SideNav extends Component {
   constructor(props) {
@@ -66,7 +67,12 @@ class SideNav extends Component {
       elements = <li>No dashboards</li>;
     } else {
       elements = company["dashboards"].map((dashboard, i) => {
-        return <li key={i}>{dashboard.name}</li>;
+        let link = `/dashboard-edit/${dashboard.handle}`;
+        return (
+          <li key={i}>
+            <Link to={link}>{dashboard.name}</Link>
+          </li>
+        );
       });
     }
 

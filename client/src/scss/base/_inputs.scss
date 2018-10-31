@@ -1,18 +1,20 @@
-input[type=text],
-input[type=password] {
+input[type="text"],
+input[type="password"],
+input[type="email"] {
   width: 90%;
   background: transparent;
   border: 0;
   outline: 0;
   border-bottom: 2px solid $color-red-transparent;
   font-size: inherit;
-
   &::placeholder {
-    color: rgb(185, 185, 185);
+    color: $color-dark-white;
   }
-
-  &.dashboardEdit{
+  &.dashboardEdit {
     border-bottom: none;
+    &::placeholder {
+      color: $color-grey;
+    }
   }
 }
 

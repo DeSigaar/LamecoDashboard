@@ -45,7 +45,7 @@ class UpdateProfile extends Component {
     return (
       <div className="updateProfile">
         <TitleBar />
-        <div className="mainContainer">
+        <div className="profileContainer">
           {/* Back button */}
           <div
             className="backButton"

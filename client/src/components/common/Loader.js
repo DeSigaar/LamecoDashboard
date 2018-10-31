@@ -1,8 +1,13 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 
 class Loader extends Component {
-  render();
+  render() {
+    return (
+      <div className="lds-dual-ring">
+        <div className="logo" />
+      </div>
+    );
+  }
 }
 
 export default Loader;
