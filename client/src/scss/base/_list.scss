@@ -1,4 +1,4 @@
-.List {
+.list {
   margin: 20px 0 0 0;
   padding: 0;
   color: $color-red;
@@ -38,6 +38,83 @@
       &:last-child {
         margin-bottom: 5px;
       }
+    }
+  }
+  .listTitle:empty {
+    background: linear-gradient(270deg, #f4f5f5, #d2d3d3);
+    background-size: 600% 600%;
+    width: 60%;
+    height: 20px;
+    margin-bottom: 10px;
+    animation: AnimationName 3s 1s ease infinite backwards;
+    @include border-radius(15px);
+  }
+  .subList li {
+    height: 25px;
+  }
+  .subList li:empty {
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: linear-gradient(270deg, #f4f5f5, #d2d3d3);
+      background-size: 600% 600%;
+      width: 80%;
+      height: 18px;
+      margin-bottom: 5px;
+      animation: AnimationName 3s 1s ease infinite normal;
+      @include border-radius(15px);
+    }
+    &:nth-child(2)::after {
+      width: 65%;
+    }
+    &:nth-child(3)::after {
+      width: 72%;
+    }
+  }
+  @-webkit-keyframes AnimationName {
+    0% {
+      background-position: 0% 51%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 51%;
+    }
+  }
+  @-moz-keyframes AnimationName {
+    0% {
+      background-position: 0% 51%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 51%;
+    }
+  }
+  @-o-keyframes AnimationName {
+    0% {
+      background-position: 0% 51%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 51%;
+    }
+  }
+  @keyframes AnimationName {
+    0% {
+      background-position: 0% 51%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 51%;
     }
   }
 }

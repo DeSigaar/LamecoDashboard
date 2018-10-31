@@ -3,6 +3,7 @@ import { getCompanies } from "../../actions/companyActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Popup from "../popups/Popup";
+import isEmpty from "../../validation/is-empty";
 import { Link } from "react-router-dom";
 
 class SideNav extends Component {
@@ -47,7 +48,7 @@ class SideNav extends Component {
   };
   renderCompanyList = () => {
     return (
-      <ul className="List">
+      <ul className="list">
         {this.state.list.map((company, i) => {
           return (
             <li key={i}>
@@ -89,6 +90,36 @@ class SideNav extends Component {
         />
       );
     }
+
+    let companyList;
+    if (isEmpty(this.state.list)) {
+      companyList = (
+        <div className="companyList">
+          <ul className="list">
+            <li>
+              <div className="listTitle" />
+              <ul className="subList">
+                <li />
+                <li />
+                <li />
+              </ul>
+            </li>
+            <li>
+              <div className="listTitle" />
+              <ul className="subList">
+                <li />
+                <li />
+              </ul>
+            </li>
+          </ul>
+        </div>
+      );
+    } else {
+      companyList = (
+        <div className="companyList">{this.renderCompanyList()}</div>
+      );
+    }
+
     return (
       <div>
         {/* Top buttons */}
@@ -108,7 +139,7 @@ class SideNav extends Component {
         </button>
 
         {/* List */}
-        {this.renderCompanyList()}
+        {companyList}
 
         {popupState}
       </div>
