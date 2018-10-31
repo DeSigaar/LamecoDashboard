@@ -1,18 +1,26 @@
-.mainContainer {
-  display: grid;
-  grid-template-columns: 325px auto;
-  grid-template-rows: 100vh;
-  grid-template-areas: "sideBar dashboard";
-  padding-top: 56px;
+.dashboard{
+  overflow-y: hidden;
 
-  .dashboardGrid {
-    grid-area: dashboard;
-    padding: 0 30px;
+  .mainContainer {
+    display: grid;
+    grid-template-columns: 325px auto;
+    grid-template-rows: 100vh;
+    grid-template-areas: "sideBar dashboard";
+    padding-top: 56px;
+    height:100vh;
 
-    h2 {
-      padding: 10px 0 5px;
-      font-size: 20px;
-      color: $color-grey;
+    .dashboardGrid {
+      grid-area: dashboard;
+      padding: 0 30px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: calc(100vh - 57px);
+
+      h2 {
+        padding: 10px 0 5px;
+        font-size: 20px;
+        color: $color-grey;
+      }
     }
   }
 }
