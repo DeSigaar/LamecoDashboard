@@ -3,6 +3,7 @@ import Company from "../popups/Company";
 import { getCompanies } from "../../actions/companyActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import Popup from "../popups/Popup";
 
 class SideNav extends Component {
   constructor(props) {
@@ -22,10 +23,12 @@ class SideNav extends Component {
       ],
 
       open: null,
-      popupState: false
+      popupState: false,
+      title: ""
     };
 
-    this.addCompany = this.addCompany.bind(this);
+    this.togglePopupDashboard = this.togglePopupDashboard.bind(this);
+    this.togglePopupCompany = this.togglePopupCompany.bind(this);
   }
   componentDidMount() {
     this.props.getCompanies();
@@ -40,7 +43,15 @@ class SideNav extends Component {
   addCompany = () => {
     this.setState({ popupState: !this.state.popupState });
   };
-
+  togglePopupDashboard = title => {
+    this.setState({ popupState: !this.state.popupState, title });
+  };
+  togglePopupCompany = title => {
+    this.setState({
+      popupState: !this.state.popupState,
+      title
+    });
+  };
   renderCompanyList = () => {
     return (
       <ul className="List">
@@ -70,16 +81,28 @@ class SideNav extends Component {
     const { companies } = this.props.company;
     let popupState;
     if (this.state.popupState) {
-      popupState = <Company />;
+      popupState = (
+        <Popup
+          title={this.state.title}
+          closePopup={this.togglePopupCompany}
+          companyList={this.state.list}
+        />
+      );
     }
     return (
       <div>
         {/* Top buttons */}
-        <button className="btn icon" onClick={this.addCompany}>
+        <button
+          className="btn icon"
+          onClick={this.togglePopupCompany.bind(this, "Add Company")}
+        >
           <i className="material-icons">add</i>
           <span>Add company</span>
         </button>
-        <button className="btn icon">
+        <button
+          className="btn icon"
+          onClick={this.togglePopupDashboard.bind(this, "Add Dashboard")}
+        >
           <i className="material-icons">add</i>
           <span>Add dashboard</span>
         </button>

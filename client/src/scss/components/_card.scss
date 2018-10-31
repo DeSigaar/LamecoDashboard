@@ -1,34 +1,108 @@
 .card {
-  width: 100vw;
-  height: 100%;
-  background-color: $color-black;
+  // opacity: 0.7;
   position: absolute;
-  left: 0;
+  width: 100vw;
+  height: 100vh;
   top: 0;
-  opacity: 0.7;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
 
+  z-index: 0;
+
   .cardContent {
-    width: 35vw;
-    height: 70vh;
+    width: 20vw;
+    height: auto;
     background-color: $color-white;
+    z-index: 0;
+    border-radius: 10px;
+    @include shadow($shadow-2);
+
     .cardHeader {
       height: 50%;
       width: auto;
+      border-radius: 10px 10px 0px 0px;
+    }
+    .overlayImage {
+      background: url(img/lamecoCompany.jpg);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+      width: 100%;
+      height: 25vh;
+      z-index: 2;
+
       display: flex;
       justify-content: center;
       align-items: center;
+
+      border-radius: 10px 10px 0px 0px;
+
+      h1 {
+        color: $color-white;
+        z-index: 3;
+      }
     }
-    .cardContent {
+    .overlayImage:after {
+      position: absolute;
+      background-color: $color-red-transparent;
+      content: "";
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px 10px 0px 0px;
+    }
+
+    .cardBody {
       height: 50%;
       width: auto;
+      display: flex;
+      justify-content: space-around;
+      margin-top: 10px;
 
-      button {
-        width: 200px;
-        height: 100px;
+      .middleForm {
+        height: 15vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        .formText {
+          height: 5vh;
+        }
+        .formField {
+          height: 7.5vh;
+          input {
+            width: 100%;
+            background: transparent;
+            border: 0;
+            outline: 0;
+            border-bottom: 2px solid $color-red-transparent;
+          }
+          ::placeholder {
+            color: rgb(185, 185, 185);
+          }
+          .invalid {
+            margin-top: 2px;
+            font-size: 0.8em;
+            color: $color-red;
+          }
+        }
+      }
+      .btn {
+        margin-bottom: 15px;
       }
     }
   }
+}
+.cardBackground {
+  width: 100vw;
+  height: 100%;
+  background-color: $color-grey-transparent-50;
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: pointer;
 }
