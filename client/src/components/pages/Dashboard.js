@@ -39,13 +39,12 @@ class Dashboard extends Component {
       elements = company["dashboards"].map((dashboard, i) => {
         let link = `/dashboard-edit/${dashboard.handle}`;
         return (
-          <div className="dashboardCard" key={i}>
-            <DashboardCard
-              name={dashboard.name}
-              companyhandle={company.handle}
-              handle={dashboard.handle}
-            />
-          </div>
+          <DashboardCard
+            key={i}
+            name={dashboard.name}
+            companyhandle={company.handle}
+            handle={dashboard.handle}
+          />
         );
       });
     }
@@ -56,7 +55,7 @@ class Dashboard extends Component {
       <div>
         {this.state.list.map((company, i) => {
           return (
-            <div>
+            <div key={i}>
               <h2>{company.name}</h2>
               <div key={i}>{this.renderDashboardList(company)}</div>
             </div>

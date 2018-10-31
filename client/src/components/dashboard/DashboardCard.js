@@ -11,7 +11,7 @@ class DashboardCard extends Component {
     const linkShow = `/${companyhandle}/${handle}`;
     const linkShare = `/${companyhandle}/${handle}`;
     return (
-      <div>
+      <div className="dashboardCard">
         <span>{this.props.name}</span>
         <div className="editButtons">
           <Link to={linkEdit}>
