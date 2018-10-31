@@ -8,6 +8,7 @@ import Weather from "../gridItems/Weather";
 import WidgetSelecter from "./WidgetSelecter";
 import EditDashboardTitle from "./EditDashboardTitle";
 import BackButton from "./Backbutton";
+import Loader from "../common/Loader";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const layout = [];
@@ -291,7 +292,11 @@ class DashboardEdit extends Component {
 
     let grid;
     if (!loaded) {
-      grid = <div className="noItems">Loading...</div>;
+      grid = (
+        <div className="loader-center">
+          <Loader />
+        </div>
+      );
     } else {
       if (items.length > 0) {
         grid = (
