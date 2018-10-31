@@ -3,6 +3,7 @@
   grid-template-columns: 325px auto;
   grid-template-rows: 100vh;
   grid-template-areas: "sideBar dashboard";
+  padding-top: 56px;
 
   .dashboardGrid {
     grid-area: dashboard;
