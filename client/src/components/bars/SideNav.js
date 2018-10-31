@@ -8,33 +8,28 @@ class SideNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: [
-        {
-          id: 1,
-          name: "Berkvens deursystemen",
-          dashboards: ["Lobby", "Vergaderruimte", "Kantoor"]
-        },
-        {
-          id: 2,
-          name: "MAN - Truck & Bus",
-          dashboards: ["Front desk", "Werkplaats"]
-        }
-      ],
-
+      list: [],
       open: null,
-      popupState: false
+      popupState: false,
+      loaded: false
     };
 
     this.addCompany = this.addCompany.bind(this);
+
+    if (!this.state.loaded) {
+      this.props.getCompanies();
+    }
   }
-  componentDidMount() {
-    this.props.getCompanies();
-  }
+
   componentWillReceiveProps(nextProps) {
-    // if (nextProps.company.company) {
-    //   this.setState({ list: nextProps.company.company });
-    // }
+    if (nextProps.company.company.companies) {
+      this.setState({
+        list: nextProps.company.company.companies,
+        loaded: true
+      });
+    }
   }
+
   addCompany = () => {
     this.setState({ popupState: !this.state.popupState });
   };
@@ -55,13 +50,16 @@ class SideNav extends Component {
   };
 
   renderDashboardList = company => {
-    return (
-      <ul className="subList">
-        {company["dashboards"].map((dashboard, i) => {
-          return <li key={i}>{dashboard}</li>;
-        })}
-      </ul>
-    );
+    let elements;
+    if (company["dashboards"].length <= 0) {
+      elements = <li>No dashboards</li>;
+    } else {
+      elements = company["dashboards"].map((dashboard, i) => {
+        return <li key={i}>{dashboard.name}</li>;
+      });
+    }
+
+    return <ul className="subList">{elements}</ul>;
   };
 
   render() {
