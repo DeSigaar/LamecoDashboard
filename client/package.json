@@ -13,11 +13,11 @@
     "react-dropdown": "^1.6.2",
     "react-grid-layout": "^0.16.6",
     "react-live-clock": "^2.0.3",
-    "react-moment": "^0.8.2",
+    "react-moment": "^0.8.3",
     "react-open-weather": "^0.4.0",
     "react-redux": "^5.1.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.0.5",
+    "react-scripts": "^2.1.1",
     "react-select": "^2.1.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
@@ -29,6 +29,7 @@
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive --use-polling --polling-interval 1000",
+    "install": "npm install --save axios classnames jwt-decode moment react react-copy-to-clipboard react-dom react-dropdown react-grid-layout react-live-clock react-moment react-open-weather react-redux react-router-dom react-scripts react-select redux redux-thunk && npm install --save-dev node-sass-chokidar npm-run-all",
     "start-js": "react-scripts start",
     "start": "npm-run-all -p watch-css start-js",
     "build": "npm-run-all build-css && react-scripts build",

@@ -14,7 +14,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     console.log(this.props.companyList[0].name);
-    this.setState({ companyList: this.probs.companyList });
+    this.setState({ companyList: this.props.companyList });
     console.log(this.state.companyList);
   }
 
