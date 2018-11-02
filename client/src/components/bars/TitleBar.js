@@ -34,7 +34,7 @@ class TitleBar extends Component {
             </Link>
           </li> */}
           <li>
-            <Link to="/profile/adminProfile">
+            <Link to="/profile/admin">
               <img
                 className="profilePicture"
                 alt="Gravatar profile"

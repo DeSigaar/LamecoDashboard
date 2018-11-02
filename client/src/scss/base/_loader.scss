@@ -1,0 +1,49 @@
+.loader-center {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader-center-vh {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lds-dual-ring {
+  display: inline-block;
+  position: relative;
+  width: 96px;
+  height: 96px;
+
+  .logo {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    margin: 24px;
+    background-image: url("img/favicon.ico");
+    background-position: center;
+    background-size: contain;
+  }
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 92px;
+  height: 92px;
+  margin: 2px;
+  border-radius: 50%;
+  border: 5px solid $color-red;
+  border-color: $color-red transparent $color-red transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

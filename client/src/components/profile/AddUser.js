@@ -23,15 +23,6 @@ class UpdateProfile extends Component {
       this.setState({ errors: nextProps.errors });
     }
   }
-
-  componentDidMount() {
-    {
-      /* Redirect als user geen admin is. LELIJK tho.*/
-    }
-    if (!this.props.user.admin_role) {
-      window.location.href = "/dashboard";
-    }
-  }
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -54,7 +45,7 @@ class UpdateProfile extends Component {
     return (
       <div className="updateProfile">
         <TitleBar />
-        <div className="mainContainer">
+        <div className="profileContainer">
           {/* Back button */}
           <div
             className="backButton"

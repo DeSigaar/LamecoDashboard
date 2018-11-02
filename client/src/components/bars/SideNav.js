@@ -1,37 +1,54 @@
 import React, { Component } from "react";
-import Company from "../popups/Company";
+import { getCompanies } from "../../actions/companyActions";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import Popup from "../popups/Popup";
+import isEmpty from "../../validation/is-empty";
+import { Link } from "react-router-dom";
 
 class SideNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: [
-        {
-          id: 1,
-          name: "Berkvens deursystemen",
-          dashboards: ["Lobby", "Vergaderruimte", "Kantoor"]
-        },
-        {
-          id: 2,
-          name: "MAN - Truck & Bus",
-          dashboards: ["Front desk", "Werkplaats"]
-        }
-      ],
-
+      list: [],
       open: null,
-      popupState: false
+      popupState: false,
+      title: "",
+      loaded: false
     };
 
-    this.addCompany = this.addCompany.bind(this);
+    this.togglePopupDashboard = this.togglePopupDashboard.bind(this);
+    this.togglePopupCompany = this.togglePopupCompany.bind(this);
+
+    if (!this.state.loaded) {
+      this.props.getCompanies();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.company.company.companies) {
+      this.setState({
+        list: nextProps.company.company.companies,
+        loaded: true
+      });
+    }
   }
 
   addCompany = () => {
     this.setState({ popupState: !this.state.popupState });
   };
-
+  togglePopupDashboard = title => {
+    this.setState({ popupState: !this.state.popupState, title });
+  };
+  togglePopupCompany = title => {
+    this.setState({
+      popupState: !this.state.popupState,
+      title
+    });
+  };
   renderCompanyList = () => {
     return (
-      <ul className="List">
+      <ul className="list">
         {this.state.list.map((company, i) => {
           return (
             <li key={i}>
@@ -45,39 +62,97 @@ class SideNav extends Component {
   };
 
   renderDashboardList = company => {
-    return (
-      <ul className="subList">
-        {company["dashboards"].map((dashboard, i) => {
-          return <li key={i}>{dashboard}</li>;
-        })}
-      </ul>
-    );
+    let elements;
+    if (company["dashboards"].length <= 0) {
+      elements = <li>No dashboards</li>;
+    } else {
+      elements = company["dashboards"].map((dashboard, i) => {
+        let link = `/dashboard-edit/${dashboard.handle}`;
+        return (
+          <li key={i}>
+            <Link to={link}>{dashboard.name}</Link>
+          </li>
+        );
+      });
+    }
+
+    return <ul className="subList">{elements}</ul>;
   };
 
   render() {
     let popupState;
     if (this.state.popupState) {
-      popupState = <Company />;
+      popupState = (
+        <Popup
+          title={this.state.title}
+          closePopup={this.togglePopupCompany}
+          companyList={this.state.list}
+        />
+      );
     }
+
+    let companyList;
+    if (isEmpty(this.state.list)) {
+      companyList = (
+        <div className="companyList">
+          <ul className="list">
+            <li>
+              <div className="listTitle" />
+              <ul className="subList">
+                <li />
+                <li />
+                <li />
+              </ul>
+            </li>
+            <li>
+              <div className="listTitle" />
+              <ul className="subList">
+                <li />
+                <li />
+              </ul>
+            </li>
+          </ul>
+        </div>
+      );
+    } else {
+      companyList = (
+        <div className="companyList">{this.renderCompanyList()}</div>
+      );
+    }
+
     return (
-      <div className="sideNav">
+      <div>
         {/* Top buttons */}
-        <button className="btn icon" onClick={this.addCompany}>
+        <button
+          className="btn icon"
+          onClick={this.togglePopupCompany.bind(this, "Add Company")}
+        >
           <i className="material-icons">add</i>
           <span>Add company</span>
         </button>
-        <button className="btn icon">
+        <button
+          className="btn icon"
+          onClick={this.togglePopupDashboard.bind(this, "Add Dashboard")}
+        >
           <i className="material-icons">add</i>
           <span>Add dashboard</span>
         </button>
 
         {/* List */}
-        {this.renderCompanyList()}
+        {companyList}
 
         {popupState}
       </div>
     );
   }
 }
-
-export default SideNav;
+SideNav.propTypes = {
+  getCompanies: PropTypes.func.isRequired
+};
+const mapStateToProps = state => ({
+  company: state.company
+});
+export default connect(
+  mapStateToProps,
+  { getCompanies }
+)(SideNav);

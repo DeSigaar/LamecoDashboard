@@ -2,8 +2,9 @@
   color: #fff;
   width: 100%;
   height: 320px;
-  background: #4997D8;
+  background: #4997d8;
   display: flex;
+  border-radius: 8px;
 }
 
 .rw-main h2 {
@@ -26,11 +27,11 @@
 }
 
 .rw-main.type-today {
-  border-radius: 0px;
+  border-radius: 8px;
 }
 
 .rw-main.type-5days {
-  border-radius: 0px;
+  border-radius: 8px;
 }
 
 .rw-main .rw-box-left {
@@ -40,7 +41,7 @@
 
 .rw-main .rw-box-right {
   background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 0px;
+  border-radius: 0 8px 8px 0;
   width: 40%;
   display: flex;
   align-items: center;
@@ -52,7 +53,7 @@
 }
 
 .rw-main .rw-today .date {
-  color: #B5DEF4;
+  color: #b5def4;
 }
 
 .rw-main .rw-today .current {
@@ -60,23 +61,23 @@
 }
 
 .rw-main .rw-today .range {
-  color: #B5DEF4;
+  color: #b5def4;
   font-size: 12px;
   margin: 0 0 5px 2px;
 }
 
 .rw-main .rw-today .desc {
-  color: #B5DEF4;
+  color: #b5def4;
   font-size: 16px;
 }
 
 .rw-main .rw-today .desc i {
   font-size: 20px;
-  color: #B5DEF4;
+  color: #b5def4;
 }
 
 .rw-main .rw-today .info {
-  color: #B5DEF4;
+  color: #b5def4;
 }
 
 .rw-main .rw-today .info div {
@@ -89,7 +90,7 @@
   border-left: solid 1px #ddd;
   border-right: solid 1px #ddd;
   border-bottom: solid 1px #ddd;
-  border-radius: 0px;
+  border-radius: 8px;
   font-size: 11px;
   color: #777;
   background-color: #fff;
@@ -127,7 +128,7 @@
 .rw-box-days .wicon {
   margin-top: 15px;
   font-size: 35px;
-  color: #4BC4F7;
+  color: #4bc4f7;
 }
 
 .rw-box {
