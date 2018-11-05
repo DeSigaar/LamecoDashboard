@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import Snackbar from "../../components/common/Snackbar";
 
 class DashboardCard extends Component {
   constructor(props) {
@@ -33,6 +34,7 @@ class DashboardCard extends Component {
             <i className="material-icons">share</i>
           </CopyToClipboard>
         </div>
+        <Snackbar text="Link copied" />
       </div>
     );
   }
