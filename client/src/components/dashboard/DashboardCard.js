@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Snackbar from "../../components/common/Snackbar";
+=======
+>>>>>>> 12701d30fa0663b0d6156954f603f1b1ae27acaa
 
 class DashboardCard extends Component {
   constructor(props) {
@@ -20,8 +23,11 @@ class DashboardCard extends Component {
     const { companyhandle } = this.props;
     const linkEdit = `/dashboard-edit/${handle}`;
     const linkShow = `/${companyhandle}/${handle}`;
+<<<<<<< HEAD
     const linkShare = `${window.location.href}${companyhandle}/${handle}`;
 
+=======
+>>>>>>> 12701d30fa0663b0d6156954f603f1b1ae27acaa
     return (
       <div className="dashboardCard">
         <span>{this.props.name}</span>

@@ -3,27 +3,46 @@ import TitleBar from "../bars/TitleBar";
 import SideNav from "../bars/SideNav";
 import SideNavContainer from "../bars/SideNavContainer";
 import DashboardCard from "../dashboard/DashboardCard";
-import DashboardCardHolder from "../dashboard/DashboardCardHolder";
 import DashboardGrid from "../dashboard/DashboardGrid";
 import { getCompanies } from "../../actions/companyActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+<<<<<<< HEAD
+=======
+import Loader from "../common/Loader";
+>>>>>>> 12701d30fa0663b0d6156954f603f1b1ae27acaa
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       list: [],
-      loaded: false
+      loaded: false,
+      companyLoading: false,
+      init: false
     };
 
-    if (!this.state.loaded) {
+    if (!this.state.init) {
       this.props.getCompanies();
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.company.company.companies) {
+    this.setState({
+      init: true
+    });
+    if (nextProps.company.company === null) {
+      if (!this.state.companyLoading) {
+        this.setState({
+          companyLoading: true
+        });
+        setTimeout(this.setState({ companyLoading: false }), 10000);
+        this.props.getCompanies();
+      }
+    } else if (
+      nextProps.company.company !== null &&
+      nextProps.company.company.companies
+    ) {
       this.setState({
         list: nextProps.company.company.companies,
         loaded: true
@@ -36,7 +55,6 @@ class Dashboard extends Component {
       elements = <div>No dashboards</div>;
     } else {
       elements = company["dashboards"].map((dashboard, i) => {
-        let link = `/dashboard-edit/${dashboard.handle}`;
         return (
           <DashboardCard
             key={i}
@@ -66,6 +84,19 @@ class Dashboard extends Component {
 
   render() {
     document.title = "Dashboard | Laméco Dashboard";
+
+    // stuff
+    let dashboardContent;
+    if (this.state.loaded) {
+      dashboardContent = this.renderCompanyList();
+    } else {
+      dashboardContent = (
+        <div className="loader-center">
+          <Loader />
+        </div>
+      );
+    }
+
     return (
       <div className="dashboard">
         <TitleBar />
@@ -74,7 +105,7 @@ class Dashboard extends Component {
             <SideNav />
           </SideNavContainer>
 
-          <DashboardGrid>{this.renderCompanyList()}</DashboardGrid>
+          <DashboardGrid>{dashboardContent}</DashboardGrid>
         </div>
       </div>
     );

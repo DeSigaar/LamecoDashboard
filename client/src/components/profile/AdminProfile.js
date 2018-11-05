@@ -72,7 +72,7 @@ class AdminProfile extends Component {
                 <img className="profileImg" src={user.avatar} alt="" />
               </div>
               <div className="info">
-                <h6>{user.username}</h6>
+                <h2>{user.username}</h2>
               </div>
             </div>
             <form onSubmit={this.onSubmit} className="adminForm">

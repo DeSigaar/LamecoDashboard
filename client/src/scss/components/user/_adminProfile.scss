@@ -20,14 +20,8 @@
       }
       .info {
         padding-left: 30px;
-        align-self: center;
-        color: $color-grey;
-        h6 {
-          font-weight: 100;
-          padding-bottom: 20px;
-          color: $color-grey-transparent-50;
-          font-size: inherit;
-        }
+        align-self: flex-start;
+        color: $color-black;
       }
     }
     .adminForm {

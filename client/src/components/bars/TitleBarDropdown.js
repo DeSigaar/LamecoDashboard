@@ -10,24 +10,14 @@ class TitleBarDropdown extends Component {
   };
 
   render() {
-    let addperson;
-    if (this.props.auth.user.admin_role) {
-      addperson = (
+    return (
+      <ul className="subnav">
         <li>
           <Link to="/add-user">
             {/* Eeeeek inline styling, sorry hiervoor het is bijna 5 uur*/}
-            <i style={{ color: "#fff" }} className="material-icons">
-              person_add
-            </i>
+            <i className="material-icons white-icon">person_add</i>
           </Link>
         </li>
-      );
-    } else {
-      addperson = null;
-    }
-    return (
-      <ul className="subnav">
-        {addperson}
         <li onClick={this.onLogoutClick}>
           <i className="material-icons">power_settings_new</i>
         </li>

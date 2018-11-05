@@ -19,14 +19,13 @@ class SideNav extends Component {
 
     this.togglePopupDashboard = this.togglePopupDashboard.bind(this);
     this.togglePopupCompany = this.togglePopupCompany.bind(this);
-
-    if (!this.state.loaded) {
-      this.props.getCompanies();
-    }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.company.company.companies) {
+    if (
+      nextProps.company.company !== null &&
+      nextProps.company.company.companies
+    ) {
       this.setState({
         list: nextProps.company.company.companies,
         loaded: true
@@ -94,30 +93,26 @@ class SideNav extends Component {
     let companyList;
     if (isEmpty(this.state.list)) {
       companyList = (
-        <div className="companyList">
-          <ul className="list">
-            <li>
-              <div className="listTitle" />
-              <ul className="subList">
-                <li />
-                <li />
-                <li />
-              </ul>
-            </li>
-            <li>
-              <div className="listTitle" />
-              <ul className="subList">
-                <li />
-                <li />
-              </ul>
-            </li>
-          </ul>
-        </div>
+        <ul className="list">
+          <li>
+            <div className="listTitle" />
+            <ul className="subList">
+              <li />
+              <li />
+              <li />
+            </ul>
+          </li>
+          <li>
+            <div className="listTitle" />
+            <ul className="subList">
+              <li />
+              <li />
+            </ul>
+          </li>
+        </ul>
       );
     } else {
-      companyList = (
-        <div className="companyList">{this.renderCompanyList()}</div>
-      );
+      companyList = this.renderCompanyList();
     }
 
     return (
