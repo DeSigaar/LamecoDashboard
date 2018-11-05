@@ -38,12 +38,35 @@ class SideNav extends Component {
   };
   togglePopupDashboard = title => {
     this.setState({ popupState: !this.state.popupState, title });
+    var myElements = document.querySelectorAll(".titleBar");
+
+    if (this.state.popupState === false) {
+      for (var x = 0; x < myElements.length; x++) {
+        myElements[x].style.backgroundColor = "rgba(112, 112, 112, 0.5)";
+      }
+    } else {
+      for (var x = 0; x < myElements.length; x++) {
+        myElements[x].style.backgroundColor = "rgb(255, 255, 255)";
+      }
+    }
   };
   togglePopupCompany = title => {
     this.setState({
       popupState: !this.state.popupState,
       title
     });
+
+    var myElements = document.querySelectorAll(".titleBar");
+
+    if (this.state.popupState === false) {
+      for (var i = 0; i < myElements.length; i++) {
+        myElements[i].style.backgroundColor = "rgba(112, 112, 112, 0.5)";
+      }
+    } else {
+      for (var i = 0; i < myElements.length; i++) {
+        myElements[i].style.backgroundColor = "rgb(255, 255, 255)";
+      }
+    }
   };
   renderCompanyList = () => {
     return (

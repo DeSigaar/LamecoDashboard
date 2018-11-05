@@ -38,7 +38,10 @@ class Dashboard extends Component {
     this.props.closePopup();
   };
 
-  handleSelectClick = e => {};
+  handleSelectClick = e => {
+    let selectedItem = e.target.value;
+    // console.log(selectedItem);
+  };
 
   renderCompanyList = () => {
     return (
