@@ -7,10 +7,8 @@ import DashboardGrid from "../dashboard/DashboardGrid";
 import { getCompanies } from "../../actions/companyActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-<<<<<<< HEAD
-=======
+
 import Loader from "../common/Loader";
->>>>>>> 12701d30fa0663b0d6156954f603f1b1ae27acaa
 
 class Dashboard extends Component {
   constructor(props) {
