@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PopupHeader from "./PopupHeader";
 import PopupBody from "./PopupBody";
+import PropTypes from "prop-types";
 
 class Popup extends Component {
   constructor() {

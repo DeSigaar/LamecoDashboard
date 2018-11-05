@@ -17,10 +17,11 @@
     background-color: $color-white;
     z-index: 0;
     border-radius: 10px;
+    min-width: 300px;
     @include shadow($shadow-2);
 
     .cardHeader {
-      height: 50%;
+      height: 25vh;
       width: auto;
       border-radius: 10px 10px 0px 0px;
     }
@@ -57,7 +58,7 @@
     }
 
     .cardBody {
-      height: 50%;
+      height: auto;
       width: auto;
       display: flex;
       justify-content: space-around;
@@ -74,6 +75,7 @@
         }
         .formField {
           height: 7.5vh;
+          margin-bottom: 10px;
           input {
             width: 100%;
             background: transparent;
@@ -105,4 +107,43 @@
   left: 0;
   top: 0;
   cursor: pointer;
+}
+
+.companyList {
+  height: 50%;
+  overflow-y: auto;
+  padding: 0 0 0 10px;
+
+  font-size: 0.9em;
+  border-left: 1px solid $color-red;
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 7px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px grey;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: red;
+    border-radius: 10px;
+  }
+
+  ul {
+    padding: 0;
+    padding-inline-start: 0px;
+    margin: 0px;
+    margin-block-start: 0;
+    color: $color-grey;
+
+    li:hover {
+      color: $color-red;
+      cursor: pointer;
+    }
+  }
 }
