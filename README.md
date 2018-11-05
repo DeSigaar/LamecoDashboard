@@ -46,17 +46,13 @@ $ npm run install-all
 If that doens't work for whatever reason or errors are shown. Copy the following lines and run them:
 
 ```
-npm uninstall axios bcryptjs body-parser concurrently express gravatar jsonwebtoken jwt-decode mongoose node-sass-chokidar nodemailer passport passport-jwt react-scripts validator nodemon
+$ npm uninstall axios bcryptjs body-parser concurrently express gravatar jsonwebtoken jwt-decode mongoose node-sass-chokidar nodemailer passport passport-jwt react-scripts validator nodemon
 
-npm install --save axios bcryptjs body-parser concurrently express gravatar jsonwebtoken jwt-decode mongoose node-sass-chokidar nodemailer passport passport-jwt react-scripts validator
+$ npm install --save axios bcryptjs body-parser concurrently express gravatar jsonwebtoken jwt-decode mongoose node-sass-chokidar nodemailer passport passport-jwt react-scripts validator && npm install --save-dev nodemon
 
-npm install --save-dev nodemon
+$ npm uninstall axios classnames jwt-decode moment react react-copy-to-clipboard react-dom react-dropdown react-grid-layout react-live-clock react-moment react-open-weather react-redux react-router-dom react-scripts react-select redux redux-thunk node-sass-chokidar npm-run-all --prefix client
 
-npm uninstall axios classnames jwt-decode moment react react-copy-to-clipboard react-dom react-dropdown react-grid-layout react-live-clock react-moment react-open-weather react-redux react-router-dom react-scripts react-select redux redux-thunk node-sass-chokidar npm-run-all --prefix client
-
-npm install --save axios classnames jwt-decode moment react react-copy-to-clipboard react-dom react-dropdown react-grid-layout react-live-clock react-moment react-open-weather react-redux react-router-dom react-scripts react-select redux redux-thunk --prefix client
-
-npm install --save-dev node-sass-chokidar npm-run-all --prefix client
+$ npm install --save axios classnames jwt-decode moment react react-copy-to-clipboard react-dom react-dropdown react-grid-layout react-live-clock react-moment react-open-weather react-redux react-router-dom react-scripts react-select redux redux-thunk --prefix client && npm install --save-dev node-sass-chokidar npm-run-all --prefix client
 ```
 
 ### Running

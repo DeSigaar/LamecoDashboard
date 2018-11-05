@@ -25,12 +25,13 @@ const UserSchema = new Schema({
   },
   avatar: {
     type: String
-  },
-  admin_role: {
-    type: Boolean,
-    required: true,
-    default: false
   }
+  // Admin role used for admins and customers [UNUSED]
+  // admin_role: {
+  //   type: Boolean,
+  //   required: true,
+  //   default: false
+  // }
 });
 
 module.exports = User = mongoose.model("user", UserSchema);

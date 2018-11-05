@@ -26,7 +26,6 @@ router.get(
   }),
   (req, res) => {
     res.json({
-      admin_role: req.user.admin_role,
       _id: req.user.id,
       email: req.user.email,
       username: req.user.username,
@@ -45,9 +44,12 @@ router.get(
     session: false
   }),
   (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
+    // Check if user requesting is admin [UNUSED]
+    // if (req.user.admin_role === false) {
+    //   return res.status(401).json({ authorized: false });
+    // }
+
+    // Get all users
     User.find().then(users => {
       users.forEach(user => {
         user.password = undefined;
@@ -67,10 +69,12 @@ router.get(
     session: false
   }),
   (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
+    // Check if user requesting is admin [UNUSED]
+    // if (req.user.admin_role === false) {
+    //   return res.status(401).json({ authorized: false });
+    // }
 
+    // Get user by given ID
     User.findById(req.params.id)
       .then(user => {
         user.password = undefined;
@@ -78,7 +82,7 @@ router.get(
         res.json(user);
       })
       .catch(err =>
-        res.status(404).json({ nouserfound: "No user found with that ID" })
+        res.status(404).json({ user_not_found: "No user found with that ID" })
       );
   }
 );
@@ -92,28 +96,36 @@ router.post(
     session: false
   }),
   (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
+    // Check if user requesting is admin [UNUSED]
+    // if (req.user.admin_role === false) {
+    //   return res.status(401).json({ authorized: false });
+    // }
 
-    req.body.email = req.body.email.toLowerCase();
-    req.body.username = req.body.username.toLowerCase();
+    const userFields = {};
+    userFields.email = req.body.email.toLowerCase();
+    userFields.username = req.body.username.toLowerCase();
+    userFields.name = req.body.name;
+    userFields.password = req.body.password;
+    userFields.password2 = req.body.password2;
 
-    const { errors, isValid } = validateUserInput(req.body);
+    const { errors, isValid } = validateUserInput(userFields);
 
-    // Check validation
+    // Check if data is valid
     if (!isValid) {
       return res.status(400).json(errors);
     }
 
+    // Find user in database with email
     User.findOne({
-      email: req.body.email
+      email: userFields.email
     }).then(user => {
       if (user) {
         errors.email = "Email already exists";
       }
+
+      // Find user in database with username
       User.findOne({
-        username: req.body.username
+        username: userFields.username
       }).then(user => {
         if (user) {
           errors.username = "Username already exists";
@@ -121,22 +133,23 @@ router.post(
         } else if (!isEmpty(errors)) {
           return res.status(400).json(errors);
         } else {
-          const avatar = gravatar.url(req.body.email, {
+          // Get gravatar from email
+          const avatar = gravatar.url(userFields.email, {
             s: "200", // Size
             r: "pg", // Rating
             d: "mm" // Default
           });
 
+          // Create new user
           const newUser = new User({
-            email: req.body.email,
-            username: req.body.username,
-            password: req.body.password,
-            name: req.body.name,
-            avatar,
-            admin_role: req.body.admin_role
+            email: userFields.email,
+            username: userFields.username,
+            password: userFields.password,
+            name: userFields.name,
+            avatar
           });
 
-          // Send email to email with data
+          // Prepare to send the email with data
           let transporter = nodemailer.createTransport({
             host: require("../../config/keys").mailHost,
             port: 587,
@@ -148,6 +161,7 @@ router.post(
             }
           });
 
+          // Prepare email itself
           let mailOptions = {
             from: `"Laméco Dashboard" <${
               require("../../config/keys").mailAccountUsername
@@ -174,16 +188,20 @@ router.post(
             }? No need to do anything!</p></td></tr></table><!--[if (gte mso 9)|(IE)]> </td></tr></table><![endif]--> </td></tr></table> </body></html>`
           };
 
+          // Send the email
           transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
               return console.log(error);
             }
           });
 
+          // Create hashed password
           bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(newUser.password, salt, (err, hash) => {
               if (err) throw err;
               newUser.password = hash;
+
+              // Save to database
               newUser
                 .save()
                 .then(user => res.json(user))
@@ -205,12 +223,13 @@ router.post(
     session: false
   }),
   (req, res) => {
-    if (req.user.admin_role === false && req.user.id !== req.params.id) {
-      return res.status(401).json({ authorized: false });
-    }
+    // Check if user requesting is admin [UNUSED]
+    // if (req.user.admin_role === false && req.user.id !== req.params.id) {
+    //   return res.status(401).json({ authorized: false });
+    // }
 
     const userFields = {};
-    userFields.user = req.params.id;
+    userFields.id = req.params.id;
     if (req.body.email) userFields.email = req.body.email.toLowerCase();
     if (req.body.username)
       userFields.username = req.body.username.toLowerCase();
@@ -224,27 +243,30 @@ router.post(
 
     const { errors, isValid } = validateUserInput(userFields, passwordChange);
 
-    // Check validation
+    // Check if data is valid
     if (!isValid) {
       return res.status(400).json(errors);
     }
 
+    // Find user in database with email
     User.findOne({
       email: userFields.email
     }).then(user => {
-      if (user && user.id !== userFields.user) {
+      if (user && user.id !== userFields.id) {
         errors.email = "Email already exists";
       }
 
+      // Find user in database with username
       User.findOne({
         username: userFields.username
       }).then(user => {
-        if (user && user.id !== userFields.user) {
+        if (user && user.id !== userFields.id) {
           errors.username = "Username already exists";
           return res.status(400).json(errors);
         } else if (!isEmpty(errors)) {
           return res.status(400).json(errors);
         } else {
+          // Get gravatar from email
           userFields.avatar = gravatar.url(userFields.email, {
             s: "200", // Size
             r: "pg", // Rating
@@ -252,23 +274,24 @@ router.post(
           });
 
           if (passwordChange) {
+            // Create hashed password
             bcrypt.genSalt(10, (err, salt) => {
               bcrypt.hash(userFields.password, salt, (err, hash) => {
                 if (err) throw err;
                 userFields.password = hash;
 
-                // Update
+                // Update user within database
                 User.findOneAndUpdate(
-                  { _id: userFields.user },
+                  { _id: userFields.id },
                   { $set: userFields },
                   { new: true }
                 ).then(user => res.json(user));
               });
             });
           } else {
-            // Update
+            // Update user within database
             User.findOneAndUpdate(
-              { _id: userFields.user },
+              { _id: userFields.id },
               { $set: userFields },
               { new: true }
             ).then(user => res.json(user));
@@ -283,17 +306,22 @@ router.post(
 // @desc    Login user and return JWT token
 // @access  Public
 router.post("/login", (req, res) => {
-  req.body.info = req.body.info.toLowerCase();
+  const userFields = {};
+  userFields.info = req.body.info.toLowerCase();
+  userFields.password = req.body.password;
+  userFields.remember_me = req.body.remember_me;
 
-  const { errors, isValid } = validateLoginInput(req.body);
+  const { errors, isValid } = validateLoginInput(userFields);
 
-  // Check validation
+  // Check if data is valid
   if (!isValid) {
     return res.status(400).json(errors);
   }
 
-  if (Validator.isEmail(req.body.info)) {
-    const email = req.body.info;
+  // Check if given info is an email or username
+  if (Validator.isEmail(userFields.info)) {
+    const email = userFields.info;
+
     // Find user by email given
     User.findOne({
       email
@@ -305,88 +333,40 @@ router.post("/login", (req, res) => {
       }
 
       // Check password
-      bcrypt.compare(req.body.password, user.password).then(isMatch => {
+      bcrypt.compare(userFields.password, user.password).then(isMatch => {
         if (isMatch) {
-          // Check what type of login it is - admin_login or regular_login?
-          // admin_login is for the backend of the system
-          // regular_login is any login
+          // User matched
+          const payload = {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            name: user.name,
+            avatar: user.avatar
+          }; // Create JWT payload
 
-          if (req.body.type === "admin_login") {
-            // Check if user is admin_role
-            if (user.admin_role) {
-              // User matched
-              const payload = {
-                id: user.id,
-                email: user.email,
-                username: user.username,
-                name: user.name,
-                avatar: user.avatar,
-                admin_role: user.admin_role
-              }; // Create JWT payload
-
-              if (req.body.remember_me) {
-                // Sign token
-                jwt.sign(payload, keys.secretOrKey, (err, token) => {
-                  res.json({
-                    success: true,
-                    token: "Bearer " + token
-                  });
-                });
-              } else {
-                // Sign token
-                jwt.sign(
-                  payload,
-                  keys.secretOrKey,
-                  {
-                    expiresIn: 36000
-                  },
-                  (err, token) => {
-                    res.json({
-                      success: true,
-                      token: "Bearer " + token
-                    });
-                  }
-                );
-              }
-            } else {
-              errors.info = "Not an admin";
-              return res.status(400).json(errors);
-            }
+          if (userFields.remember_me) {
+            // Sign token without expiration
+            jwt.sign(payload, keys.secretOrKey, (err, token) => {
+              res.json({
+                success: true,
+                token: "Bearer " + token
+              });
+            });
           } else {
-            // User matched
-            const payload = {
-              id: user.id,
-              email: user.email,
-              username: user.username,
-              name: user.name,
-              avatar: user.avatar,
-              admin_role: user.admin_role
-            }; // Create JWT payload
-
-            if (req.body.remember_me) {
-              // Sign token
-              jwt.sign(payload, keys.secretOrKey, (err, token) => {
+            // Sign token with expiration
+            jwt.sign(
+              payload,
+              keys.secretOrKey,
+              {
+                expiresIn: 36000
+              },
+              (err, token) => {
                 res.json({
                   success: true,
                   token: "Bearer " + token
                 });
-              });
-            } else {
-              // Sign token
-              jwt.sign(
-                payload,
-                keys.secretOrKey,
-                {
-                  expiresIn: 36000
-                },
-                (err, token) => {
-                  res.json({
-                    success: true,
-                    token: "Bearer " + token
-                  });
-                }
-              );
-            }
+              }
+            );
           }
         } else {
           errors.password = "Password incorrect";
@@ -395,7 +375,8 @@ router.post("/login", (req, res) => {
       });
     });
   } else {
-    const username = req.body.info;
+    const username = userFields.info;
+
     // Find user by username given
     User.findOne({
       username
@@ -407,88 +388,40 @@ router.post("/login", (req, res) => {
       }
 
       // Check password
-      bcrypt.compare(req.body.password, user.password).then(isMatch => {
+      bcrypt.compare(userFields.password, user.password).then(isMatch => {
         if (isMatch) {
-          // Check what type of login it is - admin_login or regular_login?
-          // admin_login is for the backend of the system
-          // regular_login is any login
+          // User matched
+          const payload = {
+            id: user.id,
+            email: user.email,
+            username: user.username,
+            name: user.name,
+            avatar: user.avatar
+          }; // Create JWT payload
 
-          if (req.body.type === "admin_login") {
-            // Check if user is admin_role
-            if (user.admin_role) {
-              // User matched
-              const payload = {
-                id: user.id,
-                email: user.email,
-                username: user.username,
-                name: user.name,
-                avatar: user.avatar,
-                admin_role: user.admin_role
-              }; // Create JWT payload
-
-              if (req.body.remember_me) {
-                // Sign token
-                jwt.sign(payload, keys.secretOrKey, (err, token) => {
-                  res.json({
-                    success: true,
-                    token: "Bearer " + token
-                  });
-                });
-              } else {
-                // Sign token
-                jwt.sign(
-                  payload,
-                  keys.secretOrKey,
-                  {
-                    expiresIn: 36000
-                  },
-                  (err, token) => {
-                    res.json({
-                      success: true,
-                      token: "Bearer " + token
-                    });
-                  }
-                );
-              }
-            } else {
-              errors.info = "Not an admin";
-              return res.status(400).json(errors);
-            }
+          if (userFields.remember_me) {
+            // Sign token without expiration
+            jwt.sign(payload, keys.secretOrKey, (err, token) => {
+              res.json({
+                success: true,
+                token: "Bearer " + token
+              });
+            });
           } else {
-            // User matched
-            const payload = {
-              id: user.id,
-              email: user.email,
-              username: user.username,
-              name: user.name,
-              avatar: user.avatar,
-              admin_role: user.admin_role
-            }; // Create JWT payload
-
-            if (req.body.remember_me) {
-              // Sign token
-              jwt.sign(payload, keys.secretOrKey, (err, token) => {
+            // Sign token with expiration
+            jwt.sign(
+              payload,
+              keys.secretOrKey,
+              {
+                expiresIn: 36000
+              },
+              (err, token) => {
                 res.json({
                   success: true,
                   token: "Bearer " + token
                 });
-              });
-            } else {
-              // Sign token
-              jwt.sign(
-                payload,
-                keys.secretOrKey,
-                {
-                  expiresIn: 36000
-                },
-                (err, token) => {
-                  res.json({
-                    success: true,
-                    token: "Bearer " + token
-                  });
-                }
-              );
-            }
+              }
+            );
           }
         } else {
           errors.password = "Password incorrect";
@@ -506,16 +439,19 @@ router.delete(
   "/remove/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
+    // Check if user requesting is admin [UNUSED]
+    // if (req.user.admin_role === false) {
+    //   return res.status(401).json({ authorized: false });
+    // }
 
+    // Get user by given ID
     User.findById(req.params.id)
       .then(user => {
+        // Remove user from database
         user.remove().then(() => res.json({ success: true }));
       })
       .catch(err =>
-        res.status(404).json({ usernotfound: "User not found with that ID" })
+        res.status(404).json({ user_not_found: "User not found with that ID" })
       );
   }
 );
