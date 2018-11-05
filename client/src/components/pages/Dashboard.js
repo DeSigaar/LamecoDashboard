@@ -82,7 +82,6 @@ class Dashboard extends Component {
   render() {
     document.title = "Dashboard | Laméco Dashboard";
 
-    // stuff
     let dashboardContent;
     if (this.state.loaded) {
       dashboardContent = this.renderCompanyList();

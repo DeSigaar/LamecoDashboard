@@ -72,7 +72,8 @@ class AdminProfile extends Component {
                 <img className="profileImg" src={user.avatar} alt="" />
               </div>
               <div className="info">
-                <h2>{user.username}</h2>
+                <h2>{user.name}</h2>
+                <h5>{user.email}</h5>
               </div>
             </div>
             <form onSubmit={this.onSubmit} className="adminForm">

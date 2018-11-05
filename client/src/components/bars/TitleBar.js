@@ -43,7 +43,7 @@ class TitleBar extends Component {
             </Link>
           </li>
           <li onClick={this.onDropdownToggle}>
-            <i className="material-icons">more_vert</i>
+            <i className="material-icons gray-hover-black">more_vert</i>
             {titleBarDropdown}
           </li>
         </ul>

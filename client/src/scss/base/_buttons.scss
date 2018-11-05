@@ -40,8 +40,6 @@
     top: 0;
     background: $color-red;
     z-index: -1;
-    -ms-transform: translate(-110%, 0) skew(45deg);
-    -webkit-transform: translate(-110%, 0) skew(45deg);
     transform: translate(-110%, 0) skew(45deg);
     box-sizing: border-box;
     background-clip: padding-box;
@@ -50,7 +48,6 @@
   &:active {
     color: $color-white;
     &::before {
-      background-color: $color-red;
       left: 130%;
     }
   }

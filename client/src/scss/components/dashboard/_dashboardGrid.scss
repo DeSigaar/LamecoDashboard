@@ -1,4 +1,4 @@
-.dashboard{
+.dashboard {
   overflow-y: hidden;
 
   .mainContainer {
@@ -7,7 +7,7 @@
     grid-template-rows: 100vh;
     grid-template-areas: "sideBar dashboard";
     padding-top: 56px;
-    height:100vh;
+    height: 100vh;
 
     .dashboardGrid {
       grid-area: dashboard;
@@ -19,6 +19,9 @@
         padding: 10px 0 5px;
         font-size: 20px;
         color: $color-grey;
+      }
+      > div > div > h2 {
+        color: $color-red;
       }
     }
   }
