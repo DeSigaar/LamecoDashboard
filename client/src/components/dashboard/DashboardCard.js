@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 
 class DashboardCard extends Component {
   render() {
@@ -9,7 +8,6 @@ class DashboardCard extends Component {
 
     const linkEdit = `/dashboard-edit/${handle}`;
     const linkShow = `/${companyhandle}/${handle}`;
-    const linkShare = `/${companyhandle}/${handle}`;
     return (
       <div className="dashboardCard">
         <span>{this.props.name}</span>

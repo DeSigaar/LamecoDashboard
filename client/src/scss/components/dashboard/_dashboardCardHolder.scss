@@ -1,4 +1,9 @@
 .cardHolder {
   display: flex;
   flex-wrap: wrap;
+
+  > div {
+    font-weight: 700;
+    color: $color-grey;
+  }
 }
