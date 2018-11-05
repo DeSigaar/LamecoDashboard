@@ -24,6 +24,10 @@ class Dashboard extends Component {
     }
   }
 
+  onCompanyDelete = () => {
+    console.log("doet het");
+  };
+
   componentWillReceiveProps(nextProps) {
     this.setState({
       init: true
@@ -70,10 +74,12 @@ class Dashboard extends Component {
         {this.state.list.map((company, i) => {
           return (
             <div key={i}>
-              <h2>{company.name}</h2> 
-                <button className="iconOnly">
+              <div className="dashboardTitle">
+                <h2>{company.name}</h2> 
+                <button className="iconOnly" onClick={this.onCompanyDelete}>
                   <i className="material-icons">delete</i>
                 </button>
+              </div>
               <div key={i}>{this.renderDashboardList(company)}</div>
             </div>
           );

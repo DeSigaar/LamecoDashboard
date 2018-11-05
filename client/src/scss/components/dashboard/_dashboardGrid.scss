@@ -15,12 +15,18 @@
       overflow-y: auto;
       height: calc(100vh - 57px);
 
+      .dashboardTitle{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+
       h2 {
         padding: 10px 0 5px;
         font-size: 20px;
         color: $color-grey;
       }
-      > div > div > h2 {
+      > div > div > div > h2 {
         color: $color-red;
       }
     }

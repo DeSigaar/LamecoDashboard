@@ -59,19 +59,20 @@
 }
 
 .iconOnly {
-    align-self: flex-start;
     border: none;
-    padding: 0px;
     min-width: 0;
     background: none;
-
+    padding: 12px 0 5px;
+    margin-left: 10px;
+    color: $color-grey;
+    
     i {
       font-size: 17px;
     }
 
     &:hover{
       color: $color-red;
-      transition: 0.3 ease all;
+      transition: 0.3s ease all;
     }
 
     &:focus {
