@@ -7,14 +7,25 @@ class DashboardCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      copied: false
+      copied: false,
+      active: false
     };
-    let snackbar = undefined;
+    let snackbar = <div />;
   }
 
   toggleSnackbar = () => {
-    this.snackbar = <Snackbar text="Link Copied" />;
+    if (!this.state.active) {
+      this.setState({
+        active: true
+      });
+      setTimeout(() => {
+        this.setState({
+          active: false
+        });
+      }, 3000);
+    }
   };
+
   render() {
     const { handle } = this.props;
     const { companyhandle } = this.props;
@@ -41,7 +52,7 @@ class DashboardCard extends Component {
             </i>
           </CopyToClipboard>
         </div>
-        {this.snackbar}
+        {this.state.active && <Snackbar text="Link Copied" />}
       </div>
     );
   }

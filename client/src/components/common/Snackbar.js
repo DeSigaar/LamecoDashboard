@@ -2,20 +2,8 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 
 class Snackbar extends Component {
-  toggleSnackbar() {
-    if (this.props.toggle) {
-      setTimeout(() => {
-        this.props.toggle = false;
-      }, 3000);
-    } else {
-      this.props.toggle = true;
-    }
-  }
-
   render() {
-    console.log(this.props);
-    let snackbar = null;
-    return { snackbar };
+    return <div className="snackbar">{this.props.text}</div>;
   }
 }
 Snackbar.propTypes = {
