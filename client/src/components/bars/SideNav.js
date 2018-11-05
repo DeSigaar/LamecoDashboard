@@ -19,14 +19,13 @@ class SideNav extends Component {
 
     this.togglePopupDashboard = this.togglePopupDashboard.bind(this);
     this.togglePopupCompany = this.togglePopupCompany.bind(this);
-
-    if (!this.state.loaded) {
-      this.props.getCompanies();
-    }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.company.company.companies) {
+    if (
+      nextProps.company.company !== null &&
+      nextProps.company.company.companies
+    ) {
       this.setState({
         list: nextProps.company.company.companies,
         loaded: true

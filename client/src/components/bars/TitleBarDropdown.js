@@ -15,9 +15,7 @@ class TitleBarDropdown extends Component {
         <li>
           <Link to="/add-user">
             {/* Eeeeek inline styling, sorry hiervoor het is bijna 5 uur*/}
-            <i style={{ color: "#fff" }} className="material-icons">
-              person_add
-            </i>
+            <i className="material-icons white-icon">person_add</i>
           </Link>
         </li>
         <li onClick={this.onLogoutClick}>
