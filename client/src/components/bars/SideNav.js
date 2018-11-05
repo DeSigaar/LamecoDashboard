@@ -42,7 +42,7 @@ class SideNav extends Component {
 
     if (this.state.popupState === false) {
       for (var x = 0; x < myElements.length; x++) {
-        myElements[x].style.backgroundColor = "rgba(112, 112, 112, 0.5)";
+        myElements[x].style.backgroundColor = "rgb(178, 178, 178)";
       }
     } else {
       for (var x = 0; x < myElements.length; x++) {
@@ -60,7 +60,7 @@ class SideNav extends Component {
 
     if (this.state.popupState === false) {
       for (var i = 0; i < myElements.length; i++) {
-        myElements[i].style.backgroundColor = "rgba(112, 112, 112, 0.5)";
+        myElements[i].style.backgroundColor = "rgb(178, 178, 178)";
       }
     } else {
       for (var i = 0; i < myElements.length; i++) {
