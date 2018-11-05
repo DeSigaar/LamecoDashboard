@@ -7,40 +7,20 @@ class DashboardCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      copied: false,
-      snackbar: false
+      copied: false
     };
+    let snackbar = undefined;
   }
-  toggleSnackbar() {
-    if (this.state.snackbar) {
-      this.setState(state => ({
-        snackbar: false
-      }));
-    } else {
-      this.setState(state => ({
-        snackbar: true
-      }));
-    }
-  }
+
+  toggleSnackbar = () => {
+    this.snackbar = <Snackbar text="Link Copied" />;
+  };
   render() {
-    let snackbar = false;
     const { handle } = this.props;
     const { companyhandle } = this.props;
     const linkEdit = `/dashboard-edit/${handle}`;
     const linkShow = `/${companyhandle}/${handle}`;
     const linkShare = `${window.location.href}${companyhandle}/${handle}`;
-
-    if (this.state.snackbar) {
-      snackbar = <Snackbar text="Link copied" />;
-      alert("Work");
-      setTimeout(() => {
-        this.setState(state => ({
-          snackbar: false
-        }));
-      }, 3000);
-    } else {
-      snackbar = null;
-    }
 
     return (
       <div className="dashboardCard">
@@ -57,15 +37,12 @@ class DashboardCard extends Component {
             text={linkShare}
             onCopy={() => this.setState({ copied: true })}
           >
-            <i
-              onClick={() => this.setState({ snackbar: true })}
-              className="material-icons"
-            >
+            <i onClick={this.toggleSnackbar} className="material-icons">
               share
             </i>
           </CopyToClipboard>
         </div>
-        {snackbar}
+        {this.snackbar}
       </div>
     );
   }
