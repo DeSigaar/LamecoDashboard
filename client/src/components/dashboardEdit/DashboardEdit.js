@@ -283,6 +283,10 @@ class DashboardEdit extends Component {
     document.getElementById("dashboardH").focus();
   };
 
+  onDashboardDelete = () => {
+    console.log("Delete");
+  };
+
   /* This render function, renders the grid, dropdown-menu, 'Add Item'-button
 	 * and 'Reset Layout'-button. This is also where the createElement() function
 	 * is called for each grid item.
@@ -333,6 +337,7 @@ class DashboardEdit extends Component {
               handleChange={this.handleChange}
               onAddItem={this.onAddItem}
               onLayoutReset={this.onLayoutReset}
+              onDashboardDelete={this.onDashboardDelete}
             />
           </div>
           <div className="dashboardGrid">
