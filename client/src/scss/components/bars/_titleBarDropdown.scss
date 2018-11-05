@@ -15,11 +15,36 @@
     color: $color-white;
     padding: 0;
     margin-bottom: 10px;
+    opacity: 0;
     @include shadow($shadow-1);
+
+    transition: cubic-bezier(0.645, 0.045, 0.355, 1);
+    animation-name: yourAnimation;
+    animation-duration: 0.2s;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+
+    &:nth-child(2) {
+      animation-delay: 0.1s;
+    }
 
     i {
       padding-right: 0;
       font-size: 20px;
     }
+    i.white-icon {
+      color: #ffffff;
+    }
+  }
+}
+
+@keyframes yourAnimation {
+  0% {
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

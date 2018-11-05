@@ -56,11 +56,7 @@ class App extends Component {
                 path="/dashboard-edit/:handle"
                 component={DashboardEdit}
               />
-              <PrivateRoute
-                exact
-                path="/profile/admin"
-                component={AdminProfile}
-              />
+              <PrivateRoute exact path="/profile" component={AdminProfile} />
               <Route exact path="/:company/:dashboard" component={Page} />
               <Route component={Login} />
             </Switch>

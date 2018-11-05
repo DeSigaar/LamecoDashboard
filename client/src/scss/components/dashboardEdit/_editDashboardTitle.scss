@@ -1,0 +1,18 @@
+.editDashboardTitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 20px 0;
+  i {
+    color: $color-dark-white;
+    cursor: pointer;
+    &:hover {
+      color: $color-red;
+    }
+  }
+  .dashboardName {
+    h5 {
+      margin: 0;
+    }
+  }
+}

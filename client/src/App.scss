@@ -17,9 +17,9 @@
 
 //      /scss/components/bars
 @import "scss/components/bars/sideNav";
-@import "scss/components/bars/dashboardEditSideNav";
 @import "scss/components/bars/titleBar";
 @import "scss/components/bars/titleBarDropdown";
+@import "scss/components/bars/snackbar";
 
 //      /scss/components/gridItems
 @import "scss/components/gridItems/clock";
@@ -30,7 +30,6 @@
 // User components
 @import "scss/components/user/login";
 @import "scss/components/user/adminProfile";
-@import "scss/components/user/dashboardEdit";
 
 // Popup
 @import "scss/components/card";
@@ -39,3 +38,8 @@
 @import "scss/components/dashboard/dashboardCard";
 @import "scss/components/dashboard/dashboardCardHolder";
 @import "scss/components/dashboard/dashboardGrid";
+
+//      /scss/components/dashboardEdit
+@import "scss/components/dashboardEdit/editDashboardTitle";
+@import "scss/components/dashboardEdit/widgetSelecter";
+@import "scss/components/dashboardEdit/dashboardEdit";

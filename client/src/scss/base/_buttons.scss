@@ -82,4 +82,21 @@
 
 .backButton {
   margin: 50px 0 0 50px;
+  width: fit-content;
+}
+
+.dashboardEdit {
+  .mainContainer {
+    .sideNav {
+      .backButton {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.bottomButtonsEdit {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

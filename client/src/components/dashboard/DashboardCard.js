@@ -1,13 +1,24 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class DashboardCard extends Component {
   render() {
+    const { handle } = this.props;
+    const { companyhandle } = this.props;
+
+    const linkEdit = `/dashboard-edit/${handle}`;
+    const linkShow = `/${companyhandle}/${handle}`;
     return (
       <div className="dashboardCard">
-        <span>Dashboard title</span>
+        <span>{this.props.name}</span>
         <div className="editButtons">
-          <i className="material-icons">edit</i>
-          <i className="material-icons">remove_red_eye</i>
+          <Link to={linkEdit}>
+            <i className="material-icons">edit</i>
+          </Link>
+          <Link to={linkShow}>
+            <i className="material-icons">remove_red_eye</i>
+          </Link>
+
           <i className="material-icons">share</i>
         </div>
       </div>

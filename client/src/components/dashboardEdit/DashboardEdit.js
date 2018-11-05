@@ -5,7 +5,10 @@ import axios from "axios";
 import TitleBar from "../bars/TitleBar";
 import Clock from "../gridItems/Clock";
 import Weather from "../gridItems/Weather";
-import DashboardEditSideNav from "./DashboardEditSideNav";
+import WidgetSelecter from "./WidgetSelecter";
+import EditDashboardTitle from "./EditDashboardTitle";
+import BackButton from "./Backbutton";
+import Loader from "../common/Loader";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const layout = [];
@@ -51,6 +54,8 @@ class DashboardEdit extends Component {
         handle: "",
         name: ""
       },
+      name: "",
+      handle: this.props.match.params.handle,
       loaded: false
     };
 
@@ -82,6 +87,8 @@ class DashboardEdit extends Component {
                   handle: value.handle,
                   name: value.name
                 },
+                name: value.name,
+                handle: value.handle,
                 loaded: true
               });
 
@@ -103,7 +110,6 @@ class DashboardEdit extends Component {
                 });
               }
             });
-            console.log(this.state);
           } else {
             // Not a valid handle -> Show error?
             this.props.history.push("/");
@@ -185,8 +191,7 @@ class DashboardEdit extends Component {
           minH: widgetProps.minH,
           maxH: widgetProps.maxH
         }),
-        selectedOption: { value: "", label: "Select..." },
-        newCounter: this.state.newCounter + 1
+        selectedOption: { value: "", label: "Select..." }
       });
     }
   };
@@ -198,7 +203,19 @@ class DashboardEdit extends Component {
     // remove content from grid && database
     saveToDB(this.state.items, this.state.dashboard.handle, true);
     this.setState({
-      items: ""
+      items: layout.map(function(i, key, list) {
+        return {
+          i: layout[key].i,
+          x: layout[key].x,
+          y: layout[key].y,
+          w: layout[key].w,
+          h: layout[key].h,
+          widget: layout[key].widget,
+          minW: layout[key].minW,
+          minH: layout[key].minH,
+          maxH: layout[key].maxH
+        };
+      })
     });
   };
 
@@ -238,6 +255,38 @@ class DashboardEdit extends Component {
     this.setState({ selectedOption });
   };
 
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  onBlur = e => {
+    this.setState({ [e.target.name]: e.target.value });
+
+    document.title = `${this.state.name} | Laméco Dashboard`;
+
+    saveDashboardToDB({
+      id: this.state.dashboard.id,
+      name: this.state.name,
+      handle: this.state.handle,
+      company: this.state.dashboard.company_id
+    });
+
+    this.props.history.push(`/dashboard-edit/${this.state.handle}`);
+  };
+
+  // change focus to the input when clicked on edit button
+  onChangeFocusName = () => {
+    document.getElementById("dashboardN").focus();
+  };
+
+  onChangeFocusHandle = () => {
+    document.getElementById("dashboardH").focus();
+  };
+
+  onDashboardDelete = () => {
+    console.log("Delete");
+  };
+
   /* This render function, renders the grid, dropdown-menu, 'Add Item'-button
 	 * and 'Reset Layout'-button. This is also where the createElement() function
 	 * is called for each grid item.
@@ -247,7 +296,11 @@ class DashboardEdit extends Component {
 
     let grid;
     if (!loaded) {
-      grid = <div className="noItems">Loading...</div>;
+      grid = (
+        <div className="loader-center">
+          <Loader />
+        </div>
+      );
     } else {
       if (items.length > 0) {
         grid = (
@@ -269,14 +322,22 @@ class DashboardEdit extends Component {
         <TitleBar />
         <div className="mainContainer">
           <div className="sideNav shadow2">
-            <DashboardEditSideNav
-              history={this.props.history}
+            <BackButton history={this.props.history} />
+            <EditDashboardTitle
+              onChange={this.onChange}
+              onChangeFocusName={this.onChangeFocusName}
+              onChangeFocusHandle={this.onChangeFocusHandle}
+              onBlur={this.onBlur}
+              company={this.state.company}
+              name={this.state.name}
+              handle={this.state.handle}
+            />
+            <WidgetSelecter
               selectedOption={selectedOption}
               handleChange={this.handleChange}
               onAddItem={this.onAddItem}
               onLayoutReset={this.onLayoutReset}
-              company={this.state.company}
-              dashboard={this.state.dashboard}
+              onDashboardDelete={this.onDashboardDelete}
             />
           </div>
           <div className="dashboardGrid">
@@ -301,6 +362,10 @@ function saveToDB(content, handle, reset) {
   axios.post(`/api/dashboard/update/layout/${handle}`, {
     content
   });
+}
+
+function saveDashboardToDB(dashboard) {
+  axios.post(`/api/dashboard/update/${dashboard.id}`, dashboard);
 }
 
 /* returnProps function returns widget-specific properties like width, min width,
