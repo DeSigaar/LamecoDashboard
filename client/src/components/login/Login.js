@@ -54,27 +54,28 @@ class Login extends Component {
 
   componentDidMount() {
     const location = this.props.history.location.pathname;
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/");
+    const { history, auth, match } = this.props;
+    if (auth.isAuthenticated) {
+      history.push("/");
     } else if (location.startsWith("/password-reset/")) {
-      axios.get(`/api/forgot/${this.props.match.params.key}`).then(res => {
+      axios.get(`/api/forgot/${match.params.key}`).then(res => {
         if (!res.data) {
           this.setState({ reverse: "reverse" });
-          this.props.history.push("/login");
+          history.push("/login");
         }
       });
-      axios.get(`/api/forgot/info/${this.props.match.params.key}`).then(res => {
+      axios.get(`/api/forgot/info/${match.params.key}`).then(res => {
         const currentTime = Date.now();
         if (res.data.time < Math.round(currentTime)) {
-          axios.delete(`/api/forgot/remove/${this.props.match.params.key}`);
+          axios.delete(`/api/forgot/remove/${match.params.key}`);
           this.setState({
             forgotpassword: "Password reset link has expired",
             reverse: "reverse"
           });
-          this.props.history.push("/login");
+          history.push("/login");
         } else {
           this.setState({
-            key: this.props.match.params.key,
+            key: match.params.key,
             email: res.data.email
           });
         }

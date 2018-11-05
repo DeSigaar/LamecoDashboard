@@ -17,25 +17,24 @@
     "gravatar": "^1.6.0",
     "jsonwebtoken": "^8.3.0",
     "jwt-decode": "^2.2.0",
-    "mongoose": "^5.3.6",
+    "mongoose": "^5.3.8",
     "node-sass-chokidar": "^1.3.4",
     "nodemailer": "^4.6.8",
-    "npm-run-all": "^4.1.3",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "react-scripts": "^2.0.5",
+    "react-scripts": "^2.1.1",
     "validator": "^10.8.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.5"
   },
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
-    "install-server": "npm install",
-    "install-client": "npm install --prefix client",
-    "install-all": "npm install && npm install --prefix client",
+    "install-server": "npm install --save axios bcryptjs body-parser concurrently express gravatar jsonwebtoken jwt-decode mongoose node-sass-chokidar nodemailer passport passport-jwt react-scripts validator && npm install --save-dev nodemon",
+    "install-client": "npm install --save axios classnames jwt-decode moment react react-copy-to-clipboard react-dom react-dropdown react-grid-layout react-live-clock react-moment react-open-weather react-redux react-router-dom react-scripts react-select redux redux-thunk --prefix client && npm install --save-dev node-sass-chokidar npm-run-all --prefix client",
+    "install-all": "npm run install-server && npm run install-client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run heroku-build --prefix client"
   },

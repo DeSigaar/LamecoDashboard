@@ -52,6 +52,7 @@ class DashboardCard extends Component {
       <div>
         {snackbar}
         {console.log(snackbar)}
+      <div className="dashboardCard">
         <span>{this.props.name}</span>
         <div className="editButtons">
           <Link to={linkEdit}>
