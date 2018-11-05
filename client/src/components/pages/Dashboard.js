@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TitleBar from "../bars/TitleBar";
 import SideNav from "../bars/SideNav";
+import axios from "axios";
 import SideNavContainer from "../bars/SideNavContainer";
 import DashboardCard from "../dashboard/DashboardCard";
 import DashboardGrid from "../dashboard/DashboardGrid";
@@ -24,8 +25,9 @@ class Dashboard extends Component {
     }
   }
 
-  onCompanyDelete = () => {
-    console.log("doet het");
+  onCompanyDelete = i => {
+    console.log(i);
+    // deleteCompany({ id: i });
   };
 
   componentWillReceiveProps(nextProps) {
@@ -75,8 +77,11 @@ class Dashboard extends Component {
           return (
             <div key={i}>
               <div className="dashboardTitle">
-                <h2>{company.name}</h2> 
-                <button className="iconOnly" onClick={this.onCompanyDelete}>
+                <h2>{company.name}</h2>
+                <button
+                  className="iconOnly"
+                  onClick={this.onCompanyDelete(this.state.list.i)}
+                >
                   <i className="material-icons">delete</i>
                 </button>
               </div>
@@ -87,7 +92,6 @@ class Dashboard extends Component {
       </div>
     );
   };
-
   render() {
     document.title = "Dashboard | Laméco Dashboard";
 
@@ -115,6 +119,10 @@ class Dashboard extends Component {
       </div>
     );
   }
+}
+
+function deleteCompany(id) {
+  axios.post(`/api/dashboard/update/${id}`);
 }
 
 Dashboard.propTypes = {

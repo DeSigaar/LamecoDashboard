@@ -284,7 +284,9 @@ class DashboardEdit extends Component {
   };
 
   onDashboardDelete = () => {
-    console.log("Delete");
+    deleteDashboard({
+      id: this.state.dashboard.id
+    });
   };
 
   /* This render function, renders the grid, dropdown-menu, 'Add Item'-button
@@ -366,6 +368,10 @@ function saveToDB(content, handle, reset) {
 
 function saveDashboardToDB(dashboard) {
   axios.post(`/api/dashboard/update/${dashboard.id}`, dashboard);
+}
+
+function deleteDashboard(dashboard) {
+  axios.post(`/api/dashboard/remove/${dashboard.id}`, dashboard);
 }
 
 /* returnProps function returns widget-specific properties like width, min width,
