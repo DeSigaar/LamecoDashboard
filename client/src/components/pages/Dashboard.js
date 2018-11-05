@@ -8,6 +8,7 @@ import DashboardGrid from "../dashboard/DashboardGrid";
 import { getCompanies } from "../../actions/companyActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+
 import Loader from "../common/Loader";
 
 class Dashboard extends Component {
