@@ -39,14 +39,15 @@ class Dashboard extends Component {
   };
 
   handleSelectClick = e => {
-    let selectedItem = e.target.value;
-    // console.log(selectedItem);
+    let selectedItem = e.target.innerText;
+    var myElements = document.querySelectorAll(".titleBar");
+    console.log(selectedItem);
   };
 
   renderCompanyList = () => {
     return (
       <div className="companyList">
-        <ul className="List">
+        <ul className="list">
           {this.state.companyList.map((company, i) => {
             return (
               <li key={i} onClick={this.handleSelectClick.bind(this)}>

@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import { getCompanies } from "../../actions/companyActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Popup from "../popups/Popup";
 import isEmpty from "../../validation/is-empty";
 import { Link } from "react-router-dom";
+
+const portalContainer = document.getElementById("card");
 
 class SideNav extends Component {
   constructor(props) {
@@ -38,17 +41,17 @@ class SideNav extends Component {
   };
   togglePopupDashboard = title => {
     this.setState({ popupState: !this.state.popupState, title });
-    var myElements = document.querySelectorAll(".titleBar");
+    // var myElements = document.querySelectorAll(".titleBar");
 
-    if (this.state.popupState === false) {
-      for (var x = 0; x < myElements.length; x++) {
-        myElements[x].style.backgroundColor = "rgb(178, 178, 178)";
-      }
-    } else {
-      for (var x = 0; x < myElements.length; x++) {
-        myElements[x].style.backgroundColor = "rgb(255, 255, 255)";
-      }
-    }
+    // if (this.state.popupState === false) {
+    //   for (var x = 0; x < myElements.length; x++) {
+    //     myElements[x].style.backgroundColor = "rgb(178, 178, 178)";
+    //   }
+    // } else {
+    //   for (var x = 0; x < myElements.length; x++) {
+    //     myElements[x].style.backgroundColor = "rgb(255, 255, 255)";
+    //   }
+    // }
   };
   togglePopupCompany = title => {
     this.setState({
@@ -56,17 +59,17 @@ class SideNav extends Component {
       title
     });
 
-    var myElements = document.querySelectorAll(".titleBar");
+    // var myElements = document.querySelectorAll(".titleBar");
 
-    if (this.state.popupState === false) {
-      for (var i = 0; i < myElements.length; i++) {
-        myElements[i].style.backgroundColor = "rgb(178, 178, 178)";
-      }
-    } else {
-      for (var i = 0; i < myElements.length; i++) {
-        myElements[i].style.backgroundColor = "rgb(255, 255, 255)";
-      }
-    }
+    // if (this.state.popupState === false) {
+    //   for (var i = 0; i < myElements.length; i++) {
+    //     myElements[i].style.backgroundColor = "rgb(178, 178, 178)";
+    //   }
+    // } else {
+    //   for (var i = 0; i < myElements.length; i++) {
+    //     myElements[i].style.backgroundColor = "rgb(255, 255, 255)";
+    //   }
+    // }
   };
   renderCompanyList = () => {
     return (
@@ -104,12 +107,13 @@ class SideNav extends Component {
   render() {
     let popupState;
     if (this.state.popupState) {
-      popupState = (
+      popupState = ReactDOM.createPortal(
         <Popup
           title={this.state.title}
           closePopup={this.togglePopupCompany}
           companyList={this.state.list}
-        />
+        />,
+        portalContainer
       );
     }
 
