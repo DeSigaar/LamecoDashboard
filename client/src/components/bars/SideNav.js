@@ -94,30 +94,26 @@ class SideNav extends Component {
     let companyList;
     if (isEmpty(this.state.list)) {
       companyList = (
-        <div className="companyList">
-          <ul className="list">
-            <li>
-              <div className="listTitle" />
-              <ul className="subList">
-                <li />
-                <li />
-                <li />
-              </ul>
-            </li>
-            <li>
-              <div className="listTitle" />
-              <ul className="subList">
-                <li />
-                <li />
-              </ul>
-            </li>
-          </ul>
-        </div>
+        <ul className="list">
+          <li>
+            <div className="listTitle" />
+            <ul className="subList">
+              <li />
+              <li />
+              <li />
+            </ul>
+          </li>
+          <li>
+            <div className="listTitle" />
+            <ul className="subList">
+              <li />
+              <li />
+            </ul>
+          </li>
+        </ul>
       );
     } else {
-      companyList = (
-        <div className="companyList">{this.renderCompanyList()}</div>
-      );
+      companyList = this.renderCompanyList();
     }
 
     return (
