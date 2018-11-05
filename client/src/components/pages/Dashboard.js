@@ -56,7 +56,10 @@ class Dashboard extends Component {
         {this.state.list.map((company, i) => {
           return (
             <div key={i}>
-              <h2>{company.name}</h2>
+              <h2>{company.name}</h2> 
+                <button className="iconOnly">
+                  <i className="material-icons">delete</i>
+                </button>
               <div key={i}>{this.renderDashboardList(company)}</div>
             </div>
           );

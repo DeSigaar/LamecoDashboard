@@ -26,6 +26,7 @@
   &.small {
     padding: 4px 10px 4px 8px;
   }
+
   &.red {
     color: $color-white;
     background-color: $color-red;
@@ -59,6 +60,28 @@
     box-shadow: none;
   }
 }
+
+.iconOnly {
+    align-self: flex-start;
+    border: none;
+    padding: 0px;
+    min-width: 0;
+    background: none;
+
+    i {
+      font-size: 17px;
+    }
+
+    &:hover{
+      color: $color-red;
+      transition: 0.3 ease all;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
 
 .addButton {
   border-radius: 0px;
