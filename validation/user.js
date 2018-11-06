@@ -29,7 +29,6 @@ module.exports = function validateRegisterInput(data, passwordChange) {
 
   // Check if password will be changed or not
   if (passwordChange) {
-    console.log("Bla");
     // Check for anything wrong with the password
     data.password = !isEmpty(data.password) ? data.password : "";
     if (Validator.isEmpty(data.password)) {

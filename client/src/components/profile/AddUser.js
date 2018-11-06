@@ -41,7 +41,6 @@ class UpdateProfile extends Component {
     };
 
     this.props.addUser(profileData, this.props.history);
-    alert("User created??");
   };
   render() {
     const { errors, name, email, password, password2, username } = this.state;
@@ -51,10 +50,7 @@ class UpdateProfile extends Component {
         <TitleBar />
         <div className="profileContainer">
           {/* Back button */}
-          <div
-            className="backButton"
-            onClick={() => history.push("/")}
-          >
+          <div className="backButton" onClick={() => history.push("/")}>
             <button className="btn icon red">
               <i className="material-icons">arrow_back</i>
               <span>Back</span>

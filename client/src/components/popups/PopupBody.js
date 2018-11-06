@@ -8,7 +8,6 @@ class PopupBody extends Component {
   // }
 
   componentDidMount() {
-    console.log(this.props);
     this.setState({
       companyList: this.props.companyList
     });
@@ -17,7 +16,7 @@ class PopupBody extends Component {
   render() {
     let isDashboard = false;
     let isCompany = false;
-    console.log(this.props.title);
+
     if (this.props.title === "Add Dashboard") {
       isDashboard = true;
     }

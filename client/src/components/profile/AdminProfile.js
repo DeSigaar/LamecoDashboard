@@ -51,7 +51,6 @@ class AdminProfile extends Component {
     };
 
     this.props.updateProfile(profileData, this.props.history);
-    alert("Profile updated 😂😂😂😂");
   };
   render() {
     const { errors, email, name, username, password, password2 } = this.state;

@@ -34,9 +34,7 @@ export const deleteDashboard = id => dispatch => {
 export const addCompany = data => dispatch => {
   axios
     .post("/api/company/add", data)
-    .then(res => {
-      console.log("company added");
-    })
+    .then(res => {})
     .catch(err => {
       dispatch({
         type: GET_ERRORS,

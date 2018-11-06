@@ -30,7 +30,7 @@ mongoose
       useNewUrlParser: true
     }
   )
-  .then(() => console.log("MongoDB connected..."))
+  .then(() => console.log("MongolDB connected..."))
   .catch(err => console.log(err));
 
 // Passport middleware
