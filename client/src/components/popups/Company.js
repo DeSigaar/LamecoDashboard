@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import { addCompany } from "../../actions/companyActions";
+import TextFieldGroup from "../common/TextField";
+import PropTypes from "prop-types";
+import { getCompanies } from "../../actions/companyActions";
+import { connect } from "react-redux";
 
 class Company extends Component {
   constructor(props) {
@@ -6,9 +11,14 @@ class Company extends Component {
     this.state = {
       name: "",
       handle: "",
-      remember_me: false,
       errors: {}
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
   }
 
   onChange = e => {
@@ -17,6 +27,13 @@ class Company extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+    const company = {
+      name: this.state.name,
+      handle: this.state.handle
+    };
+    this.props.addCompany(company);
+    alert("company added");
+    this.props.getCompanies();
   };
 
   handleClick = e => {
@@ -33,27 +50,25 @@ class Company extends Component {
             <div className="middleForm">
               <div className="formField">
                 <p>Company</p>
-                <input
+                <TextFieldGroup
                   type="text"
-                  name="company"
+                  name="name"
                   placeholder="Ex.Fontys University of Applied Sciences"
                   onChange={this.onChange}
                   value={this.state.name}
+                  error={errors.name}
                 />
-                {errors.name && <div className="invalid"> {errors.name} </div>}
               </div>
               <div className="formField">
                 <p>Handle</p>
-                <input
+                <TextFieldGroup
                   type="text"
                   name="handle"
                   placeholder="Ex. Fontys"
                   onChange={this.onChange}
                   value={this.state.handle}
+                  error={errors.handle}
                 />
-                {errors.handle && (
-                  <div className="invalid"> {errors.handle} </div>
-                )}
               </div>
             </div>
             <button className="btn" type="submit">
@@ -73,4 +88,17 @@ class Company extends Component {
   }
 }
 
-export default Company;
+Company.propTypes = {
+  addCompany: PropTypes.func.isRequired,
+  getCompanies: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  user: state.auth.user,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { addCompany, getCompanies }
+)(Company);

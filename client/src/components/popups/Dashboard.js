@@ -38,12 +38,16 @@ class Dashboard extends Component {
     this.props.closePopup();
   };
 
-  handleSelectClick = e => {};
+  handleSelectClick = e => {
+    let selectedItem = e.target.innerText;
+    var myElements = document.querySelectorAll(".titleBar");
+    console.log(selectedItem);
+  };
 
   renderCompanyList = () => {
     return (
       <div className="companyList">
-        <ul className="List">
+        <ul className="list">
           {this.state.companyList.map((company, i) => {
             return (
               <li key={i} onClick={this.handleSelectClick.bind(this)}>

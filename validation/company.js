@@ -10,7 +10,7 @@ module.exports = function validateCompanyInput(data) {
     errors.name = "Name field is required";
   } else if (
     !Validator.isLength(data.name, {
-      min: 6
+      min: 2
     })
   ) {
     errors.name = "Name must be at least 6 characters";
