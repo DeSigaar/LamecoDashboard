@@ -51,6 +51,7 @@ class DashboardCard extends Component {
               share
             </i>
           </CopyToClipboard>
+          <i className="material-icons">delete</i>
         </div>
         {this.state.active && <Snackbar text="Link Copied" />}
       </div>
