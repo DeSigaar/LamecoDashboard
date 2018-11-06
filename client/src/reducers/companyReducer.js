@@ -1,9 +1,7 @@
-
 import {
-  GET_COMPANIES,
   DELETE_COMPANY,
   DELETE_DASHBOARD,
-  GET_COMPANIES, 
+  GET_COMPANIES,
   ADD_COMPANIES
 } from "../actions/types";
 

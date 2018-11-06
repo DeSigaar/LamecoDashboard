@@ -4,8 +4,7 @@ import {
   GET_COMPANIES,
   GET_ERRORS,
   DELETE_COMPANY,
-  DELETE_DASHBOARD,
-  ADD_COMPANIES
+  DELETE_DASHBOARD
 } from "./types";
 export const getCompanies = () => dispatch => {
   setTimeout(() => {
