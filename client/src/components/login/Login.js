@@ -37,33 +37,33 @@ class Login extends Component {
   }
 
   componentWillMount() {
-    const location = this.props.history.location.pathname;
-    if (
-      location === "/sent-password-reset" &&
-      this.state.email === "" &&
-      this.state.time === ""
-    ) {
-      this.props.history.push("/login");
-    } else if (
-      location === "/password-reset-success" &&
-      this.state.email === ""
-    ) {
-      this.props.history.push("/login");
+    const { history } = this.props;
+    const { email, time } = this.state;
+    const location = history.location.pathname;
+    // Redirect if no data is found for password reset sent and success
+    if (location === "/sent-password-reset" && email === "" && time === "") {
+      history.push("/login");
+    } else if (location === "/password-reset-success" && email === "") {
+      history.push("/login");
     }
   }
 
   componentDidMount() {
-    const location = this.props.history.location.pathname;
     const { history, auth, match } = this.props;
+    const location = history.location.pathname;
+
     if (auth.isAuthenticated) {
       history.push("/");
     } else if (location.startsWith("/password-reset/")) {
+      // Check for the key
       axios.get(`/api/forgot/${match.params.key}`).then(res => {
         if (!res.data) {
           this.setState({ reverse: "reverse" });
           history.push("/login");
         }
       });
+
+      // Get info of the key
       axios.get(`/api/forgot/info/${match.params.key}`).then(res => {
         const currentTime = Date.now();
         if (res.data.time < Math.round(currentTime)) {
@@ -102,17 +102,18 @@ class Login extends Component {
     this.setState({ forgotpassword: "", reverse: "" });
     this.props.clearErrors();
 
-    const location = this.props.history.location.pathname;
+    const { history } = this.props;
+    const location = history.location.pathname;
     switch (true) {
       case location.startsWith("/forgot-password"):
       case location.startsWith("/sent-password-reset"):
       case location.startsWith("/password-reset-success"):
-        this.props.history.push("/login");
+        history.push("/login");
         this.setState({ email: "", key: "" });
         break;
       case location.startsWith("/login"):
       default:
-        this.props.history.push("/forgot-password");
+        history.push("/forgot-password");
         this.setState({ info: "", password: "" });
         break;
     }
@@ -152,11 +153,9 @@ class Login extends Component {
   onSubmitPassword = e => {
     e.preventDefault();
 
-    const resetData = {
-      email: this.state.email,
-      newPassword1: this.state.newPassword1,
-      newPassword2: this.state.newPassword2
-    };
+    const { email, newPassword1, newPassword2 } = this.state;
+
+    const resetData = { email, newPassword1, newPassword2 };
 
     this.props.updateUserWithEmail(resetData, this.props.history);
   };
@@ -164,17 +163,25 @@ class Login extends Component {
   onSubmitLogin = e => {
     e.preventDefault();
 
-    const userData = {
-      info: this.state.info,
-      password: this.state.password,
-      remember_me: this.state.remember_me,
-      type: "admin_login"
-    };
+    const { info, password, remember_me } = this.state;
+
+    const userData = { info, password, remember_me };
 
     this.props.loginUser(userData);
   };
 
   setupContainerContent = location => {
+    const {
+      reverse,
+      email,
+      time,
+      password,
+      newPassword1,
+      newPassword2,
+      info,
+      remember_me,
+      errors
+    } = this.state;
     switch (true) {
       case location.startsWith("/forgot-password"):
         document.title = "Forgot password | Laméco Dashboard";
@@ -183,9 +190,9 @@ class Login extends Component {
             onChange={this.onChange}
             onSubmit={this.onSubmitForgot}
             onForgot={this.onForgot}
-            reverse={this.state.reverse}
-            email={this.state.email}
-            error={this.state.errors.email}
+            reverse={reverse}
+            email={email}
+            error={errors.email}
           />
         );
         break;
@@ -193,8 +200,8 @@ class Login extends Component {
         document.title = "Password request sent | Laméco Dashboard";
         this.loginContainerContent = (
           <ForgotFormSuccess
-            email={this.state.email}
-            time={this.state.time}
+            email={email}
+            time={time}
             onForgot={this.onForgot}
           />
         );
@@ -203,23 +210,20 @@ class Login extends Component {
         document.title = "Password reset | Laméco Dashboard";
         this.loginContainerContent = (
           <PasswordReset
-            email={this.state.email}
-            newPassword1={this.state.newPassword1}
-            newPassword2={this.state.newPassword2}
-            reverse={this.state.reverse}
+            email={email}
+            newPassword1={newPassword1}
+            newPassword2={newPassword2}
+            reverse={reverse}
             onSubmit={this.onSubmitPassword}
             onChange={this.onChange}
-            errors={this.state.errors}
+            errors={errors}
           />
         );
         break;
       case location.startsWith("/password-reset-success"):
         document.title = "Password reset success | Laméco Dashboard";
         this.loginContainerContent = (
-          <PasswordResetSuccess
-            email={this.state.email}
-            onForgot={this.onForgot}
-          />
+          <PasswordResetSuccess email={email} onForgot={this.onForgot} />
         );
         break;
       case location.startsWith("/login"):
@@ -231,10 +235,10 @@ class Login extends Component {
             onChange={this.onChange}
             onTick={this.onTick}
             onForgot={this.onForgot}
-            info={this.state.info}
-            password={this.state.password}
-            remember_me={this.state.remember_me}
-            errors={this.state.errors}
+            info={info}
+            password={password}
+            remember_me={remember_me}
+            errors={errors}
           />
         );
         break;

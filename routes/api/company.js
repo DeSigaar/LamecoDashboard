@@ -42,6 +42,7 @@ router.get(
         // Loop through companies
         Object.entries(companies_result).forEach(([key, value]) => {
           companies_result[key] = {
+            id: companies_result[key].id,
             name: companies_result[key].name,
             handle: companies_result[key].handle,
             dashboards: []
@@ -63,6 +64,7 @@ router.get(
                 handle: value.handle
               });
               companies_result[company_key] = {
+                id: companies_result[company_key].id,
                 name: companies_result[company_key].name,
                 handle: companies_result[company_key].handle,
                 dashboards: dashboards_array

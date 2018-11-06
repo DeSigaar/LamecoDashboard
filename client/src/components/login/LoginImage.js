@@ -6,9 +6,7 @@ const LoginImage = () => {
       <div className="overlayImage" />
       <div className="imageText">
         <h1>Laméco</h1>
-        <h4>
-          Making online <strong>successful</strong>
-        </h4>
+        <h4>Making online successful</h4>
       </div>
     </div>
   );
