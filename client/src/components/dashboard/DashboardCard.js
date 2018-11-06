@@ -72,7 +72,6 @@ class DashboardCard extends Component {
               share
             </i>
           </CopyToClipboard>
-          {console.log(this.props)}
           <i
             onClick={() => this.onDashboardDelete(this.props.id)}
             className="material-icons"
