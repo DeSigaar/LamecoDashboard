@@ -19,13 +19,14 @@
     font-weight: normal;
     list-style-type: none;
     padding-left: 25px;
-    li {
+    cursor: default;
+    li.dashboardLink {
       padding: 5px 5px;
       position: relative;
       a {
         text-decoration: none;
         color: $color-grey;
-        transition: .3s ease all;
+        transition: 0.3s ease all;
         &:hover {
           color: $color-red;
         }
@@ -45,6 +46,11 @@
       &:last-child {
         margin-bottom: 5px;
       }
+    }
+    li.noDashboards {
+      color: $color-grey;
+      cursor: text;
+      margin-bottom: 5px;
     }
   }
   .listTitle:empty {
