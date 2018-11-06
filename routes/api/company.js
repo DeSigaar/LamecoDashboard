@@ -60,6 +60,7 @@ router.get(
               // If dashboard company is the same as the company id
               // So the dashboard matches the company
               dashboards_array.push({
+                id: value.id,
                 name: value.name,
                 handle: value.handle
               });
