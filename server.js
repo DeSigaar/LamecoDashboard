@@ -39,7 +39,7 @@ app.use(passport.initialize());
 // Passport config
 require("./config/passport")(passport);
 
-// Use routes
+// Use API routes
 app.use("/api/user", user);
 app.use("/api/forgot", forgot);
 app.use("/api/company", company);
@@ -54,6 +54,8 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+// Set port to 5000 or the port running on the remote server
 const port = process.env.PORT || 5000;
 
+// Start the server
 app.listen(port, () => console.log(`Server running on port ${port}`));

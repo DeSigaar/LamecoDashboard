@@ -13,9 +13,17 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.companyList[0].name);
-    this.setState({ companyList: this.props.companyList });
-    console.log(this.state.companyList);
+    this.setState({
+      companyList: this.props.companyList
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.company.company.companies) {
+      this.setState({
+        companyList: nextProps.company.company.companies
+      });
+    }
   }
 
   onChange = e => {
@@ -26,13 +34,31 @@ class Dashboard extends Component {
     e.preventDefault();
   };
 
-  handleClick = e => {
+  handleCloseClick = e => {
     this.props.closePopup();
+  };
+
+  handleSelectClick = e => {};
+
+  renderCompanyList = () => {
+    return (
+      <div className="companyList">
+        <ul className="List">
+          {this.state.companyList.map((company, i) => {
+            return (
+              <li key={i} onClick={this.handleSelectClick.bind(this)}>
+                {company.name}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    );
   };
 
   render() {
     const { errors } = this.state;
-    console.log(this.props.companyList);
+    console.log(this.state.companyList);
     return (
       <div>
         <div className="loginContainer">
@@ -40,11 +66,7 @@ class Dashboard extends Component {
             <div className="middleForm">
               <div className="formField">
                 <p>Select Company</p>
-                <div className="companyList">
-                  <ul>
-                    <li />
-                  </ul>
-                </div>
+                {this.renderCompanyList()}
                 {errors.name && <div className="invalid"> {errors.name} </div>}
               </div>
               <div className="formField">
@@ -67,7 +89,7 @@ class Dashboard extends Component {
             <button
               className="btn"
               type="submit"
-              onClick={this.handleClick.bind(this)}
+              onClick={this.handleCloseClick.bind(this)}
             >
               <span>Cancel</span>
             </button>

@@ -14,7 +14,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const layout = [];
 
 /* This class generates the layout for the web app. It renders the grid
- * and it's items, but also button's and a dropdown menu, to control the grid.
+ * and it's items, but also the side navigation with button's and a dropdown menu, to control the grid.
  */
 class DashboardEdit extends Component {
   static defaultProps = {
@@ -283,6 +283,12 @@ class DashboardEdit extends Component {
     document.getElementById("dashboardH").focus();
   };
 
+  onDashboardDelete = () => {
+    deleteDashboard({
+      id: this.state.dashboard.id
+    });
+  };
+
   /* This render function, renders the grid, dropdown-menu, 'Add Item'-button
 	 * and 'Reset Layout'-button. This is also where the createElement() function
 	 * is called for each grid item.
@@ -333,6 +339,7 @@ class DashboardEdit extends Component {
               handleChange={this.handleChange}
               onAddItem={this.onAddItem}
               onLayoutReset={this.onLayoutReset}
+              onDashboardDelete={this.onDashboardDelete}
             />
           </div>
           <div className="dashboardGrid">
@@ -361,6 +368,10 @@ function saveToDB(content, handle, reset) {
 
 function saveDashboardToDB(dashboard) {
   axios.post(`/api/dashboard/update/${dashboard.id}`, dashboard);
+}
+
+function deleteDashboard(dashboard) {
+  axios.post(`/api/dashboard/remove/${dashboard.id}`, dashboard);
 }
 
 /* returnProps function returns widget-specific properties like width, min width,

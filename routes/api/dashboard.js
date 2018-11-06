@@ -8,22 +8,11 @@ const validateDashboardInput = require("../../validation/dashboard");
 
 // Lad Dashboard model
 const Dashboard = require("../../models/Dashboard");
-// Load Company model
-const Company = require("../../models/Company");
 
 // @route   GET /api/dashboard/all
 // @desc    Get all dashboards
 // @access  Private
-router.get(
-  "/all",
-  passport.authenticate("jwt", {
-    session: false
-  }),
-  (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
-
+router.get("/all", (req, res) => {
     Dashboard.find().then(dashboards => res.json(dashboards));
   }
 );
@@ -37,35 +26,41 @@ router.post(
     session: false
   }),
   (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
+    // Check if user requesting is admin [UNUSED]
+    // if (req.user.admin_role === false) {
+    //   return res.status(401).json({ authorized: false });
+    // }
 
-    req.body.name = req.body.name
+    const dashboardFields = {};
+    dashboardFields.name = req.body.name
       .toLowerCase()
       .split(" ")
       .map(x => x.charAt(0).toUpperCase() + x.substring(1))
       .join(" ");
-    req.body.handle = req.body.handle
+    dashboardFields.handle = req.body.handle
       .toLowerCase()
       .trim()
       .replace(/\s+/g, "-");
+    dashboardFields.company = req.body.company;
 
-    const { errors, isValid } = validateDashboardInput(req.body);
+    const { errors, isValid } = validateDashboardInput(dashboardFields);
 
-    // Check validation
+    // Check if data is valid
     if (!isValid) {
       return res.status(400).json(errors);
     }
 
+    // Find dashboard in database with name
     Dashboard.findOne({
-      name: req.body.name
+      name: dashboardFields.name
     }).then(dashboard => {
       if (dashboard) {
         errors.name = "Name already exists";
       }
+
+      // Find dashboard in database with handle
       Dashboard.findOne({
-        handle: req.body.handle
+        handle: dashboardFields.handle
       }).then(dashboard => {
         if (dashboard) {
           errors.handle = "Handle already exists";
@@ -73,13 +68,15 @@ router.post(
         } else if (!isEmpty(errors)) {
           return res.status(400).json(errors);
         } else {
+          // Create new dashboard
           const newDashboard = new Dashboard({
-            company: req.body.company,
-            name: req.body.name,
-            handle: req.body.handle,
+            company: dashboardFields.company,
+            name: dashboardFields.name,
+            handle: dashboardFields.handle,
             content: ""
           });
 
+          // Save dashboard to database
           newDashboard.save().then(dashboard => res.json(dashboard));
         }
       });
@@ -92,14 +89,8 @@ router.post(
 // @access  Private
 router.get(
   "/:id",
-  passport.authenticate("jwt", {
-    session: false
-  }),
   (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
-
+    // Find dashboard in database by given ID
     Dashboard.findById(req.params.id)
       .then(dashboard => {
         dashboard.__v = undefined;
@@ -108,7 +99,7 @@ router.get(
       .catch(err =>
         res
           .status(404)
-          .json({ nodashboardfound: "No dashboard found with that ID" })
+          .json({ dashboard_not_found: "No dashboard found with that ID" })
       );
   }
 );
@@ -122,15 +113,16 @@ router.post(
     session: false
   }),
   (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
+    // Check if user requesting is admin [UNUSED]
+    // if (req.user.admin_role === false) {
+    //   return res.status(401).json({ authorized: false });
+    // }
 
     const handle = req.params.handle;
-
     const dashboardFields = {};
     dashboardFields.content = req.body.content;
 
+    // Update dashboard in database
     Dashboard.findOneAndUpdate(
       { handle },
       { $set: dashboardFields },
@@ -148,9 +140,10 @@ router.post(
     session: false
   }),
   (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
+    // Check if user requesting is admin [UNUSED]
+    // if (req.user.admin_role === false) {
+    //   return res.status(401).json({ authorized: false });
+    // }
 
     const dashboardFields = {};
     dashboardFields.dashboard = req.params.id;
@@ -170,15 +163,17 @@ router.post(
 
     const { errors, isValid } = validateDashboardInput(dashboardFields);
 
-    // Check validation
+    // Check if data is valid
     if (!isValid) {
       return res.status(400).json(errors);
     }
 
-    Dashboard.findById(dashboardFields.dashboard).then(dashboard => {
+    // Find dashboard in database by given ID
+    Dashboard.findOne({ name: dashboardFields.name }).then(dashboard => {
       if (dashboard && dashboard.id !== dashboardFields.dashboard) {
         errors.name = "Name already exists";
       }
+      // Find dashboard in database with handle
       Dashboard.findOne({
         handle: dashboardFields.handle
       }).then(dashboard => {
@@ -188,6 +183,7 @@ router.post(
         } else if (!isEmpty(errors)) {
           return res.status(400).json(errors);
         } else {
+          // Update dashboard in database
           Dashboard.findOneAndUpdate(
             { _id: dashboardFields.dashboard },
             { $set: dashboardFields },
@@ -206,18 +202,21 @@ router.delete(
   "/remove/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    if (req.user.admin_role === false) {
-      return res.status(401).json({ authorized: false });
-    }
+    // Check if user requesting is admin [UNUSED]
+    // if (req.user.admin_role === false) {
+    //   return res.status(401).json({ authorized: false });
+    // }
 
+    // Find dashboard in database wit given ID
     Dashboard.findById(req.params.id)
       .then(dashboard => {
+        // Remove dashboard from database
         dashboard.remove().then(() => res.json({ success: true }));
       })
       .catch(err =>
         res
           .status(404)
-          .json({ dashboardnotfound: "Dashboard not found with that ID" })
+          .json({ dashboard_not_found: "Dashboard not found with that ID" })
       );
   }
 );

@@ -7,9 +7,7 @@ module.exports = function validatePasswordInput(data) {
   // Check for anything wrong with the passwords
   if (Validator.isEmpty(data.newPassword1)) {
     errors.newPassword1 = "Password field is required";
-  }
-
-  if (
+  } else if (
     !Validator.isLength(data.newPassword1, {
       min: 6,
       max: 30

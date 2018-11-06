@@ -19,14 +19,12 @@
         border-radius: 50%;
       }
       .info {
-        padding-left: 30px;
-        align-self: center;
-        color: $color-grey;
-        h6 {
-          font-weight: 100;
-          padding-bottom: 20px;
-          color: $color-grey-transparent-50;
-          font-size: inherit;
+        margin-left: 30px;
+        h2 {
+          color: $color-black;
+        }
+        h5 {
+          color: $color-grey;
         }
       }
     }
@@ -41,9 +39,6 @@
         flex-direction: row;
         justify-content: space-between;
         width: 100%;
-        input {
-          margin-bottom: 4.5vh;
-        }
         h6 {
           color: $color-grey;
           font-size: inherit;
@@ -54,6 +49,9 @@
         }
         .adminFormPassword {
           width: 34.5vw;
+        }
+        .formField {
+          margin-bottom: 4.5vh;
         }
       }
     }

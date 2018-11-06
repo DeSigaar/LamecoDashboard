@@ -2,13 +2,14 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
 // Import material icons
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+// Import weather icons
+@import url("https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css");
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: $font;
   font-weight: bold;
 }
 
@@ -40,6 +41,6 @@ p,
 span,
 a,
 li {
-  font-family: $font;
   font-weight: medium;
 }
+

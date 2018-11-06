@@ -3,28 +3,63 @@ import TitleBar from "../bars/TitleBar";
 import SideNav from "../bars/SideNav";
 import SideNavContainer from "../bars/SideNavContainer";
 import DashboardCard from "../dashboard/DashboardCard";
-import DashboardCardHolder from "../dashboard/DashboardCardHolder";
 import DashboardGrid from "../dashboard/DashboardGrid";
-import { getCompanies } from "../../actions/companyActions";
+import { getCompanies, deleteCompany } from "../../actions/companyActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import Loader from "../common/Loader";
+import Snackbar from "../common/Snackbar";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       list: [],
-      loaded: false
+      loaded: false,
+      companyLoading: false,
+      init: false,
+      active: false
     };
 
-    if (!this.state.loaded) {
+    if (!this.state.init) {
       this.props.getCompanies();
     }
   }
+  toggleSnackbar = () => {
+    if (!this.state.active) {
+      this.setState({
+        active: true
+      });
+      setTimeout(() => {
+        this.setState({
+          active: false
+        });
+      }, 3000);
+    }
+  };
+  onCompanyDelete = i => {
+    this.props.deleteCompany(i);
+    this.props.history.push("/");
+    this.props.getCompanies();
+    this.toggleSnackbar();
+  };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.company.company.companies) {
+    this.setState({
+      init: true
+    });
+    if (nextProps.company.company === null) {
+      if (!this.state.companyLoading) {
+        this.setState({
+          companyLoading: true
+        });
+        setTimeout(this.setState({ companyLoading: false }), 10000);
+        this.props.getCompanies();
+      }
+    } else if (
+      nextProps.company.company !== null &&
+      nextProps.company.company.companies
+    ) {
       this.setState({
         list: nextProps.company.company.companies,
         loaded: true
@@ -37,10 +72,10 @@ class Dashboard extends Component {
       elements = <div>No dashboards</div>;
     } else {
       elements = company["dashboards"].map((dashboard, i) => {
-        let link = `/dashboard-edit/${dashboard.handle}`;
         return (
           <DashboardCard
             key={i}
+            id={dashboard.id}
             name={dashboard.name}
             companyhandle={company.handle}
             handle={dashboard.handle}
@@ -56,17 +91,37 @@ class Dashboard extends Component {
         {this.state.list.map((company, i) => {
           return (
             <div key={i}>
-              <h2>{company.name}</h2>
+              <div className="dashboardTitle">
+                <h2>{company.name}</h2>
+                <button
+                  className="iconOnly"
+                  onClick={() => this.onCompanyDelete(company.id)}
+                >
+                  <i className="material-icons">delete</i>
+                </button>
+              </div>
               <div key={i}>{this.renderDashboardList(company)}</div>
             </div>
           );
         })}
+        {this.state.active && <Snackbar text="Company Deleted" />}
       </div>
     );
   };
-
   render() {
     document.title = "Dashboard | Laméco Dashboard";
+
+    let dashboardContent;
+    if (this.state.loaded) {
+      dashboardContent = this.renderCompanyList();
+    } else {
+      dashboardContent = (
+        <div className="loader-center">
+          <Loader />
+        </div>
+      );
+    }
+
     return (
       <div className="dashboard">
         <TitleBar />
@@ -75,7 +130,7 @@ class Dashboard extends Component {
             <SideNav />
           </SideNavContainer>
 
-          <DashboardGrid>{this.renderCompanyList()}</DashboardGrid>
+          <DashboardGrid>{dashboardContent}</DashboardGrid>
         </div>
       </div>
     );
@@ -83,12 +138,13 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
-  getCompanies: PropTypes.func.isRequired
+  getCompanies: PropTypes.func.isRequired,
+  deleteCompany: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   company: state.company
 });
 export default connect(
   mapStateToProps,
-  { getCompanies }
+  { getCompanies, deleteCompany }
 )(Dashboard);

@@ -29,6 +29,14 @@
     margin-top: 0;
     align-items: center;
 
+    .gray-hover-black {
+      color: $color-grey;
+      transition: 0.3s ease all;
+    }
+    .gray-hover-black:hover {
+      color: $color-grey-hover;
+    }
+
     > li {
       display: flex;
       justify-content: center;
@@ -36,10 +44,10 @@
       cursor: pointer;
 
       &:first-child {
-        padding-right: 14px;
+        margin-right: 10px;
       }
       &:last-child {
-        padding-right: 18px;
+        margin-right: 18px;
       }
 
       a {

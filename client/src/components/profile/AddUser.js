@@ -28,20 +28,24 @@ class UpdateProfile extends Component {
   };
   onSubmit = e => {
     e.preventDefault();
+
+    const { name, email, password, password2, username } = this.state;
+
     const profileData = {
       id: this.props.user._id,
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2,
-      username: this.state.username
+      name,
+      email,
+      password,
+      password2,
+      username
     };
 
     this.props.addUser(profileData, this.props.history);
     alert("User created??");
   };
   render() {
-    const { errors } = this.state;
+    const { errors, name, email, password, password2, username } = this.state;
+    const { history } = this.props;
     return (
       <div className="updateProfile">
         <TitleBar />
@@ -49,7 +53,7 @@ class UpdateProfile extends Component {
           {/* Back button */}
           <div
             className="backButton"
-            onClick={() => this.props.history.push("/")}
+            onClick={() => history.push("/")}
           >
             <button className="btn icon red">
               <i className="material-icons">arrow_back</i>
@@ -64,21 +68,21 @@ class UpdateProfile extends Component {
                   <TextFieldGroup
                     placeholder="* Name"
                     name="name"
-                    value={this.state.name}
+                    value={name}
                     onChange={this.onChange}
                     error={errors.name}
                   />
                   <TextFieldGroup
                     placeholder="* Email"
                     name="email"
-                    value={this.state.email}
+                    value={email}
                     onChange={this.onChange}
                     error={errors.email}
                   />
                   <TextFieldGroup
                     placeholder="* Username"
                     name="username"
-                    value={this.state.username}
+                    value={username}
                     onChange={this.onChange}
                     error={errors.username}
                   />
@@ -89,7 +93,7 @@ class UpdateProfile extends Component {
                     placeholder="* Password"
                     name="password"
                     type="password"
-                    value={this.state.password}
+                    value={password}
                     onChange={this.onChange}
                     error={errors.password}
                   />
@@ -97,7 +101,7 @@ class UpdateProfile extends Component {
                     placeholder="* Password repeat"
                     name="password2"
                     type="password"
-                    value={this.state.password2}
+                    value={password2}
                     onChange={this.onChange}
                     error={errors.password2}
                   />
