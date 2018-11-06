@@ -47,16 +47,18 @@ class SideNav extends Component {
   };
   renderCompanyList = () => {
     return (
-      <ul className="list">
-        {this.state.list.map((company, i) => {
-          return (
-            <li key={i}>
-              {company.name}
-              {this.renderDashboardList(company)}
-            </li>
-          );
-        })}
-      </ul>
+      <div className="listView">
+        <ul className="list">
+          {this.state.list.map((company, i) => {
+            return (
+              <li key={i}>
+                {company.name}
+                {this.renderDashboardList(company)}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     );
   };
 
