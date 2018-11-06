@@ -2,6 +2,12 @@ body {
   overflow-y: hidden;
 }
 
+.page {
+  height: 100vh;
+  position: relative;
+  overflow-y: auto;
+}
+
 * {
   font-family: $font;
   /* width */
