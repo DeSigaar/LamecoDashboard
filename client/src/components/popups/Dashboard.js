@@ -41,7 +41,6 @@ class Dashboard extends Component {
   handleSelectClick = e => {
     let selectedItem = e.target.innerText;
     var myElements = document.querySelectorAll(".titleBar");
-    console.log(selectedItem);
   };
 
   renderCompanyList = () => {
@@ -62,7 +61,7 @@ class Dashboard extends Component {
 
   render() {
     const { errors } = this.state;
-    console.log(this.state.companyList);
+
     return (
       <div>
         <div className="loginContainer">

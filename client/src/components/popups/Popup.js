@@ -12,7 +12,6 @@ class Popup extends Component {
     this.props.closePopup();
   };
   componentDidMount() {
-    console.log(this.props.title);
     this.setState({
       title: this.props.title
     });

@@ -68,12 +68,12 @@ class SideNav extends Component {
   renderDashboardList = company => {
     let elements;
     if (company["dashboards"].length <= 0) {
-      elements = <li>No dashboards</li>;
+      elements = <li className="noDashboards">No dashboards</li>;
     } else {
       elements = company["dashboards"].map((dashboard, i) => {
         let link = `/dashboard-edit/${dashboard.handle}`;
         return (
-          <li key={i}>
+          <li className="dashboardLink" key={i}>
             <Link to={link}>{dashboard.name}</Link>
           </li>
         );
