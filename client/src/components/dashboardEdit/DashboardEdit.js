@@ -14,7 +14,7 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const layout = [];
 
 /* This class generates the layout for the web app. It renders the grid
- * and it's items, but also button's and a dropdown menu, to control the grid.
+ * and it's items, but also the side navigation with button's and a dropdown menu, to control the grid.
  */
 class DashboardEdit extends Component {
   static defaultProps = {

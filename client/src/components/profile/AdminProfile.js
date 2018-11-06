@@ -21,46 +21,47 @@ class AdminProfile extends Component {
   componentDidMount() {
     this.props.getCurrentProfile();
 
-    this.setState({
-      name: this.props.user.name,
-      email: this.props.user.email,
-      username: this.props.user.username
-    });
+    const { name, email, username } = this.props.user;
+
+    this.setState({ name, email, username });
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
   }
+
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
   onSubmit = e => {
     e.preventDefault();
+
+    const { name, email, password, password2, username } = this.state;
+
     const profileData = {
       id: this.props.user._id,
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2,
-      username: this.state.username
+      name,
+      email,
+      password,
+      password2,
+      username
     };
 
     this.props.updateProfile(profileData, this.props.history);
     alert("Profile updated 😂😂😂😂");
   };
   render() {
-    const { errors } = this.state;
-    const { user } = this.props;
+    const { errors, email, name, username, password, password2 } = this.state;
+    const { user, history } = this.props;
     return (
       <div className="adminProfile">
         <TitleBar />
         <div className="profileContainer">
           {/* Back button */}
-          <div
-            className="backButton"
-            onClick={() => this.props.history.push("/")}
-          >
+          <div className="backButton" onClick={() => history.push("/")}>
             <button className="btn icon red">
               <i className="material-icons">arrow_back</i>
               <span>Back</span>
@@ -82,21 +83,21 @@ class AdminProfile extends Component {
                   <TextFieldGroup
                     placeholder="* Name"
                     name="name"
-                    value={this.state.name}
+                    value={name}
                     onChange={this.onChange}
                     error={errors.name}
                   />
                   <TextFieldGroup
                     placeholder="* Email"
                     name="email"
-                    value={this.state.email}
+                    value={email}
                     onChange={this.onChange}
                     error={errors.email}
                   />
                   <TextFieldGroup
                     placeholder="* Username"
                     name="username"
-                    value={this.state.username}
+                    value={username}
                     onChange={this.onChange}
                     error={errors.username}
                   />
@@ -107,7 +108,7 @@ class AdminProfile extends Component {
                     placeholder="* Password"
                     name="password"
                     type="password"
-                    value={this.state.password}
+                    value={password}
                     onChange={this.onChange}
                     error={errors.password}
                   />
@@ -115,7 +116,7 @@ class AdminProfile extends Component {
                     placeholder="* Password repeat"
                     name="password2"
                     type="password"
-                    value={this.state.password2}
+                    value={password2}
                     onChange={this.onChange}
                     error={errors.password2}
                   />

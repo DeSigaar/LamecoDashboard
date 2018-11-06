@@ -12,17 +12,7 @@ const Dashboard = require("../../models/Dashboard");
 // @route   GET /api/dashboard/all
 // @desc    Get all dashboards
 // @access  Private
-router.get(
-  "/all",
-  passport.authenticate("jwt", {
-    session: false
-  }),
-  (req, res) => {
-    // Check if user requesting is admin [UNUSED]
-    // if (req.user.admin_role === false) {
-    //   return res.status(401).json({ authorized: false });
-    // }
-
+router.get("/all", (req, res) => {
     Dashboard.find().then(dashboards => res.json(dashboards));
   }
 );
@@ -99,15 +89,7 @@ router.post(
 // @access  Private
 router.get(
   "/:id",
-  passport.authenticate("jwt", {
-    session: false
-  }),
   (req, res) => {
-    // Check if user requesting is admin [UNUSED]
-    // if (req.user.admin_role === false) {
-    //   return res.status(401).json({ authorized: false });
-    // }
-
     // Find dashboard in database by given ID
     Dashboard.findById(req.params.id)
       .then(dashboard => {
