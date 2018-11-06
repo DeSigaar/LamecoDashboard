@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import { addCompany } from "../../actions/companyActions";
+import TextFieldGroup from "../common/TextField";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 class Company extends Component {
   constructor(props) {
@@ -17,6 +21,13 @@ class Company extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+    const company = {
+      name: this.state.name,
+      handle: this.state.handle
+    };
+
+    this.props.addCompany(company, this.props.history);
+    alert("company added");
   };
 
   handleClick = e => {
@@ -35,7 +46,7 @@ class Company extends Component {
                 <p>Company</p>
                 <input
                   type="text"
-                  name="company"
+                  name="name"
                   placeholder="Ex.Fontys University of Applied Sciences"
                   onChange={this.onChange}
                   value={this.state.name}
@@ -73,4 +84,16 @@ class Company extends Component {
   }
 }
 
-export default Company;
+Company.propTypes = {
+  addCompany: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  user: state.auth.user,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { addCompany }
+)(Company);
