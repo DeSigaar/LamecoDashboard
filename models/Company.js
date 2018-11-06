@@ -6,7 +6,7 @@ const CompanySchema = new Schema({
   name: {
     type: String,
     required: true,
-    min: 6
+    min: 2
   },
   handle: {
     type: String,

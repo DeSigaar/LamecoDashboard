@@ -1,7 +1,10 @@
+
 import {
   GET_COMPANIES,
   DELETE_COMPANY,
-  DELETE_DASHBOARD
+  DELETE_DASHBOARD,
+  GET_COMPANIES, 
+  ADD_COMPANIES
 } from "../actions/types";
 
 const initialState = {};
@@ -22,6 +25,11 @@ export default function(state = initialState, action) {
         ...state
       };
 
+    case ADD_COMPANIES:
+      return {
+        ...state,
+        company: action.payload
+      };
     default:
       return state;
   }

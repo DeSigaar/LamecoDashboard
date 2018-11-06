@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import { getCompanies } from "../../actions/companyActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Popup from "../popups/Popup";
 import isEmpty from "../../validation/is-empty";
 import { Link } from "react-router-dom";
+
+const portalContainer = document.getElementById("card");
 
 class SideNav extends Component {
   constructor(props) {
@@ -83,12 +86,13 @@ class SideNav extends Component {
   render() {
     let popupState;
     if (this.state.popupState) {
-      popupState = (
+      popupState = ReactDOM.createPortal(
         <Popup
           title={this.state.title}
           closePopup={this.togglePopupCompany}
           companyList={this.state.list}
-        />
+        />,
+        portalContainer
       );
     }
 

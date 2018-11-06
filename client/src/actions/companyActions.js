@@ -4,7 +4,8 @@ import {
   GET_COMPANIES,
   GET_ERRORS,
   DELETE_COMPANY,
-  DELETE_DASHBOARD
+  DELETE_DASHBOARD,
+  ADD_COMPANIES
 } from "./types";
 export const getCompanies = () => dispatch => {
   setTimeout(() => {
@@ -29,4 +30,18 @@ export const deleteDashboard = id => dispatch => {
     .delete(`/api/dashboard/remove/${id}`)
     .then(res => dispatch({ type: DELETE_DASHBOARD, payload: id }))
     .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+};
+
+export const addCompany = data => dispatch => {
+  axios
+    .post("/api/company/add", data)
+    .then(res => {
+      console.log("company added");
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
 };
