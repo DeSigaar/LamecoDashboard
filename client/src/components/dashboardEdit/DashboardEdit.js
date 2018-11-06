@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import { WidthProvider, Responsive } from "react-grid-layout";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import axios from "axios";
 import TitleBar from "../bars/TitleBar";
 import Clock from "../gridItems/Clock";
@@ -9,6 +11,7 @@ import WidgetSelecter from "./WidgetSelecter";
 import EditDashboardTitle from "./EditDashboardTitle";
 import BackButton from "./Backbutton";
 import Loader from "../common/Loader";
+import { deleteDashboard } from "../../actions/companyActions";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const layout = [];
@@ -284,9 +287,8 @@ class DashboardEdit extends Component {
   };
 
   onDashboardDelete = () => {
-    deleteDashboard({
-      id: this.state.dashboard.id
-    });
+    this.props.deleteDashboard(this.state.dashboard.id);
+    this.props.history.push("/");
   };
 
   /* This render function, renders the grid, dropdown-menu, 'Add Item'-button
@@ -370,10 +372,6 @@ function saveDashboardToDB(dashboard) {
   axios.post(`/api/dashboard/update/${dashboard.id}`, dashboard);
 }
 
-function deleteDashboard(dashboard) {
-  axios.post(`/api/dashboard/remove/${dashboard.id}`, dashboard);
-}
-
 /* returnProps function returns widget-specific properties like width, min width,
  * heigth, etc.
  */
@@ -406,4 +404,10 @@ function returnProps(selection) {
   }
 }
 
-export default DashboardEdit;
+DashboardEdit.propTypes = {
+  deleteDashboard: PropTypes.func.isRequired
+};
+export default connect(
+  null,
+  { deleteDashboard }
+)(DashboardEdit);
