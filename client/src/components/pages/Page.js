@@ -129,7 +129,7 @@ class Page extends Component {
           });
         }
       });
-    }, 5000);
+    }, 10000);
   }
 
   componentWillUnmount() {
