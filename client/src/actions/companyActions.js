@@ -8,16 +8,16 @@ export const getCompanies = () => dispatch => {
     .catch(err => dispatch({ type: GET_COMPANIES, payload: null }));
 };
 
-export const addCompany = (data, history) => dispatch => {
+export const addCompany = data => dispatch => {
   axios
     .post("/api/company/add", data)
     .then(res => {
-      history.push("/dashboard");
+      console.log("company added");
     })
-    .catch(err =>
+    .catch(err => {
       dispatch({
-        type: ADD_COMPANIES,
+        type: GET_ERRORS,
         payload: err.response.data
-      })
-    );
+      });
+    });
 };
