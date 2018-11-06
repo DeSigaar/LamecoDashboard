@@ -19,7 +19,6 @@ const EditDashboardTitle = ({
         <h5>Dashboard name:</h5>
         <input
           className="dashboardEdit"
-          id="dashboardN"
           type="text"
           name="name"
           value={name}
@@ -32,7 +31,6 @@ const EditDashboardTitle = ({
         <h5>Dashboard handle:</h5>
         <input
           className="dashboardEdit"
-          id="dashboardH"
           type="text"
           name="handle"
           value={handle}
