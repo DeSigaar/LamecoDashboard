@@ -39,9 +39,6 @@
         flex-direction: row;
         justify-content: space-between;
         width: 100%;
-        input {
-          margin-bottom: 4.5vh;
-        }
         h6 {
           color: $color-grey;
           font-size: inherit;
@@ -52,6 +49,9 @@
         }
         .adminFormPassword {
           width: 34.5vw;
+        }
+        .formField {
+          margin-bottom: 4.5vh;
         }
       }
     }
