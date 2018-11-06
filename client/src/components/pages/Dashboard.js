@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import TitleBar from "../bars/TitleBar";
 import SideNav from "../bars/SideNav";
-import axios from "axios";
 import SideNavContainer from "../bars/SideNavContainer";
 import DashboardCard from "../dashboard/DashboardCard";
 import DashboardGrid from "../dashboard/DashboardGrid";
-import { getCompanies } from "../../actions/companyActions";
+import { getCompanies, deleteCompany } from "../../actions/companyActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
 import Loader from "../common/Loader";
+import Snackbar from "../common/Snackbar";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -18,17 +17,30 @@ class Dashboard extends Component {
       list: [],
       loaded: false,
       companyLoading: false,
-      init: false
+      init: false,
+      active: false
     };
 
     if (!this.state.init) {
       this.props.getCompanies();
     }
   }
-
+  toggleSnackbar = () => {
+    if (!this.state.active) {
+      this.setState({
+        active: true
+      });
+      setTimeout(() => {
+        this.setState({
+          active: false
+        });
+      }, 3000);
+    }
+  };
   onCompanyDelete = i => {
-    console.log(i);
-    // deleteCompany({ id: i });
+    this.props.deleteCompany(i);
+    this.props.getCompanies();
+    this.toggleSnackbar();
   };
 
   componentWillReceiveProps(nextProps) {
@@ -81,7 +93,7 @@ class Dashboard extends Component {
                 <h2>{company.name}</h2>
                 <button
                   className="iconOnly"
-                  onClick={this.onCompanyDelete(this.state.list.i)}
+                  onClick={() => this.onCompanyDelete(company.id)}
                 >
                   <i className="material-icons">delete</i>
                 </button>
@@ -90,6 +102,7 @@ class Dashboard extends Component {
             </div>
           );
         })}
+        {this.state.active && <Snackbar text="Company Deleted" />}
       </div>
     );
   };
@@ -122,17 +135,14 @@ class Dashboard extends Component {
   }
 }
 
-function deleteCompany(id) {
-  axios.post(`/api/dashboard/update/${id}`);
-}
-
 Dashboard.propTypes = {
-  getCompanies: PropTypes.func.isRequired
+  getCompanies: PropTypes.func.isRequired,
+  deleteCompany: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   company: state.company
 });
 export default connect(
   mapStateToProps,
-  { getCompanies }
+  { getCompanies, deleteCompany }
 )(Dashboard);

@@ -8,21 +8,35 @@ class DashboardCard extends Component {
     super(props);
     this.state = {
       copied: false,
-      active: false
+      active: false,
+      active2: false
     };
-    let snackbar = <div />;
   }
 
   toggleSnackbar = () => {
     if (!this.state.active) {
       this.setState({
-        active: true
+        active: true,
+        active2: false
       });
       setTimeout(() => {
         this.setState({
           active: false
         });
-      }, 3000);
+      }, 5000);
+    }
+  };
+  toggleSnackbar2 = () => {
+    if (!this.state.active2) {
+      this.setState({
+        active2: true,
+        active: false
+      });
+      setTimeout(() => {
+        this.setState({
+          active2: false
+        });
+      }, 5000);
     }
   };
 
@@ -51,9 +65,12 @@ class DashboardCard extends Component {
               share
             </i>
           </CopyToClipboard>
-          <i className="material-icons">delete</i>
+          <i onClick={this.toggleSnackbar2} className="material-icons">
+            delete
+          </i>
         </div>
         {this.state.active && <Snackbar text="Link Copied" />}
+        {this.state.active2 && <Snackbar text="Dashboard deleted" />}
       </div>
     );
   }
