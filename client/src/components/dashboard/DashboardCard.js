@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Snackbar from "../../components/common/Snackbar";
+import { getCompanies, deleteDashboard } from "../../actions/companyActions";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 class DashboardCard extends Component {
   constructor(props) {
@@ -40,6 +43,11 @@ class DashboardCard extends Component {
     }
   };
 
+  onDashboardDelete = i => {
+    this.props.deleteDashboard(i);
+    this.props.getCompanies();
+    this.toggleSnackbar2();
+  };
   render() {
     const { handle } = this.props;
     const { companyhandle } = this.props;
@@ -56,7 +64,6 @@ class DashboardCard extends Component {
           <Link to={linkShow}>
             <i className="material-icons">remove_red_eye</i>
           </Link>
-
           <CopyToClipboard
             text={linkShare}
             onCopy={() => this.setState({ copied: true })}
@@ -65,7 +72,11 @@ class DashboardCard extends Component {
               share
             </i>
           </CopyToClipboard>
-          <i onClick={this.toggleSnackbar2} className="material-icons">
+          {console.log(this.props)}
+          <i
+            onClick={() => this.onDashboardDelete(this.props.id)}
+            className="material-icons"
+          >
             delete
           </i>
         </div>
@@ -75,5 +86,14 @@ class DashboardCard extends Component {
     );
   }
 }
-
-export default DashboardCard;
+DashboardCard.propTypes = {
+  getCompanies: PropTypes.func.isRequired,
+  deleteDashboard: PropTypes.func.isRequired
+};
+const mapStateToProps = state => ({
+  dashboard: state.dashboard
+});
+export default connect(
+  mapStateToProps,
+  { getCompanies, deleteDashboard }
+)(DashboardCard);

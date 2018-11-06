@@ -39,6 +39,7 @@ class Dashboard extends Component {
   };
   onCompanyDelete = i => {
     this.props.deleteCompany(i);
+    this.props.history.push("/");
     this.props.getCompanies();
     this.toggleSnackbar();
   };
@@ -74,6 +75,7 @@ class Dashboard extends Component {
         return (
           <DashboardCard
             key={i}
+            id={dashboard.id}
             name={dashboard.name}
             companyhandle={company.handle}
             handle={dashboard.handle}

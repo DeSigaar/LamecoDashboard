@@ -1,4 +1,8 @@
-import { GET_COMPANIES, DELETE_COMPANY } from "../actions/types";
+import {
+  GET_COMPANIES,
+  DELETE_COMPANY,
+  DELETE_DASHBOARD
+} from "../actions/types";
 
 const initialState = {};
 
@@ -10,6 +14,10 @@ export default function(state = initialState, action) {
         company: action.payload
       };
     case DELETE_COMPANY:
+      return {
+        ...state
+      };
+    case DELETE_DASHBOARD:
       return {
         ...state
       };
