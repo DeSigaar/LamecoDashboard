@@ -32,7 +32,11 @@ class Company extends Component {
       handle: this.state.handle
     };
     this.props.addCompany(company);
-    alert("company added");
+    // TODO add snackbar here and close popup if possible
+    this.props.closePopup();
+    setTimeout(() => {
+      this.props.closePopup();
+    }, 500);
     this.props.getCompanies();
   };
 
