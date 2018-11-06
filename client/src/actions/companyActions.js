@@ -7,10 +7,12 @@ import {
   DELETE_DASHBOARD
 } from "./types";
 export const getCompanies = () => dispatch => {
-  axios
-    .get("/api/company/ordered")
-    .then(res => dispatch({ type: GET_COMPANIES, payload: res.data }))
-    .catch(err => dispatch({ type: GET_COMPANIES, payload: null }));
+  setTimeout(() => {
+    axios
+      .get("/api/company/ordered")
+      .then(res => dispatch({ type: GET_COMPANIES, payload: res.data }))
+      .catch(err => dispatch({ type: GET_COMPANIES, payload: null }));
+  }, 500);
 };
 
 // Delete company
