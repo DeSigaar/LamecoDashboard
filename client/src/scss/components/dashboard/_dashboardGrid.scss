@@ -15,7 +15,7 @@
       overflow-y: auto;
       height: calc(100vh - 57px);
 
-      .dashboardTitle{
+      .dashboardTitle {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -28,6 +28,14 @@
       }
       > div > div > div > h2 {
         color: $color-red;
+      }
+      > div > div button {
+        opacity: 0;
+        transition: 0.3s ease all;
+      }
+      > div > div:hover button {
+        opacity: 1;
+        cursor: pointer;
       }
     }
   }
