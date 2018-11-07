@@ -68,9 +68,7 @@ class DashboardCard extends Component {
             text={linkShare}
             onCopy={() => this.setState({ copied: true })}
           >
-            <i onClick={this.toggleSnackbar} className="material-icons">
-              share
-            </i>
+            <i onClick={this.toggleSnackbar} className="material-icons">link</i>
           </CopyToClipboard>
           <i
             onClick={() => this.onDashboardDelete(this.props.id)}

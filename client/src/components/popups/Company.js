@@ -48,8 +48,7 @@ class Company extends Component {
     const { errors } = this.state;
 
     return (
-      <div>
-        <div className="loginContainer">
+        <div className="popupContainer">
           <form onSubmit={this.onSubmit}>
             <div className="middleForm">
               <div className="formField">
@@ -75,19 +74,19 @@ class Company extends Component {
                 />
               </div>
             </div>
+          </form>
+          <div>
             <button className="btn" type="submit">
               <span>Add</span>
             </button>
             <button
               className="btn"
               type="submit"
-              onClick={this.handleClick.bind(this)}
-            >
+              onClick={this.handleClick.bind(this)}>
               <span>Cancel</span>
             </button>
-          </form>
+          </div>
         </div>
-      </div>
     );
   }
 }
