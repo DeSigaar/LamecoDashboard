@@ -2,6 +2,36 @@ import React from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
 
+const customStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    border: state.isFocused ? "2px solid RGBA(207, 31, 61, 0.35)" : ""
+  }),
+
+  // container: (provided, state) => ({
+  //   ...provided,
+  //   border_color: state.isFocused
+  //     ? "3px solid RGBA(207, 31, 61, 1)"
+  //     : "3px solid RGBA(207, 31, 61, 1)"
+  // }),
+
+  option: (provided, state) => ({
+    background: state.isFocused ? "RGBA(207, 31, 61, 0.35)" : "transparent",
+    padding: "10px",
+    cursor: "pointer"
+  }),
+  // control: () => ({
+  //   // none of react-select's styles are passed to <Control />
+  //   width: 200
+  // }),
+  singleValue: (provided, state) => {
+    const opacity = state.isDisabled ? 0.5 : 1;
+    const transition = "opacity 300ms";
+
+    return { ...provided, opacity, transition };
+  }
+};
+
 const WidgetSelecter = ({
   selectedOption,
   handleChange,
@@ -12,12 +42,14 @@ const WidgetSelecter = ({
   return (
     <div className="widgetselecter">
       <div className="widgetAdd">
+        <h5>Select a widget</h5>
         <Select
           className="dropdown"
           name="form-field-name"
           value={selectedOption}
           onChange={handleChange}
           isSearchable={false}
+          styles={customStyles}
           options={[
             { value: "Text", label: "Text" },
             { value: "Clock", label: "Clock" },

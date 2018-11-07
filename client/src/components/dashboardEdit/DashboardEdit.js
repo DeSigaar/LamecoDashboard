@@ -44,7 +44,7 @@ class DashboardEdit extends Component {
           maxH: layout[key].maxH
         };
       }),
-      selectedOption: { value: "", label: "Select..." },
+      selectedOption: { value: "", label: "Select a widget" },
       dashboard: {
         valid: false,
         company_id: "",
@@ -194,7 +194,7 @@ class DashboardEdit extends Component {
           minH: widgetProps.minH,
           maxH: widgetProps.maxH
         }),
-        selectedOption: { value: "", label: "Select..." }
+        selectedOption: { value: "", label: "Select a widget" }
       });
     }
   };
