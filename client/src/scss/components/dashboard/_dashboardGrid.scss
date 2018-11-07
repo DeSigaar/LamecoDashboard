@@ -11,14 +11,18 @@
 
     .dashboardGrid {
       grid-area: dashboard;
-      padding: 0 30px;
+      padding: 0 30px 30px 30px;
       overflow-y: auto;
-      height: calc(100vh - 57px);
+      height: calc(100vh - 59px);
 
       .dashboardTitle {
         display: flex;
         flex-direction: row;
         align-items: center;
+      }
+
+      > div > div:last-child {
+        margin-bottom: 20px;
       }
 
       h2 {

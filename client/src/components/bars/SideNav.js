@@ -108,7 +108,7 @@ class SideNav extends Component {
             <ul className="subList">
               <li className="dashboardLink" />
               <li className="dashboardLink" />
-              <li className="dashboardLink"/>
+              <li className="dashboardLink" />
             </ul>
           </li>
           <li>

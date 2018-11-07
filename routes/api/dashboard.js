@@ -13,9 +13,8 @@ const Dashboard = require("../../models/Dashboard");
 // @desc    Get all dashboards
 // @access  Private
 router.get("/all", (req, res) => {
-    Dashboard.find().then(dashboards => res.json(dashboards));
-  }
-);
+  Dashboard.find().then(dashboards => res.json(dashboards));
+});
 
 // @route   POST /api/dashboard/add
 // @desc    Create a dashboard
@@ -34,6 +33,8 @@ router.post(
     const dashboardFields = {};
     dashboardFields.name = req.body.name
       .toLowerCase()
+      .trim()
+      .replace(/\s+/g, " ")
       .split(" ")
       .map(x => x.charAt(0).toUpperCase() + x.substring(1))
       .join(" ");
@@ -87,22 +88,19 @@ router.post(
 // @route   GET /api/dashboard/:id
 // @desc    Get dashboard by given id
 // @access  Private
-router.get(
-  "/:id",
-  (req, res) => {
-    // Find dashboard in database by given ID
-    Dashboard.findById(req.params.id)
-      .then(dashboard => {
-        dashboard.__v = undefined;
-        res.json(dashboard);
-      })
-      .catch(err =>
-        res
-          .status(404)
-          .json({ dashboard_not_found: "No dashboard found with that ID" })
-      );
-  }
-);
+router.get("/:id", (req, res) => {
+  // Find dashboard in database by given ID
+  Dashboard.findById(req.params.id)
+    .then(dashboard => {
+      dashboard.__v = undefined;
+      res.json(dashboard);
+    })
+    .catch(err =>
+      res
+        .status(404)
+        .json({ dashboard_not_found: "No dashboard found with that ID" })
+    );
+});
 
 // @route   POST /api/dashboard/update/layout/:handle
 // @desc    Update dashboard layout by given handle
@@ -151,6 +149,8 @@ router.post(
     if (req.body.name)
       dashboardFields.name = req.body.name
         .toLowerCase()
+        .trim()
+        .replace(/\s+/g, " ")
         .split(" ")
         .map(x => x.charAt(0).toUpperCase() + x.substring(1))
         .join(" ");

@@ -25,6 +25,17 @@ class Dashboard extends Component {
       this.props.getCompanies();
     }
   }
+
+  componentDidMount() {
+    this.interval = setInterval(() => {
+      this.props.getCompanies();
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   toggleSnackbar = () => {
     if (!this.state.active) {
       this.setState({
@@ -37,6 +48,7 @@ class Dashboard extends Component {
       }, 3000);
     }
   };
+
   onCompanyDelete = i => {
     this.props.deleteCompany(i);
     this.props.history.push("/");
@@ -66,6 +78,7 @@ class Dashboard extends Component {
       });
     }
   }
+
   renderDashboardList = company => {
     let elements;
     if (company["dashboards"].length <= 0) {
@@ -85,6 +98,7 @@ class Dashboard extends Component {
     }
     return <div className="cardHolder">{elements}</div>;
   };
+
   renderCompanyList = () => {
     return (
       <div>
@@ -111,6 +125,7 @@ class Dashboard extends Component {
       </div>
     );
   };
+
   render() {
     document.title = "Dashboard | Laméco Dashboard";
 
