@@ -61,11 +61,6 @@ class Dashboard extends Component {
     this.setState({ companyId });
   };
 
-  adddashboard = () => {
-    this.setState({ companyId: this.state.companyList.id });
-    console.log(this.state);
-  };
-
   renderCompanyList = () => {
     return (
       <div className="companyList">
@@ -87,49 +82,50 @@ class Dashboard extends Component {
     const { errors } = this.state;
 
     return (
-        <div className="popupContainer">
-          <form onSubmit={this.onSubmit}>
-            <div className="middleForm">
-              <div className="formField" id="selectCompanyDashboard">
-                <p>Select Company</p>
-                {this.renderCompanyList()}
-              </div>
-              <div className="formField">
-                <p>Dashboard</p>
-                <TextFieldGroup
-                  type="text"
-                  name="name"
-                  placeholder="Ex. Fontys"
-                  onChange={this.onChange}
-                  value={this.state.name}
-                  error={errors.name}
-                />
-              </div>
-              <div className="formField">
-                <p>Dashboard handle</p>
-                <TextFieldGroup
-                  type="text"
-                  name="handle"
-                  placeholder="Ex. Fontys"
-                  onChange={this.onChange}
-                  value={this.state.handle}
-                  error={errors.name}
-                />
-              </div>
+      <div className="popupContainer">
+        <form onSubmit={this.onSubmit}>
+          <div className="middleForm">
+            <div className="formField" id="selectCompanyDashboard">
+              <p>Select Company</p>
+              {this.renderCompanyList()}
             </div>
-            <div>
-              <button className="btn" type="submit">
-                <span>Add</span>
-              </button>
-              <button
-                className="btn"
-                type="submit"
-                onClick={this.handleCloseClick.bind(this)}>
-                <span>Cancel</span>
-              </button>
+            <div className="formField">
+              <p>Dashboard</p>
+              <TextFieldGroup
+                type="text"
+                name="name"
+                placeholder="Ex. Fontys"
+                onChange={this.onChange}
+                value={this.state.name}
+                error={errors.name}
+              />
             </div>
-          </form>
-        </div>
+            <div className="formField">
+              <p>Dashboard handle</p>
+              <TextFieldGroup
+                type="text"
+                name="handle"
+                placeholder="Ex. Fontys"
+                onChange={this.onChange}
+                value={this.state.handle}
+                error={errors.name}
+              />
+            </div>
+          </div>
+          <div>
+            <button className="btn" type="submit">
+              <span>Add</span>
+            </button>
+            <button
+              className="btn"
+              type="submit"
+              onClick={this.handleCloseClick.bind(this)}
+            >
+              <span>Cancel</span>
+            </button>
+          </div>
+        </form>
+      </div>
     );
   }
 }
