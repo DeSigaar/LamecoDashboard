@@ -39,15 +39,18 @@ class SideNav extends Component {
   addCompany = () => {
     this.setState({ popupState: !this.state.popupState });
   };
+
   togglePopupDashboard = title => {
     this.setState({ popupState: !this.state.popupState, title });
   };
+
   togglePopupCompany = title => {
     this.setState({
       popupState: !this.state.popupState,
       title
     });
   };
+
   renderCompanyList = () => {
     return (
       <div className="listView">
@@ -103,16 +106,16 @@ class SideNav extends Component {
           <li>
             <div className="listTitle" />
             <ul className="subList">
-              <li />
-              <li />
-              <li />
+              <li className="dashboardLink" />
+              <li className="dashboardLink" />
+              <li className="dashboardLink"/>
             </ul>
           </li>
           <li>
             <div className="listTitle" />
             <ul className="subList">
-              <li />
-              <li />
+              <li className="dashboardLink" />
+              <li className="dashboardLink" />
             </ul>
           </li>
         </ul>
