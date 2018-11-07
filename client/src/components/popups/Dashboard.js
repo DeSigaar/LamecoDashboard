@@ -4,7 +4,6 @@ import TextFieldGroup from "../common/TextField";
 import PropTypes from "prop-types";
 import { addDashboard } from "../../actions/companyActions";
 import { getCompanies } from "../../actions/companyActions";
-import { getDashboards } from "../../actions/companyActions";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -18,6 +17,8 @@ class Dashboard extends Component {
       remember_me: false,
       errors: {}
     };
+
+    this.handleSelectClick = this.handleSelectClick.bind(this);
   }
 
   componentDidMount() {
@@ -47,17 +48,22 @@ class Dashboard extends Component {
       handle: this.state.handle
     };
     this.props.addDashboard(dashboard);
-    alert("dashboard added");
     this.props.getCompanies();
+    this.props.closePopup();
   };
 
   handleCloseClick = e => {
     this.props.closePopup();
   };
 
-  handleSelectClick = e => {
-    let selectedItemId;
-    // this.setState({ companyId: this.state.company.companies });
+  handleSelectClick = id => {
+    let companyId = id;
+    this.setState({ companyId });
+  };
+
+  adddashboard = () => {
+    this.setState({ companyId: this.state.companyList.id });
+    console.log(this.state);
   };
 
   renderCompanyList = () => {
@@ -66,8 +72,8 @@ class Dashboard extends Component {
         <ul className="list">
           {this.state.companyList.map((company, i) => {
             return (
-              <li key={i} onClick={this.handleSelectClick.bind(this)}>
-                {console.log(company)}
+              <li key={i} onClick={() => this.handleSelectClick(company.id)}>
+                {/* {console.log(company)} */}
                 {company.name}
               </li>
             );

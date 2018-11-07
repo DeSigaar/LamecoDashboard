@@ -33,11 +33,11 @@ class Company extends Component {
     };
     this.props.addCompany(company);
     // TODO add snackbar here and close popup if possible
-    this.props.closePopup();
-    setTimeout(() => {
-      this.props.closePopup();
-    }, 500);
     this.props.getCompanies();
+    this.props.closePopup();
+    // setTimeout(() => {
+    //   this.props.closePopup();
+    // }, 500);
   };
 
   handleClick = e => {
