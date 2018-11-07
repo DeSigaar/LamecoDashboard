@@ -117,19 +117,18 @@ class Dashboard extends Component {
                 />
               </div>
             </div>
+            <div>
+              <button className="btn" type="submit">
+                <span>Add</span>
+              </button>
+              <button
+                className="btn"
+                type="submit"
+                onClick={this.handleCloseClick.bind(this)}>
+                <span>Cancel</span>
+              </button>
+            </div>
           </form>
-          <div>
-            <button className="btn" type="submit">
-              <span>Add</span>
-            </button>
-            <button
-              className="btn"
-              type="submit"
-              onClick={this.handleCloseClick.bind(this)}
-            >
-              <span>Cancel</span>
-            </button>
-          </div>
         </div>
     );
   }

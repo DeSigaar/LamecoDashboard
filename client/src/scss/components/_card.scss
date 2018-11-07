@@ -110,14 +110,12 @@
               }
             }
           }
-        }
-
-        >div {
-          width: inherit;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          margin: 10px 0px;
+          >div{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 10px 0px;
+          }
         }
         .btn {
           margin-bottom: 15px;
