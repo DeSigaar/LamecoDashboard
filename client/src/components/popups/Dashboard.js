@@ -87,11 +87,10 @@ class Dashboard extends Component {
     const { errors } = this.state;
 
     return (
-      <div>
-        <div className="loginContainer">
+        <div className="popupContainer">
           <form onSubmit={this.onSubmit}>
             <div className="middleForm">
-              <div className="formField">
+              <div className="formField" id="selectCompanyDashboard">
                 <p>Select Company</p>
                 {this.renderCompanyList()}
               </div>
@@ -118,6 +117,8 @@ class Dashboard extends Component {
                 />
               </div>
             </div>
+          </form>
+          <div>
             <button className="btn" type="submit">
               <span>Add</span>
             </button>
@@ -128,9 +129,8 @@ class Dashboard extends Component {
             >
               <span>Cancel</span>
             </button>
-          </form>
+          </div>
         </div>
-      </div>
     );
   }
 }
