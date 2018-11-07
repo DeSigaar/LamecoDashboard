@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 const EditDashboardTitle = ({
   onChange,
   company,
-  onChangeFocusNameIcon,
-  onChangeFocusHandle,
   onFocus,
+  onClick,
   onBlur,
+  onKeyDown,
   name,
   handle
 }) => {
@@ -28,12 +28,9 @@ const EditDashboardTitle = ({
             onChange={onChange}
             onFocus={onFocus}
             onBlur={onBlur}
+            onKeyDown={onKeyDown}
           />
-          <i
-            className="material-icons"
-            id="dashboardNicon"
-            onClick={onChangeFocusNameIcon}
-          >
+          <i className="material-icons" id="dashboardNicon" onClick={onClick}>
             edit
           </i>
         </div>
@@ -48,14 +45,11 @@ const EditDashboardTitle = ({
             name="handle"
             value={handle}
             onChange={onChange}
-            onFocus={onChangeFocusHandle}
+            onFocus={onFocus}
             onBlur={onBlur}
+            onKeyDown={onKeyDown}
           />
-          <i
-            className="material-icons"
-            id="dashboardHicon"
-            onClick={onChangeFocusHandle}
-          >
+          <i className="material-icons" id="dashboardHicon" onClick={onClick}>
             edit
           </i>
         </div>
@@ -66,10 +60,10 @@ const EditDashboardTitle = ({
 
 EditDashboardTitle.propTypes = {
   onChange: PropTypes.func.isRequired,
-  onChangeFocusNameIcon: PropTypes.func.isRequired,
-  onChangeFocusHandle: PropTypes.func.isRequired,
   onFocus: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   onBlur: PropTypes.func.isRequired,
+  onKeyDown: PropTypes.func.isRequired,
   company: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   handle: PropTypes.string.isRequired

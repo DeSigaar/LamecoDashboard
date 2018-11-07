@@ -264,21 +264,37 @@ class DashboardEdit extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onChangeFocusNameIcon = () => {
-    if (!this.state.inputNameActive) {
-      document.getElementById("dashboardNinput").blur();
-      document.getElementById("dashboardNicon").textContent = "edit";
-      this.setState({ inputNameActive: false });
-    } else {
-      document.getElementById("dashboardNinput").focus();
-      document.getElementById("dashboardNicon").textContent = "check";
-      this.setState({ inputNameActive: true });
+  onClick = e => {
+    const { id } = e.target;
+    if (id === "dashboardNicon") {
+      if (!this.state.inputNameActive) {
+        document.getElementById("dashboardNinput").focus();
+        document.getElementById("dashboardNicon").textContent = "check";
+        this.setState({ inputNameActive: true });
+      }
+    } else if (id === "dashboardHicon") {
+      if (!this.state.inputHandleActive) {
+        document.getElementById("dashboardHinput").focus();
+        document.getElementById("dashboardHicon").textContent = "check";
+        this.setState({ inputHandleActive: true });
+      }
     }
   };
 
-  onFocus = () => {
-    document.getElementById("dashboardNicon").textContent = "check";
-    this.setState({ inputNameActive: true });
+  onFocus = e => {
+    const { id } = e.target;
+
+    if (id === "dashboardNinput") {
+      if (!this.state.inputNameActive) {
+        document.getElementById("dashboardNicon").textContent = "check";
+        this.setState({ inputNameActive: true });
+      }
+    } else if (id === "dashboardHinput") {
+      if (!this.state.inputHandleActive) {
+        document.getElementById("dashboardHicon").textContent = "check";
+        this.setState({ inputHandleActive: true });
+      }
+    }
   };
 
   onBlur = e => {
@@ -294,8 +310,7 @@ class DashboardEdit extends Component {
         .map(x => x.charAt(0).toUpperCase() + x.substring(1))
         .join(" ");
 
-      document.getElementById("dashboardNicon").textContent = "edit";
-      this.setState({ [target]: value, inputNameActive: false });
+      this.setState({ [target]: value });
 
       saveDashboardToDB({
         id: this.state.dashboard.id,
@@ -311,8 +326,7 @@ class DashboardEdit extends Component {
         .trim()
         .replace(/\s+/g, "-");
 
-      document.getElementById("dashboardHicon").textContent = "edit";
-      this.setState({ [target]: value, inputHandleActive: false });
+      this.setState({ [target]: value });
 
       const { dashboard, name, handle } = this.state;
 
@@ -325,19 +339,29 @@ class DashboardEdit extends Component {
 
       this.props.history.push(`/dashboard-edit/${value}`);
     }
+
+    setTimeout(
+      function() {
+        try {
+          document.getElementById("dashboardNicon").textContent = "edit";
+          document.getElementById("dashboardHicon").textContent = "edit";
+          this.setState({ inputNameActive: false, inputHandleActive: false });
+        } catch (error) {}
+      }.bind(this),
+      100
+    );
   };
 
-  onChangeFocusHandle = () => {
-    if (!this.state.inputHandleActive) {
-      document.getElementById("dashboardHinput").focus();
-      document.getElementById("dashboardHicon").textContent = "check";
+  onKeyDown = e => {
+    const { id } = e.target;
+    const { key } = e;
 
-      this.setState({ inputHandleActive: true });
-    } else if (this.state.inputHandleActive) {
-      document.getElementById("dashboardHinput").blur();
-      document.getElementById("dashboardHicon").textContent = "edit";
-
-      this.setState({ inputHandleActive: false });
+    if (key === "Enter" || key === "Escape" || key === "Esc") {
+      if (id === "dashboardNinput") {
+        document.getElementById("dashboardNinput").blur();
+      } else if (id === "dashboardHinput") {
+        document.getElementById("dashboardHinput").blur();
+      }
     }
   };
 
@@ -384,10 +408,10 @@ class DashboardEdit extends Component {
             <BackButton history={this.props.history} />
             <EditDashboardTitle
               onChange={this.onChange}
-              onNameInput={this.onNameInput}
-              onChangeFocusNameIcon={this.onChangeFocusNameIcon}
               onBlur={this.onBlur}
               onFocus={this.onFocus}
+              onClick={this.onClick}
+              onKeyDown={this.onKeyDown}
               company={company}
               name={name}
               handle={handle}
