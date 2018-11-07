@@ -64,7 +64,7 @@
       margin: 0;
       margin-top: 10px;
 
-      .popupContainer{
+      .popupContainer {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -72,9 +72,9 @@
         width: 340px;
         height: inherit;
 
-        form{
+        form {
           width: inherit;
-          #selectCompanyDashboard{
+          #selectCompanyDashboard {
             height: 13.5vh;
             margin: 0;
           }
@@ -89,7 +89,7 @@
             }
             .formField {
               height: 7.5vh;
-              margin-bottom: 10px;  
+              margin-bottom: 10px;
               input {
                 width: 100%;
                 background: transparent;
@@ -105,12 +105,18 @@
                 font-size: 0.8em;
                 color: $color-red;
               }
-              .list{
-                color:$color-dark-white;
+              .list {
+                color: $color-dark-white;
+              }
+              .red {
+                color: $color-red;
+              }
+              .grey {
+                color: $color-dark-white;
               }
             }
           }
-          >div{
+          > div {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -120,7 +126,6 @@
         .btn {
           margin-bottom: 15px;
         }
-
       }
     }
   }

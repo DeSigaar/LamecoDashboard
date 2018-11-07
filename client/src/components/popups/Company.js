@@ -31,13 +31,11 @@ class Company extends Component {
       name: this.state.name,
       handle: this.state.handle
     };
+
     this.props.addCompany(company);
-    // TODO add snackbar here and close popup if possible
+    // TODO do following funcionts if ^ is succeeded
     this.props.getCompanies();
-    this.props.closePopup();
-    // setTimeout(() => {
-    //   this.props.closePopup();
-    // }, 500);
+    // this.props.closePopup();
   };
 
   handleClick = e => {
@@ -48,52 +46,54 @@ class Company extends Component {
     const { errors } = this.state;
 
     return (
-        <div className="popupContainer">
-          <form onSubmit={this.onSubmit}>
-            <div className="middleForm">
-              <div className="formField">
-                <p>Company</p>
-                <TextFieldGroup
-                  type="text"
-                  name="name"
-                  placeholder="Ex.Fontys University of Applied Sciences"
-                  onChange={this.onChange}
-                  value={this.state.name}
-                  error={errors.name}
-                />
-              </div>
-              <div className="formField">
-                <p>Handle</p>
-                <TextFieldGroup
-                  type="text"
-                  name="handle"
-                  placeholder="Ex. Fontys"
-                  onChange={this.onChange}
-                  value={this.state.handle}
-                  error={errors.handle}
-                />
-              </div>
+      <div className="popupContainer">
+        <form onSubmit={this.onSubmit}>
+          <div className="middleForm">
+            <div className="formField">
+              <p>Company</p>
+              <TextFieldGroup
+                type="text"
+                name="name"
+                placeholder="Ex.Fontys University of Applied Sciences"
+                onChange={this.onChange}
+                value={this.state.name}
+                error={errors.name}
+              />
             </div>
-            <div>
-              <button className="btn" type="submit">
-                <span>Add</span>
-              </button>
-              <button
-                className="btn"
-                type="submit"
-                onClick={this.handleClick.bind(this)}>
-                <span>Cancel</span>
-              </button>
+            <div className="formField">
+              <p>Handle</p>
+              <TextFieldGroup
+                type="text"
+                name="handle"
+                placeholder="Ex. Fontys"
+                onChange={this.onChange}
+                value={this.state.handle}
+                error={errors.handle}
+              />
             </div>
-          </form>
-        </div>
+          </div>
+          <div>
+            <button className="btn" type="submit">
+              <span>Add</span>
+            </button>
+            <button
+              className="btn"
+              type="submit"
+              onClick={this.handleClick.bind(this)}
+            >
+              <span>Cancel</span>
+            </button>
+          </div>
+        </form>
+      </div>
     );
   }
 }
 
 Company.propTypes = {
   addCompany: PropTypes.func.isRequired,
-  getCompanies: PropTypes.func.isRequired
+  getCompanies: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

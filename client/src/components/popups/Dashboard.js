@@ -15,7 +15,8 @@ class Dashboard extends Component {
       name: "",
       handle: "",
       remember_me: false,
-      errors: {}
+      errors: {},
+      color: "grey"
     };
 
     this.handleSelectClick = this.handleSelectClick.bind(this);
@@ -48,8 +49,9 @@ class Dashboard extends Component {
       handle: this.state.handle
     };
     this.props.addDashboard(dashboard);
-    this.props.getCompanies();
+    // TODO do following funcionts if ^ is succeeded
     this.props.closePopup();
+    this.props.getCompanies();
   };
 
   handleCloseClick = e => {
@@ -59,6 +61,13 @@ class Dashboard extends Component {
   handleSelectClick = id => {
     let companyId = id;
     this.setState({ companyId });
+    if (this.state.color === "grey") {
+      this.setState({ color: "red" });
+    } else {
+      this.setState({ color: "grey" });
+    }
+    // const selectList = document.getElementById("selectList");
+    // selectList.classList.add("red");
   };
 
   renderCompanyList = () => {
@@ -67,7 +76,12 @@ class Dashboard extends Component {
         <ul className="list">
           {this.state.companyList.map((company, i) => {
             return (
-              <li key={i} onClick={() => this.handleSelectClick(company.id)}>
+              <li
+                key={i}
+                id="selectList"
+                className={this.state.color}
+                onClick={() => this.handleSelectClick(company.id)}
+              >
                 {/* {console.log(company)} */}
                 {company.name}
               </li>
@@ -132,7 +146,8 @@ class Dashboard extends Component {
 
 Dashboard.propTypes = {
   addDashboard: PropTypes.func.isRequired,
-  getCompanies: PropTypes.func.isRequired
+  getCompanies: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
