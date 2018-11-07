@@ -21,3 +21,17 @@ export const addCompany = data => dispatch => {
       });
     });
 };
+
+export const addDashboard = data => dispatch => {
+  axios
+    .post("/api/dashboard/add", data)
+    .then(res => {
+      console.log("dashboard added");
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
