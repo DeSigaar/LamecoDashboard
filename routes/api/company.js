@@ -98,6 +98,8 @@ router.post(
     const companyFields = {};
     companyFields.name = req.body.name
       .toLowerCase()
+      .trim()
+      .replace(/\s+/g, " ")
       .split(" ")
       .map(x => x.charAt(0).toUpperCase() + x.substring(1))
       .join(" ");
@@ -252,11 +254,23 @@ router.delete(
     //   return res.status(401).json({ authorized: false });
     // }
 
-    // Find company in dtabase by ID
+    // Find company in database by ID
     Company.findById(req.params.id)
       .then(company => {
         // Remove company from database
-        company.remove().then(() => res.json({ success: true }));
+        company.remove().then(() => {
+          // Remove all dashboards from company in database
+          Dashboard.find().then(dashboards => {
+            Object.entries(dashboards).forEach(([key, value]) => {
+              if (value.company == req.params.id) {
+                Dashboard.findById(value.id).then(dashboard => {
+                  dashboard.remove();
+                });
+              }
+            });
+            res.json({ success: true });
+          });
+        });
       })
       .catch(err =>
         res

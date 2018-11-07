@@ -59,6 +59,8 @@ class DashboardEdit extends Component {
       },
       name: "",
       handle: this.props.match.params.handle,
+      inputNameActive: false,
+      inputHandleActive: false,
       loaded: false
     };
 
@@ -262,28 +264,81 @@ class DashboardEdit extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  onBlur = e => {
-    this.setState({ [e.target.name]: e.target.value });
-
-    document.title = `${this.state.name} | Laméco Dashboard`;
-
-    saveDashboardToDB({
-      id: this.state.dashboard.id,
-      name: this.state.name,
-      handle: this.state.handle,
-      company: this.state.dashboard.company_id
-    });
-
-    this.props.history.push(`/dashboard-edit/${this.state.handle}`);
+  onChangeFocusNameIcon = () => {
+    if (!this.state.inputNameActive) {
+      document.getElementById("dashboardNinput").blur();
+      document.getElementById("dashboardNicon").textContent = "edit";
+      this.setState({ inputNameActive: false });
+    } else {
+      document.getElementById("dashboardNinput").focus();
+      document.getElementById("dashboardNicon").textContent = "check";
+      this.setState({ inputNameActive: true });
+    }
   };
 
-  // change focus to the input when clicked on edit button
-  onChangeFocusName = () => {
-    document.getElementById("dashboardN").focus();
+  onFocus = () => {
+    document.getElementById("dashboardNicon").textContent = "check";
+    this.setState({ inputNameActive: true });
+  };
+
+  onBlur = e => {
+    const target = e.target.name;
+    var value = e.target.value;
+
+    if (target === "name") {
+      value = value
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, " ")
+        .split(" ")
+        .map(x => x.charAt(0).toUpperCase() + x.substring(1))
+        .join(" ");
+
+      document.getElementById("dashboardNicon").textContent = "edit";
+      this.setState({ [target]: value, inputNameActive: false });
+
+      saveDashboardToDB({
+        id: this.state.dashboard.id,
+        name: this.state.name,
+        handle: this.state.handle,
+        company: this.state.dashboard.company_id
+      });
+
+      document.title = `${value} | Laméco Dashboard`;
+    } else if (target === "handle") {
+      value = value
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, "-");
+
+      document.getElementById("dashboardHicon").textContent = "edit";
+      this.setState({ [target]: value, inputHandleActive: false });
+
+      const { dashboard, name, handle } = this.state;
+
+      saveDashboardToDB({
+        id: dashboard.id,
+        name: name,
+        handle: handle,
+        company: dashboard.company_id
+      });
+
+      this.props.history.push(`/dashboard-edit/${value}`);
+    }
   };
 
   onChangeFocusHandle = () => {
-    document.getElementById("dashboardH").focus();
+    if (!this.state.inputHandleActive) {
+      document.getElementById("dashboardHinput").focus();
+      document.getElementById("dashboardHicon").textContent = "check";
+
+      this.setState({ inputHandleActive: true });
+    } else if (this.state.inputHandleActive) {
+      document.getElementById("dashboardHinput").blur();
+      document.getElementById("dashboardHicon").textContent = "edit";
+
+      this.setState({ inputHandleActive: false });
+    }
   };
 
   onDashboardDelete = () => {
@@ -296,7 +351,7 @@ class DashboardEdit extends Component {
 	 * is called for each grid item.
 	 */
   render() {
-    const { selectedOption, items, loaded } = this.state;
+    const { selectedOption, items, loaded, company, name, handle } = this.state;
 
     let grid;
     if (!loaded) {
@@ -329,12 +384,13 @@ class DashboardEdit extends Component {
             <BackButton history={this.props.history} />
             <EditDashboardTitle
               onChange={this.onChange}
-              onChangeFocusName={this.onChangeFocusName}
-              onChangeFocusHandle={this.onChangeFocusHandle}
+              onNameInput={this.onNameInput}
+              onChangeFocusNameIcon={this.onChangeFocusNameIcon}
               onBlur={this.onBlur}
-              company={this.state.company}
-              name={this.state.name}
-              handle={this.state.handle}
+              onFocus={this.onFocus}
+              company={company}
+              name={name}
+              handle={handle}
             />
             <WidgetSelecter
               selectedOption={selectedOption}
