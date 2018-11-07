@@ -5,3 +5,4 @@ export const GET_PROFILE = "GET_PROFILE";
 export const PROFILE_LOADING = "PROFILE_LOADING";
 export const GET_COMPANIES = "GET_COMPANIES";
 export const ADD_COMPANIES = "ADD_COMPANIES";
+export const GET_DASHBOARDS = "GET_DASHBOARDS";

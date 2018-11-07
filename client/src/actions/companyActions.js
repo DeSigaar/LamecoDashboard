@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { GET_COMPANIES, GET_ERRORS, ADD_COMPANIES } from "./types";
+import { GET_COMPANIES, GET_ERRORS, GET_DASHBOARDS } from "./types";
 export const getCompanies = () => dispatch => {
   axios
     .get("/api/company/ordered")
@@ -20,6 +20,13 @@ export const addCompany = data => dispatch => {
         payload: err.response.data
       });
     });
+};
+
+export const getDashboards = () => dispatch => {
+  axios
+    .get("/api/company/ordered")
+    .then(res => dispatch({ type: GET_DASHBOARDS, payload: res.data }))
+    .catch(err => dispatch({ type: GET_DASHBOARDS, payload: null }));
 };
 
 export const addDashboard = data => dispatch => {
