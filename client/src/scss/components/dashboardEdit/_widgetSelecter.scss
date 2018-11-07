@@ -11,9 +11,18 @@
     .dropdown {
       width: 100%;
       display: inline-block;
+
+      > div {
+        border-width: 1px;
+        border-color: $color-red !important;
+      }
+      .css-kk5gw9 {
+        box-shadow: none !important;
+      }
     }
+
     .addWidget {
-      align-self: flex-end;
+      align-self: flex-start;
     }
   }
 }

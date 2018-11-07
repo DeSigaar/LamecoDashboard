@@ -93,6 +93,9 @@ class Dashboard extends Component {
             <div key={i}>
               <div className="dashboardTitle">
                 <h2>{company.name}</h2>
+                <button className="iconOnly">
+                  <i className="material-icons">edit</i>
+                </button>
                 <button
                   className="iconOnly"
                   onClick={() => this.onCompanyDelete(company.id)}

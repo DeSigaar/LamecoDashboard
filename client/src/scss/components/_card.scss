@@ -13,7 +13,6 @@
 
   .cardContent {
     width: 20vw;
-    height: auto;
     background-color: $color-white;
     z-index: 0;
     border-radius: 10px;
@@ -59,42 +58,69 @@
 
     .cardBody {
       height: auto;
-      width: auto;
       display: flex;
-      justify-content: space-around;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
       margin-top: 10px;
 
-      .middleForm {
-        height: 15vh;
+      .popupContainer{
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        margin-bottom: 10px;
-        .formText {
-          height: 5vh;
+        align-items: center;
+        width: 340px;
+        height: inherit;
+
+        form{
+          width: inherit;
+          #selectCompanyDashboard{
+            height: 13.5vh;
+            margin: 0;
+          }
+          .middleForm {
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            .formText {
+              height: 5vh;
+            }
+            .formField {
+              height: 7.5vh;
+              margin-bottom: 10px;  
+              input {
+                width: 100%;
+                background: transparent;
+                border: 0;
+                outline: 0;
+                border-bottom: 2px solid $color-red-transparent;
+              }
+              ::placeholder {
+                color: rgb(185, 185, 185);
+              }
+              .invalid {
+                margin-top: 2px;
+                font-size: 0.8em;
+                color: $color-red;
+              }
+              .list{
+                color:$color-dark-white;
+              }
+            }
+          }
+          >div{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 10px 0px;
+          }
         }
-        .formField {
-          height: 7.5vh;
-          margin-bottom: 10px;
-          input {
-            width: 100%;
-            background: transparent;
-            border: 0;
-            outline: 0;
-            border-bottom: 2px solid $color-red-transparent;
-          }
-          ::placeholder {
-            color: rgb(185, 185, 185);
-          }
-          .invalid {
-            margin-top: 2px;
-            font-size: 0.8em;
-            color: $color-red;
-          }
+        .btn {
+          margin-bottom: 15px;
         }
-      }
-      .btn {
-        margin-bottom: 15px;
+
       }
     }
   }
@@ -116,34 +142,4 @@
 
   font-size: 0.9em;
   border-left: 1px solid $color-red;
-
-  /* width */
-  &::-webkit-scrollbar {
-    width: 7px;
-  }
-
-  /* Track */
-  &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 2px rgb(95, 95, 95);
-    border-radius: 10px;
-  }
-
-  /* Handle */
-  &::-webkit-scrollbar-thumb {
-    background: $color-red;
-    border-radius: 10px;
-  }
-
-  ul {
-    padding: 0;
-    padding-inline-start: 0px;
-    margin: 0px;
-    margin-block-start: 0;
-    color: $color-grey;
-
-    li:hover {
-      color: $color-red;
-      cursor: pointer;
-    }
-  }
 }

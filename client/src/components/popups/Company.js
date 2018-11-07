@@ -33,11 +33,11 @@ class Company extends Component {
     };
     this.props.addCompany(company);
     // TODO add snackbar here and close popup if possible
-    this.props.closePopup();
-    setTimeout(() => {
-      this.props.closePopup();
-    }, 500);
     this.props.getCompanies();
+    this.props.closePopup();
+    // setTimeout(() => {
+    //   this.props.closePopup();
+    // }, 500);
   };
 
   handleClick = e => {
@@ -48,8 +48,7 @@ class Company extends Component {
     const { errors } = this.state;
 
     return (
-      <div>
-        <div className="loginContainer">
+        <div className="popupContainer">
           <form onSubmit={this.onSubmit}>
             <div className="middleForm">
               <div className="formField">
@@ -75,19 +74,19 @@ class Company extends Component {
                 />
               </div>
             </div>
-            <button className="btn" type="submit">
-              <span>Add</span>
-            </button>
-            <button
-              className="btn"
-              type="submit"
-              onClick={this.handleClick.bind(this)}
-            >
-              <span>Cancel</span>
-            </button>
+            <div>
+              <button className="btn" type="submit">
+                <span>Add</span>
+              </button>
+              <button
+                className="btn"
+                type="submit"
+                onClick={this.handleClick.bind(this)}>
+                <span>Cancel</span>
+              </button>
+            </div>
           </form>
         </div>
-      </div>
     );
   }
 }
