@@ -57,14 +57,14 @@
     }
 
     .cardBody {
+      min-height: 270px;
       height: auto;
       display: flex;
       flex-direction: column;
       align-items: center;
       margin: 0;
-      margin-top: 10px;
 
-      .popupContainer{
+      .popupContainer {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -72,9 +72,9 @@
         width: 340px;
         height: inherit;
 
-        form{
+        form {
           width: inherit;
-          #selectCompanyDashboard{
+          #selectCompanyDashboard {
             height: 13.5vh;
             margin: 0;
           }
@@ -88,8 +88,11 @@
               height: 5vh;
             }
             .formField {
-              height: 7.5vh;
-              margin-bottom: 10px;  
+              p {
+                margin: 10px 0;
+              }
+              height: 10vh;
+              margin-bottom: 10px;
               input {
                 width: 100%;
                 background: transparent;
@@ -105,23 +108,23 @@
                 font-size: 0.8em;
                 color: $color-red;
               }
-              .list{
-                color:$color-dark-white;
+              .list {
+                color: $color-dark-white;
               }
             }
           }
-          >div{
+          > div {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            margin: 10px 0px;
+            margin: 20px 0px;
           }
         }
         .btn {
           margin-bottom: 15px;
         }
-
       }
+      margin-top: 0;
     }
   }
 }
@@ -132,7 +135,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  cursor: pointer;
+  cursor: default;
 }
 
 .companyList {

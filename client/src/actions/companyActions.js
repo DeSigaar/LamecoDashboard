@@ -3,17 +3,16 @@ import axios from "axios";
 import {
   GET_COMPANIES,
   GET_ERRORS,
+  CLEAR_ERRORS,
   GET_DASHBOARDS,
   DELETE_COMPANY,
   DELETE_DASHBOARD
 } from "./types";
 export const getCompanies = () => dispatch => {
-  setTimeout(() => {
-    axios
-      .get("/api/company/ordered")
-      .then(res => dispatch({ type: GET_COMPANIES, payload: res.data }))
-      .catch(err => dispatch({ type: GET_COMPANIES, payload: null }));
-  }, 500);
+  axios
+    .get("/api/company/ordered")
+    .then(res => dispatch({ type: GET_COMPANIES, payload: res.data }))
+    .catch(err => dispatch({ type: GET_COMPANIES, payload: null }));
 };
 
 // Delete company
@@ -26,6 +25,7 @@ export const deleteCompany = id => dispatch => {
 
 // Delete dashboard
 export const deleteDashboard = id => dispatch => {
+  dispatch(clearErrors());
   axios
     .delete(`/api/dashboard/remove/${id}`)
     .then(res => dispatch({ type: DELETE_DASHBOARD, payload: id }))
@@ -33,9 +33,12 @@ export const deleteDashboard = id => dispatch => {
 };
 
 export const addCompany = data => dispatch => {
+  dispatch(clearErrors());
   axios
     .post("/api/company/add", data)
-    .then(res => {})
+    .then(res => {
+      //closePopup();
+    })
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
@@ -52,6 +55,7 @@ export const getDashboards = () => dispatch => {
 };
 
 export const addDashboard = data => dispatch => {
+  dispatch(clearErrors());
   axios
     .post("/api/dashboard/add", data)
     .then(res => {
@@ -63,4 +67,10 @@ export const addDashboard = data => dispatch => {
         payload: err.response.data
       });
     });
+};
+
+export const clearErrors = () => {
+  return {
+    type: CLEAR_ERRORS
+  };
 };

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { addCompany } from "../../actions/companyActions";
+import { addCompany, getCompanies } from "../../actions/companyActions";
 import TextFieldGroup from "../common/TextField";
 import PropTypes from "prop-types";
-import { getCompanies } from "../../actions/companyActions";
 import { connect } from "react-redux";
 
 class Company extends Component {
@@ -11,6 +10,7 @@ class Company extends Component {
     this.state = {
       name: "",
       handle: "",
+      handleTyped: false,
       errors: {}
     };
   }
@@ -25,19 +25,52 @@ class Company extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  onKeyUp = e => {
+    let { name, value } = e.target;
+
+    if (name === "name") {
+      if (e.key !== " ") {
+        value = value
+          .toLowerCase()
+          .trim()
+          .replace(/\s+/g, " ")
+          .split(" ")
+          .map(x => x.charAt(0).toUpperCase() + x.substring(1))
+          .join(" ");
+
+        this.setState({ name: value });
+        if (!this.state.handleTyped) {
+          value = value
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, "-");
+
+          this.setState({ handle: value });
+        }
+      }
+    } else if (name === "handle") {
+      this.setState({ handleTyped: true });
+
+      if (e.key !== " ") {
+        value = value
+          .toLowerCase()
+          .trim()
+          .replace(/\s+/g, "-");
+
+        this.setState({ handle: value });
+      }
+    }
+  };
+
   onSubmit = e => {
     e.preventDefault();
-    const company = {
-      name: this.state.name,
-      handle: this.state.handle
-    };
-    this.props.addCompany(company);
-    // TODO add snackbar here and close popup if possible
+    const { name, handle } = this.state;
+    this.props.addCompany({ name, handle });
     this.props.getCompanies();
-    this.props.closePopup();
-    // setTimeout(() => {
-    //   this.props.closePopup();
-    // }, 500);
+
+    // TODO close popup after succesful submit -- Max busy with this
+
+    // TODO add snackbar here
   };
 
   handleClick = e => {
@@ -45,48 +78,47 @@ class Company extends Component {
   };
 
   render() {
-    const { errors } = this.state;
+    const { errors, name, handle } = this.state;
 
     return (
-        <div className="popupContainer">
-          <form onSubmit={this.onSubmit}>
-            <div className="middleForm">
-              <div className="formField">
-                <p>Company</p>
-                <TextFieldGroup
-                  type="text"
-                  name="name"
-                  placeholder="Ex.Fontys University of Applied Sciences"
-                  onChange={this.onChange}
-                  value={this.state.name}
-                  error={errors.name}
-                />
-              </div>
-              <div className="formField">
-                <p>Handle</p>
-                <TextFieldGroup
-                  type="text"
-                  name="handle"
-                  placeholder="Ex. Fontys"
-                  onChange={this.onChange}
-                  value={this.state.handle}
-                  error={errors.handle}
-                />
-              </div>
+      <div className="popupContainer">
+        <form onSubmit={this.onSubmit}>
+          <div className="middleForm">
+            <div className="formField">
+              <p>Name</p>
+              <TextFieldGroup
+                type="text"
+                name="name"
+                placeholder="Name of company"
+                onChange={this.onChange}
+                onKeyUp={this.onKeyUp}
+                value={name}
+                error={errors.name}
+              />
             </div>
-            <div>
-              <button className="btn" type="submit">
-                <span>Add</span>
-              </button>
-              <button
-                className="btn"
-                type="submit"
-                onClick={this.handleClick.bind(this)}>
-                <span>Cancel</span>
-              </button>
+            <div className="formField">
+              <p>Handle</p>
+              <TextFieldGroup
+                type="text"
+                name="handle"
+                placeholder="Handle of company"
+                onChange={this.onChange}
+                onKeyUp={this.onKeyUp}
+                value={handle}
+                error={errors.handle}
+              />
             </div>
-          </form>
-        </div>
+          </div>
+          <div>
+            <button className="btn" type="submit">
+              <span>Add</span>
+            </button>
+            <button className="btn" onClick={this.handleClick.bind(this)}>
+              <span>Cancel</span>
+            </button>
+          </div>
+        </form>
+      </div>
     );
   }
 }

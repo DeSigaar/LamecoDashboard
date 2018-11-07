@@ -8,14 +8,27 @@ class Popup extends Component {
     this.state = { title: "" };
   }
 
-  handleClick = e => {
-    this.props.closePopup();
-  };
-  componentDidMount() {
+  componentDidMount = () => {
     this.setState({
       title: this.props.title
     });
-  }
+    document.addEventListener("keydown", this.typeFunction, false);
+  };
+
+  componentWillMount = () => {
+    document.removeEventListener("keydown", this.typeFunction, false);
+  };
+
+  typeFunction = e => {
+    if (e.key === "Escape") {
+      this.props.closePopup();
+    }
+  };
+
+  handleClick = () => {
+    this.props.closePopup();
+  };
+
   render() {
     return (
       <div className="card">
