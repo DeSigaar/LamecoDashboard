@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import { addCompany, getCompanies } from "../../actions/companyActions";
 import TextFieldGroup from "../common/TextField";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
 class Company extends Component {
   constructor(props) {
@@ -15,17 +15,18 @@ class Company extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = nextProps => {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
-  }
+  };
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
   onKeyUp = e => {
+    const { handleTyped } = this.state;
     let { name, value } = e.target;
 
     if (name === "name") {
@@ -39,7 +40,7 @@ class Company extends Component {
           .join(" ");
 
         this.setState({ name: value });
-        if (!this.state.handleTyped) {
+        if (!handleTyped) {
           value = value
             .toLowerCase()
             .trim()
@@ -65,16 +66,17 @@ class Company extends Component {
   onSubmit = e => {
     e.preventDefault();
     const { name, handle } = this.state;
-    this.props.addCompany({ name, handle });
-    this.props.getCompanies();
+    const { addCompany, closePopup, getCompanies } = this.props;
 
-    // TODO close popup after succesful submit -- Max busy with this
+    addCompany({ name, handle }, () => closePopup());
+    getCompanies();
 
-    // TODO add snackbar here
+    // TODO: add snackbar here
   };
 
   handleClick = e => {
-    this.props.closePopup();
+    const { closePopup } = this.props;
+    closePopup();
   };
 
   render() {
@@ -113,7 +115,7 @@ class Company extends Component {
             <button className="btn" type="submit">
               <span>Add</span>
             </button>
-            <button className="btn" onClick={this.handleClick.bind(this)}>
+            <button className="btn" onClick={this.handleClick}>
               <span>Cancel</span>
             </button>
           </div>

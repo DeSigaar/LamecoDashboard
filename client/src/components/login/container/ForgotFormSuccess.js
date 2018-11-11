@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 const ForgotFormSuccess = ({ email, time, onForgot }) => {
   return (
     <div className="forgotSuccess">
@@ -18,9 +19,11 @@ const ForgotFormSuccess = ({ email, time, onForgot }) => {
     </div>
   );
 };
+
 ForgotFormSuccess.propTypes = {
   email: PropTypes.string.isRequired,
   time: PropTypes.instanceOf(Date).isRequired,
   onForgot: PropTypes.func.isRequired
 };
+
 export default ForgotFormSuccess;

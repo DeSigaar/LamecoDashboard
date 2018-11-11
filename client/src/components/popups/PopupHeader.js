@@ -1,13 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import PopupImage from "./PopupImage";
 
-class PopupHeader extends Component {
-  render() {
-    return (
-      <div className="cardHeader">
-        <PopupImage title={this.props.title} />
-      </div>
-    );
-  }
-}
+const PopupHeader = ({ title }) => {
+  return (
+    <div className="cardHeader">
+      <PopupImage title={title} />
+    </div>
+  );
+};
+
+PopupHeader.propTypes = {
+  title: PropTypes.string.isRequired
+};
+
 export default PopupHeader;

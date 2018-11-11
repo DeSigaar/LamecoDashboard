@@ -42,7 +42,7 @@ router.post(
       .toLowerCase()
       .trim()
       .replace(/\s+/g, "-");
-    dashboardFields.company = req.body.company;
+    if (req.body.company) dashboardFields.company = req.body.company;
 
     const { errors, isValid } = validateDashboardInput(dashboardFields);
 

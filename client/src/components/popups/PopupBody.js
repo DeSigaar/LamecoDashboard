@@ -1,47 +1,38 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Company from "./Company";
 import Dashboard from "./Dashboard";
 
 class PopupBody extends Component {
-  // constructor() {
-  //   super();
-  // }
-
-  componentDidMount() {
-    this.setState({
-      companyList: this.props.companyList
-    });
-  }
-
   render() {
-    let isDashboard = false;
-    let isCompany = false;
+    const { companyList, title, closePopup } = this.props;
 
-    if (this.props.title === "Add Dashboard") {
-      isDashboard = true;
-    }
-    if (this.props.title === "Add Company") {
-      isCompany = true;
-    }
-
-    if (isCompany) {
-      return (
-        <div className="cardBody">
-          <Company closePopup={this.props.closePopup.bind(this)} />
-        </div>
-      );
-    } else if (isDashboard) {
-      return (
-        <div className="cardBody">
-          <Dashboard
-            closePopup={this.props.closePopup.bind(this)}
-            companyList={this.state.companyList}
-          />
-        </div>
-      );
-    } else {
-      return <div>ERror!</div>;
+    switch (title) {
+      case "Add Company":
+        return (
+          <div className="cardBody">
+            <Company closePopup={closePopup.bind(this)} />
+          </div>
+        );
+      case "Add Dashboard":
+        return (
+          <div className="cardBody">
+            <Dashboard
+              closePopup={closePopup.bind(this)}
+              companyList={companyList}
+            />
+          </div>
+        );
+      default:
+        return <div>Oops, something went wrong!</div>;
     }
   }
 }
+
+PopupBody.propTypes = {
+  title: PropTypes.string.isRequired,
+  closePopup: PropTypes.func.isRequired,
+  companyList: PropTypes.array
+};
+
 export default PopupBody;

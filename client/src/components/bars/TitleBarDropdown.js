@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import { logoutUser } from "../../actions/authActions";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { logoutUser } from "../../actions/authActions";
 
 class TitleBarDropdown extends Component {
   onLogoutClick = () => {
-    this.props.logoutUser();
+    const { logoutUser } = this.props;
+
+    logoutUser();
   };
 
   render() {
@@ -14,7 +16,6 @@ class TitleBarDropdown extends Component {
       <ul className="subnav">
         <li>
           <Link to="/add-user">
-            {/* Eeeeek inline styling, sorry hiervoor het is bijna 5 uur*/}
             <i className="material-icons white-icon">person_add</i>
           </Link>
         </li>

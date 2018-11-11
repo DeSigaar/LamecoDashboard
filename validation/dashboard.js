@@ -4,6 +4,12 @@ const isEmpty = require("./is-empty");
 module.exports = function validateDashboardInput(data) {
   let errors = {};
 
+  // Check for aynthing wrong with the companyId
+  data.company = !isEmpty(data.company) ? data.company : "";
+  if (Validator.isEmpty(data.company)) {
+    errors.company = "Company is required";
+  }
+
   // Check for anything wrong with the name
   data.name = !isEmpty(data.name) ? data.name : "";
   if (Validator.isEmpty(data.name)) {

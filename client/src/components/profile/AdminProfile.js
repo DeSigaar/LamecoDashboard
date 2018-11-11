@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { getCurrentProfile, updateProfile } from "../../actions/authActions";
 import TitleBar from "../bars/TitleBar";
 import TextFieldGroup from "../common/TextField";
-import { getCurrentProfile, updateProfile } from "../../actions/authActions";
 
 class AdminProfile extends Component {
   constructor(props) {
@@ -18,19 +18,20 @@ class AdminProfile extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props.getCurrentProfile();
+  componentDidMount = () => {
+    const { getCurrentProfile, user } = this.props;
 
-    const { name, email, username } = this.props.user;
+    getCurrentProfile();
+    const { name, email, username } = user;
 
     this.setState({ name, email, username });
-  }
+  };
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = nextProps => {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
-  }
+  };
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -38,11 +39,11 @@ class AdminProfile extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-
     const { name, email, password, password2, username } = this.state;
+    const { user, updateProfile, history } = this.props;
 
     const profileData = {
-      id: this.props.user._id,
+      id: user._id,
       name,
       email,
       password,
@@ -50,16 +51,17 @@ class AdminProfile extends Component {
       username
     };
 
-    this.props.updateProfile(profileData, this.props.history);
+    updateProfile(profileData, history);
   };
+
   render() {
     const { errors, email, name, username, password, password2 } = this.state;
     const { user, history } = this.props;
+
     return (
       <div className="adminProfile">
         <TitleBar />
         <div className="profileContainer">
-          {/* Back button */}
           <div className="backButton" onClick={() => history.push("/")}>
             <button className="btn icon red">
               <i className="material-icons">arrow_back</i>

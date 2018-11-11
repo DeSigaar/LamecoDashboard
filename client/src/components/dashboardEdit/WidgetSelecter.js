@@ -1,6 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Select from "react-select";
+import PropTypes from "prop-types";
 
 const customStyles = {
   control: (provided, state) => ({

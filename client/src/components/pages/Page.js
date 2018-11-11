@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import { WidthProvider, Responsive } from "react-grid-layout";
 import axios from "axios";
 import _ from "lodash";
-import { WidthProvider, Responsive } from "react-grid-layout";
 import Clock from "../gridItems/Clock";
 import Weather from "../gridItems/Weather";
 import Loader from "../common/Loader";
@@ -10,17 +10,10 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const layout = [];
 
 class Page extends Component {
-  static defaultProps = {
-    className: "layout",
-    isDraggable: false,
-    isResizable: false,
-    cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
-    rowHeight: 100,
-    autoSize: true
-  };
-
   constructor(props) {
     super(props);
+    const { company, dashboard } = this.props.match.params;
+
     this.state = {
       validCompany: false,
       validDashboard: false,
@@ -29,13 +22,13 @@ class Page extends Component {
       company: {
         id: "",
         name: "",
-        handle: this.props.match.params.company
+        handle: company
       },
       dashboard: {
         company_id: "",
         id: "",
         name: "",
-        handle: this.props.match.params.dashboard,
+        handle: dashboard,
         content: ""
       },
       items: layout.map(function(i, key, list) {
@@ -53,7 +46,9 @@ class Page extends Component {
       })
     };
 
-    if (!this.state.loaded) {
+    const { loaded } = this.state;
+
+    if (!loaded) {
       axios.get(`/api/company/all`).then(res => {
         const companies = res.data;
         axios.get(`/api/dashboard/all`).then(res => {
@@ -114,9 +109,10 @@ class Page extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
+    const { dashboard } = this.state;
     this.interval = setInterval(() => {
-      axios.get(`/api/dashboard/${this.state.dashboard.id}`).then(res => {
+      axios.get(`/api/dashboard/${dashboard.id}`).then(res => {
         if (res.data.content.length > 0) {
           var items = JSON.parse(res.data.content);
           for (var i = 0; i < items.length; i++) {
@@ -130,11 +126,11 @@ class Page extends Component {
         }
       });
     }, 10000);
-  }
+  };
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     clearInterval(this.interval);
-  }
+  };
 
   createElement = el => {
     const i = el.i;
@@ -222,5 +218,14 @@ class Page extends Component {
     return <div className="page">{dashboardContent}</div>;
   }
 }
+
+Page.defaultProps = {
+  className: "layout",
+  isDraggable: false,
+  isResizable: false,
+  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
+  rowHeight: 100,
+  autoSize: true
+};
 
 export default Page;

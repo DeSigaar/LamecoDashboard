@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 const PasswordResetSuccess = ({ email, onForgot }) => {
   return (
     <div className="passwordResetSuccess">
@@ -19,8 +20,10 @@ const PasswordResetSuccess = ({ email, onForgot }) => {
     </div>
   );
 };
+
 PasswordResetSuccess.propTypes = {
   email: PropTypes.string.isRequired,
   onForgot: PropTypes.func.isRequired
 };
+
 export default PasswordResetSuccess;

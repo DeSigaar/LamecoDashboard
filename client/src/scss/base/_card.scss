@@ -74,10 +74,6 @@
 
         form {
           width: inherit;
-          #selectCompanyDashboard {
-            height: 13.5vh;
-            margin: 0;
-          }
           .middleForm {
             height: auto;
             display: flex;
@@ -87,9 +83,10 @@
             .formText {
               height: 5vh;
             }
-            .formField {
+            .formField:not(#selectCompanyDashboard) {
               p {
                 margin: 10px 0;
+                font-weight: 800;
               }
               height: 10vh;
               margin-bottom: 10px;
@@ -108,9 +105,6 @@
                 font-size: 0.8em;
                 color: $color-red;
               }
-              .list {
-                color: $color-dark-white;
-              }
             }
           }
           > div {
@@ -118,6 +112,25 @@
             flex-direction: row;
             justify-content: space-between;
             margin: 20px 0px;
+          }
+          #selectCompanyDashboard.formField {
+            p.companyTitle {
+              margin: 10px 0;
+              font-weight: 800;
+            }
+            .companyList {
+              height: 110px;
+            }
+            .list {
+              color: $color-dark-white;
+              cursor: pointer;
+
+              .selected {
+                color: $color-red;
+              }
+            }
+            height: 175px;
+            margin: 0;
           }
         }
         .btn {

@@ -19,7 +19,6 @@
     font-weight: normal;
     list-style-type: none;
     padding-left: 25px;
-    cursor: default;
     li.dashboardLink {
       padding: 5px 5px;
       position: relative;
@@ -49,7 +48,7 @@
     }
     li.noDashboards {
       color: $color-grey;
-      cursor: text;
+      cursor: auto;
       margin-bottom: 5px;
     }
   }

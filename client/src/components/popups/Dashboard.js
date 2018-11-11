@@ -1,88 +1,120 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import TextFieldGroup from "../common/TextField";
 import PropTypes from "prop-types";
-import { addDashboard } from "../../actions/companyActions";
-import { getCompanies } from "../../actions/companyActions";
+import { addDashboard, getCompanies } from "../../actions/companyActions";
+import TextFieldGroup from "../common/TextField";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       companyList: [],
-      dashboardList: [],
       companyId: "",
       name: "",
       handle: "",
-      remember_me: false,
-      errors: {},
-      color: "grey"
+      handleTyped: false,
+      errors: {}
     };
-
-    this.handleSelectClick = this.handleSelectClick.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({
-      companyList: this.props.companyList
-    });
-  }
+  componentWillMount = () => {
+    const { companyList } = this.props;
+    this.setState({ companyList });
+  };
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.company.company.companies) {
-      this.setState({
-        companyList: nextProps.company.company.companies,
-        errors: nextProps.errors
-      });
+  componentWillReceiveProps = nextProps => {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
     }
-  }
+  };
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  onKeyUp = e => {
+    const { handleTyped } = this.state;
+    let { name, value } = e.target;
+
+    if (name === "name") {
+      if (e.key !== " ") {
+        value = value
+          .toLowerCase()
+          .trim()
+          .replace(/\s+/g, " ")
+          .split(" ")
+          .map(x => x.charAt(0).toUpperCase() + x.substring(1))
+          .join(" ");
+
+        this.setState({ name: value });
+        if (!handleTyped) {
+          value = value
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, "-");
+
+          this.setState({ handle: value });
+        }
+      }
+    } else if (name === "handle") {
+      this.setState({ handleTyped: true });
+
+      if (e.key !== " ") {
+        value = value
+          .toLowerCase()
+          .trim()
+          .replace(/\s+/g, "-");
+
+        this.setState({ handle: value });
+      }
+    }
+  };
+
   onSubmit = e => {
     e.preventDefault();
-    const dashboard = {
-      company: this.state.companyId,
-      name: this.state.name,
-      handle: this.state.handle
-    };
-    this.props.addDashboard(dashboard);
-    // TODO do following funcionts if ^ is succeeded
-    this.props.closePopup();
-    this.props.getCompanies();
+    const { companyId, name, handle } = this.state;
+    const { addDashboard, closePopup, getCompanies } = this.props;
+
+    addDashboard({ company: companyId, name, handle }, () => closePopup());
+    getCompanies();
+
+    // TODO: add snackbar here
   };
 
   handleCloseClick = e => {
-    this.props.closePopup();
+    const { closePopup } = this.props;
+    closePopup();
   };
 
   handleSelectClick = id => {
     let companyId = id;
     this.setState({ companyId });
-    if (this.state.color === "grey") {
-      this.setState({ color: "red" });
-    } else {
-      this.setState({ color: "grey" });
-    }
-    // const selectList = document.getElementById("selectList");
-    // selectList.classList.add("red");
+
+    // Remove any selected items
+    var elements = document.querySelectorAll(".selected");
+    [].forEach.call(elements, function(el) {
+      el.classList.remove("selected");
+    });
+
+    // Highlight item in list
+    const selectedItem = document.getElementById(companyId);
+    selectedItem.classList.add("selected");
   };
 
   renderCompanyList = () => {
+    const { companyList } = this.state;
+
     return (
       <div className="companyList">
         <ul className="list">
-          {this.state.companyList.map((company, i) => {
+          {companyList.map((company, i) => {
             return (
               <li
                 key={i}
-                id="selectList"
-                className={this.state.color}
+                id={company.id}
+                className="selectList"
                 onClick={() => this.handleSelectClick(company.id)}
               >
-                {/* {console.log(company)} */}
                 {company.name}
               </li>
             );
@@ -93,35 +125,40 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { errors } = this.state;
+    const { errors, name, handle } = this.state;
 
     return (
       <div className="popupContainer">
         <form onSubmit={this.onSubmit}>
           <div className="middleForm">
             <div className="formField" id="selectCompanyDashboard">
-              <p>Select Company</p>
+              <p className="companyTitle">Select Company</p>
               {this.renderCompanyList()}
+              {errors.company && (
+                <div className="invalid"> {errors.company}</div>
+              )}
             </div>
             <div className="formField">
-              <p>Dashboard</p>
+              <p>Name</p>
               <TextFieldGroup
                 type="text"
                 name="name"
-                placeholder="Ex. Fontys"
+                placeholder="Name of dashboard"
                 onChange={this.onChange}
-                value={this.state.name}
+                onKeyUp={this.onKeyUp}
+                value={name}
                 error={errors.name}
               />
             </div>
             <div className="formField">
-              <p>Dashboard handle</p>
+              <p>Handle</p>
               <TextFieldGroup
                 type="text"
                 name="handle"
-                placeholder="Ex. Fontys"
+                placeholder="Handle of dashboard"
                 onChange={this.onChange}
-                value={this.state.handle}
+                onKeyUp={this.onKeyUp}
+                value={handle}
                 error={errors.name}
               />
             </div>
@@ -133,7 +170,7 @@ class Dashboard extends Component {
             <button
               className="btn"
               type="submit"
-              onClick={this.handleCloseClick.bind(this)}
+              onClick={this.handleCloseClick}
             >
               <span>Cancel</span>
             </button>

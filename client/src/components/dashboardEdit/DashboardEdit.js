@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import _ from "lodash";
-import { WidthProvider, Responsive } from "react-grid-layout";
 import { connect } from "react-redux";
+import { WidthProvider, Responsive } from "react-grid-layout";
 import PropTypes from "prop-types";
 import axios from "axios";
+import _ from "lodash";
+import { deleteDashboard } from "../../actions/companyActions";
 import TitleBar from "../bars/TitleBar";
 import Clock from "../gridItems/Clock";
 import Weather from "../gridItems/Weather";
@@ -11,7 +12,6 @@ import WidgetSelecter from "./WidgetSelecter";
 import EditDashboardTitle from "./EditDashboardTitle";
 import BackButton from "./Backbutton";
 import Loader from "../common/Loader";
-import { deleteDashboard } from "../../actions/companyActions";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const layout = [];
@@ -20,16 +20,9 @@ const layout = [];
  * and it's items, but also the side navigation with button's and a dropdown menu, to control the grid.
  */
 class DashboardEdit extends Component {
-  static defaultProps = {
-    className: "layout",
-    cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
-    rowHeight: 100,
-    autoSize: true
-  };
-
   constructor(props) {
     super(props);
-
+    const { handle } = this.props.match.params;
     this.state = {
       items: layout.map(function(i, key, list) {
         return {
@@ -49,7 +42,7 @@ class DashboardEdit extends Component {
         valid: false,
         company_id: "",
         id: "",
-        handle: this.props.match.params.handle,
+        handle,
         name: ""
       },
       company: {
@@ -58,20 +51,23 @@ class DashboardEdit extends Component {
         name: ""
       },
       name: "",
-      handle: this.props.match.params.handle,
+      handle,
       inputNameActive: false,
       inputHandleActive: false,
       loaded: false
     };
 
-    if (!this.state.loaded) {
+    const { loaded, dashboard } = this.state;
+    const { history } = this.props;
+
+    if (!loaded) {
       axios.get(`/api/company/all`).then(res => {
         const companies = res.data;
         axios.get(`/api/dashboard/all`).then(res => {
           const dashboards = res.data;
 
           Object.entries(dashboards).forEach(([key, value]) => {
-            if (value.handle === this.state.dashboard.handle) {
+            if (value.handle === dashboard.handle) {
               if (value.content.length > 0) {
                 var items = JSON.parse(value.content);
                 for (var i = 0; i < items.length; i++) {
@@ -97,15 +93,13 @@ class DashboardEdit extends Component {
                 loaded: true
               });
 
-              document.title = `${
-                this.state.dashboard.name
-              } | Laméco Dashboard`;
+              document.title = `${dashboard.name} | Laméco Dashboard`;
             }
           });
 
-          if (this.state.dashboard.valid) {
+          if (dashboard.valid) {
             Object.entries(companies).forEach(([key, value]) => {
-              if (value._id === this.state.dashboard.company_id) {
+              if (value._id === dashboard.company_id) {
                 this.setState({
                   company: {
                     id: value._id,
@@ -116,8 +110,7 @@ class DashboardEdit extends Component {
               }
             });
           } else {
-            // Not a valid handle -> Show error?
-            this.props.history.push("/");
+            history.push("/");
           }
         });
       });
@@ -125,9 +118,9 @@ class DashboardEdit extends Component {
   }
 
   /* This function renders all grid items in the layout array. It creates a div
-	 * with a remove button, and content. The content managed by a switch statement,
-	 * which output is based on the widget property from the grid items.
-	 */
+   * with a remove button, and content. The content managed by a switch statement,
+   * which output is based on the widget property from the grid items.
+   */
   createElement = el => {
     const removeStyle = {
       position: "absolute",
@@ -164,15 +157,15 @@ class DashboardEdit extends Component {
   };
 
   /* The onAddItem() function is called when the user clicks on the 'Add Item' button.
-	 * It adds a new grid item to the state, and takes the selected item in the dropmenu
-	 * into account. This way the correct widget is loaded by the createElement() function.
-	 */
+   * It adds a new grid item to the state, and takes the selected item in the dropmenu
+   * into account. This way the correct widget is loaded by the createElement() function.
+   */
   onAddItem = () => {
-    var selection = this.state.selectedOption
-      ? this.state.selectedOption
-      : false;
+    const { selectedOption, items, cols } = this.state;
 
-    if (this.state.selectedOption.value !== "") {
+    var selection = selectedOption ? selectedOption : false;
+
+    if (selectedOption.value !== "") {
       var widgetProps = returnProps(selection.value);
 
       var identifier = "";
@@ -185,9 +178,9 @@ class DashboardEdit extends Component {
         );
 
       this.setState({
-        items: this.state.items.concat({
+        items: items.concat({
           i: identifier,
-          x: (this.state.items.length * 2) % (this.state.cols || 12),
+          x: (items.length * 2) % (cols || 12),
           y: Infinity,
           w: widgetProps.w,
           h: widgetProps.h,
@@ -202,11 +195,13 @@ class DashboardEdit extends Component {
   };
 
   /* onLayoutReset() is called when the user clicks on the 'Reset Layout' button.
-	 * It clears the localStorage and then issues a window refresh.
-	 */
+   * It clears the localStorage and then issues a window refresh.
+   */
   onLayoutReset = () => {
-    // remove content from grid && database
-    saveToDB(this.state.items, this.state.dashboard.handle, true);
+    const { items, dashboard } = this.state;
+
+    // Remove content from grid && database
+    saveToDB(items, dashboard.handle, true);
     this.setState({
       items: layout.map(function(i, key, list) {
         return {
@@ -233,25 +228,29 @@ class DashboardEdit extends Component {
   };
 
   /* Is called whenever the layout is changed. The for loop adds widget attribute
-	 * from items array to objects in layout array, so that the widget props
-	 * are also saved to localStorage. This is because objects in the layout array
-	 * do not include a widget property by default.
-	 */
+   * from items array to objects in layout array, so that the widget props
+   * are also saved to localStorage. This is because objects in the layout array
+   * do not include a widget property by default.
+   */
   onLayoutChange = layout => {
+    const { items, dashboard } = this.state;
+
     this.setState({ layout: layout });
-    for (var i = 0; i < this.state.items.length; i++) {
-      layout[i].widget = this.state.items[i].widget;
+    for (var i = 0; i < items.length; i++) {
+      layout[i].widget = items[i].widget;
     }
-    saveToDB(layout, this.state.dashboard.handle, false);
+    saveToDB(layout, dashboard.handle, false);
   };
 
   /* When a user presses the little 'x' in the top right corner of a grid item,
-	 * this function is called. It removes the corresponding grid item.
-	 */
+   * this function is called. It removes the corresponding grid item.
+   */
   onRemoveItem = i => {
-    this.setState({ items: _.reject(this.state.items, { i: i }) });
-    if (this.state.items.length === 1) {
-      saveToDB(this.state.items, this.state.dashboard.handle, true);
+    const { items, dashboard } = this.state;
+
+    this.setState({ items: _.reject(items, { i: i }) });
+    if (items.length === 1) {
+      saveToDB(items, dashboard.handle, true);
     }
   };
 
@@ -265,15 +264,17 @@ class DashboardEdit extends Component {
   };
 
   onClick = e => {
+    const { inputNameActive, inputHandleActive } = this.state;
     const { id } = e.target;
+
     if (id === "dashboardNicon") {
-      if (!this.state.inputNameActive) {
+      if (!inputNameActive) {
         document.getElementById("dashboardNinput").focus();
         document.getElementById("dashboardNicon").textContent = "check";
         this.setState({ inputNameActive: true });
       }
     } else if (id === "dashboardHicon") {
-      if (!this.state.inputHandleActive) {
+      if (!inputHandleActive) {
         document.getElementById("dashboardHinput").focus();
         document.getElementById("dashboardHicon").textContent = "check";
         this.setState({ inputHandleActive: true });
@@ -282,15 +283,16 @@ class DashboardEdit extends Component {
   };
 
   onFocus = e => {
+    const { inputNameActive, inputHandleActive } = this.state;
     const { id } = e.target;
 
     if (id === "dashboardNinput") {
-      if (!this.state.inputNameActive) {
+      if (!inputNameActive) {
         document.getElementById("dashboardNicon").textContent = "check";
         this.setState({ inputNameActive: true });
       }
     } else if (id === "dashboardHinput") {
-      if (!this.state.inputHandleActive) {
+      if (!inputHandleActive) {
         document.getElementById("dashboardHicon").textContent = "check";
         this.setState({ inputHandleActive: true });
       }
@@ -298,6 +300,7 @@ class DashboardEdit extends Component {
   };
 
   onBlur = e => {
+    const { history } = this.props;
     const target = e.target.name;
     var value = e.target.value;
 
@@ -312,11 +315,13 @@ class DashboardEdit extends Component {
 
       this.setState({ [target]: value });
 
+      const { dashboard, name, handle } = this.state;
+
       saveDashboardToDB({
-        id: this.state.dashboard.id,
-        name: this.state.name,
-        handle: this.state.handle,
-        company: this.state.dashboard.company_id
+        id: dashboard.id,
+        name,
+        handle,
+        company: dashboard.company_id
       });
 
       document.title = `${value} | Laméco Dashboard`;
@@ -337,7 +342,7 @@ class DashboardEdit extends Component {
         company: dashboard.company_id
       });
 
-      this.props.history.push(`/dashboard-edit/${value}`);
+      history.push(`/dashboard-edit/${value}`);
     }
 
     setTimeout(
@@ -366,16 +371,20 @@ class DashboardEdit extends Component {
   };
 
   onDashboardDelete = () => {
-    this.props.deleteDashboard(this.state.dashboard.id);
-    this.props.history.push("/");
+    const { dashboard } = this.state;
+    const { deleteDashboard, history } = this.props;
+
+    deleteDashboard(dashboard.id);
+    history.push("/");
   };
 
   /* This render function, renders the grid, dropdown-menu, 'Add Item'-button
-	 * and 'Reset Layout'-button. This is also where the createElement() function
-	 * is called for each grid item.
-	 */
+   * and 'Reset Layout'-button. This is also where the createElement() function
+   * is called for each grid item.
+   */
   render() {
     const { selectedOption, items, loaded, company, name, handle } = this.state;
+    const { history } = this.props;
 
     let grid;
     if (!loaded) {
@@ -405,7 +414,7 @@ class DashboardEdit extends Component {
         <TitleBar />
         <div className="mainContainer">
           <div className="sideNav shadow2">
-            <BackButton history={this.props.history} />
+            <BackButton history={history} />
             <EditDashboardTitle
               onChange={this.onChange}
               onBlur={this.onBlur}
@@ -424,15 +433,13 @@ class DashboardEdit extends Component {
               onDashboardDelete={this.onDashboardDelete}
             />
           </div>
-          <div className="dashboardGrid">
-            {/* Grid with widgets */}
-            {grid}
-          </div>
+          <div className="dashboardGrid">{grid}</div>
         </div>
       </div>
     );
   }
 }
+
 /* Save layout to database. */
 function saveToDB(content, handle, reset) {
   if (content.length <= 0) {
@@ -448,6 +455,7 @@ function saveToDB(content, handle, reset) {
   });
 }
 
+/* Save dashboard to database. */
 function saveDashboardToDB(dashboard) {
   axios.post(`/api/dashboard/update/${dashboard.id}`, dashboard);
 }
@@ -487,6 +495,14 @@ function returnProps(selection) {
 DashboardEdit.propTypes = {
   deleteDashboard: PropTypes.func.isRequired
 };
+
+DashboardEdit.defaultProps = {
+  className: "layout",
+  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
+  rowHeight: 100,
+  autoSize: true
+};
+
 export default connect(
   null,
   { deleteDashboard }

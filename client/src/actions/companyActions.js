@@ -32,12 +32,12 @@ export const deleteDashboard = id => dispatch => {
     .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 };
 
-export const addCompany = data => dispatch => {
+export const addCompany = (data, closePopup) => dispatch => {
   dispatch(clearErrors());
   axios
     .post("/api/company/add", data)
     .then(res => {
-      //closePopup();
+      closePopup();
     })
     .catch(err => {
       dispatch({
@@ -54,12 +54,12 @@ export const getDashboards = () => dispatch => {
     .catch(err => dispatch({ type: GET_DASHBOARDS, payload: null }));
 };
 
-export const addDashboard = data => dispatch => {
+export const addDashboard = (data, closePopup) => dispatch => {
   dispatch(clearErrors());
   axios
     .post("/api/dashboard/add", data)
     .then(res => {
-      console.log("dashboard added");
+      closePopup();
     })
     .catch(err => {
       dispatch({

@@ -1,9 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 
-class DashboardCardHolder extends Component {
-  render() {
-    return <div className="cardHolder">{this.props.children}</div>;
-  }
-}
+const DashboarddCardHolder = children => {
+  return <div className="cardHolder">{children}</div>;
+};
+
+DashboarddCardHolder.propTypes = {
+  children: PropTypes.object.isRequired
+};
 
 export default DashboardCardHolder;

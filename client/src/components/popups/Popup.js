@@ -1,49 +1,63 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import PopupHeader from "./PopupHeader";
 import PopupBody from "./PopupBody";
 
 class Popup extends Component {
-  constructor() {
-    super();
-    this.state = { title: "" };
-  }
-
   componentDidMount = () => {
-    this.setState({
-      title: this.props.title
-    });
     document.addEventListener("keydown", this.typeFunction, false);
   };
 
-  componentWillMount = () => {
+  componentWillUnmount = () => {
     document.removeEventListener("keydown", this.typeFunction, false);
   };
 
   typeFunction = e => {
+    const { closePopup } = this.props;
+
     if (e.key === "Escape") {
-      this.props.closePopup();
+      closePopup();
     }
   };
 
   handleClick = () => {
-    this.props.closePopup();
+    const { closePopup } = this.props;
+
+    closePopup();
   };
 
   render() {
+    const { companyList, title, closePopup } = this.props;
+
+    let PopupBodyContent;
+    if (title !== "") {
+      PopupBodyContent = (
+        <PopupBody
+          title={title}
+          closePopup={closePopup.bind(this)}
+          companyList={companyList}
+        />
+      );
+    } else {
+      PopupBodyContent = <div>Niks</div>;
+    }
+
     return (
       <div className="card">
         <div className="cardBackground" onClick={this.handleClick.bind(this)} />
         <div className="cardContent ">
-          <PopupHeader title={this.state.title} />
-          <PopupBody
-            title={this.state.title}
-            closePopup={this.props.closePopup.bind(this)}
-            companyList={this.props.companyList}
-          />
+          <PopupHeader title={title} />
+          {PopupBodyContent}
         </div>
       </div>
     );
   }
 }
+
+Popup.propTypes = {
+  title: PropTypes.string.isRequired,
+  closePopup: PropTypes.func.isRequired,
+  companyList: PropTypes.array
+};
 
 export default Popup;

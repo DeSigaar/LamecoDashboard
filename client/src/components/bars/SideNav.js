@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import { getCompanies } from "../../actions/companyActions";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { getCompanies } from "../../actions/companyActions";
 import Popup from "../popups/Popup";
 import isEmpty from "../../validation/is-empty";
-import { Link } from "react-router-dom";
 
 const portalContainer = document.getElementById("card");
 
@@ -19,12 +19,9 @@ class SideNav extends Component {
       title: "",
       loaded: false
     };
-
-    this.togglePopupDashboard = this.togglePopupDashboard.bind(this);
-    this.togglePopupCompany = this.togglePopupCompany.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = nextProps => {
     if (
       nextProps.company.company !== null &&
       nextProps.company.company.companies
@@ -34,7 +31,7 @@ class SideNav extends Component {
         loaded: true
       });
     }
-  }
+  };
 
   addCompany = () => {
     this.setState({ popupState: !this.state.popupState });
@@ -52,13 +49,15 @@ class SideNav extends Component {
   };
 
   renderCompanyList = () => {
+    const { list } = this.state;
+
     return (
       <div className="listView">
         <ul className="list">
-          {this.state.list.map((company, i) => {
+          {list.map((company, i) => {
             return (
               <li key={i}>
-                {company.name}
+                <span>{company.name}</span>
                 {this.renderDashboardList(company)}
               </li>
             );
@@ -87,20 +86,22 @@ class SideNav extends Component {
   };
 
   render() {
-    let popupState;
-    if (this.state.popupState) {
-      popupState = ReactDOM.createPortal(
+    const { popupState, title, list } = this.state;
+
+    let PopUpContent;
+    if (popupState) {
+      PopUpContent = ReactDOM.createPortal(
         <Popup
-          title={this.state.title}
+          title={title}
           closePopup={this.togglePopupCompany}
-          companyList={this.state.list}
+          companyList={list}
         />,
         portalContainer
       );
     }
 
     let companyList;
-    if (isEmpty(this.state.list)) {
+    if (isEmpty(list)) {
       companyList = (
         <ul className="list">
           <li>
@@ -126,7 +127,6 @@ class SideNav extends Component {
 
     return (
       <div>
-        {/* Top buttons */}
         <button
           className="btn icon"
           onClick={this.togglePopupCompany.bind(this, "Add Company")}
@@ -142,20 +142,22 @@ class SideNav extends Component {
           <span>Add dashboard</span>
         </button>
 
-        {/* List */}
         {companyList}
 
-        {popupState}
+        {PopUpContent}
       </div>
     );
   }
 }
+
 SideNav.propTypes = {
   getCompanies: PropTypes.func.isRequired
 };
+
 const mapStateToProps = state => ({
   company: state.company
 });
+
 export default connect(
   mapStateToProps,
   { getCompanies }
