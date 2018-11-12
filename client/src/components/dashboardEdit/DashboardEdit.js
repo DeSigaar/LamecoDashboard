@@ -57,7 +57,7 @@ class DashboardEdit extends Component {
       loaded: false
     };
 
-    const { loaded, dashboard } = this.state;
+    const { loaded } = this.state;
     const { history } = this.props;
 
     if (!loaded) {
@@ -67,7 +67,7 @@ class DashboardEdit extends Component {
           const dashboards = res.data;
 
           Object.entries(dashboards).forEach(([key, value]) => {
-            if (value.handle === dashboard.handle) {
+            if (value.handle === this.state.dashboard.handle) {
               if (value.content.length > 0) {
                 var items = JSON.parse(value.content);
                 for (var i = 0; i < items.length; i++) {
@@ -93,13 +93,15 @@ class DashboardEdit extends Component {
                 loaded: true
               });
 
-              document.title = `${dashboard.name} | Laméco Dashboard`;
+              document.title = `${
+                this.state.dashboard.name
+              } | Laméco Dashboard`;
             }
           });
 
-          if (dashboard.valid) {
+          if (this.state.dashboard.valid) {
             Object.entries(companies).forEach(([key, value]) => {
-              if (value._id === dashboard.company_id) {
+              if (value._id === this.state.dashboard.company_id) {
                 this.setState({
                   company: {
                     id: value._id,
