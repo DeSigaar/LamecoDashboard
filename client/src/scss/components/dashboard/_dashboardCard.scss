@@ -23,6 +23,12 @@
     color: $color-grey;
     text-decoration: none;
     min-width: 222px;
+    padding-bottom: 36px;
+    p{
+      visibility: hidden;
+      position: absolute;
+      top: 0;
+    }
   }
   span {
     padding: 17px;

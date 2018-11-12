@@ -65,7 +65,7 @@ class DashboardCard extends Component {
 
     return (
       <div className="dashboardCard">
-        <Link to={linkEdit}>{name}</Link>
+        <Link to={linkEdit}><p>{name}</p></Link>
         <span>{name}</span>
         <div className="editButtons">
           <Link to={linkEdit}>

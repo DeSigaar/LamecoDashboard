@@ -118,7 +118,17 @@ class Dashboard extends Component {
           return (
             <div key={i}>
               <div className="dashboardTitle">
-                <h2>{company.name}</h2>
+                <input
+                  className="companyNEdit"
+                  id="companyNinput"
+                  type="text"
+                  name="name"
+                  value={company.name}
+                  // onChange={onChange}
+                  // onFocus={onFocus}
+                  // onBlur={onBlur}
+                  // onKeyDown={onKeyDown}
+                />
                 <button className="iconOnly">
                   <i className="material-icons">edit</i>
                 </button>
