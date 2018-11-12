@@ -72,7 +72,7 @@ class DashboardCard extends Component {
             <i className="material-icons">edit</i>
           </Link>
           <Link to={linkShow}>
-            <i className="material-icons">remove_red_eye</i>
+            <i className="material-icons">visibility</i>
           </Link>
           <CopyToClipboard
             text={linkShare}

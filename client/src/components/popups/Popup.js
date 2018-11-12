@@ -22,19 +22,21 @@ class Popup extends Component {
 
   handleClick = () => {
     const { closePopup } = this.props;
-
     closePopup();
   };
 
   render() {
-    const { companyList, title, closePopup } = this.props;
+    const { companyList, title, id, name, handle, closePopup } = this.props;
 
     let PopupBodyContent;
     if (title !== "") {
       PopupBodyContent = (
         <PopupBody
           title={title}
-          closePopup={closePopup.bind(this)}
+          id={id}
+          name={name}
+          handle={handle}
+          closePopup={() => closePopup()}
           companyList={companyList}
         />
       );
@@ -44,7 +46,7 @@ class Popup extends Component {
 
     return (
       <div className="card">
-        <div className="cardBackground" onClick={this.handleClick.bind(this)} />
+        <div className="cardBackground" onClick={() => this.handleClick()} />
         <div className="cardContent ">
           <PopupHeader title={title} />
           {PopupBodyContent}
@@ -56,6 +58,9 @@ class Popup extends Component {
 
 Popup.propTypes = {
   title: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  handle: PropTypes.string,
   closePopup: PropTypes.func.isRequired,
   companyList: PropTypes.array
 };

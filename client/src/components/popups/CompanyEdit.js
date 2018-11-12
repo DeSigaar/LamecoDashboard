@@ -1,25 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { addDashboard, getCompanies } from "../../actions/companyActions";
+import { editCompany, getCompanies } from "../../actions/companyActions";
 import TextFieldGroup from "../common/TextField";
 
-class Dashboard extends Component {
+class CompanyEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      companyList: [],
-      companyId: "",
+      id: "",
       name: "",
       handle: "",
-      handleTyped: false,
       errors: {}
     };
   }
 
   componentWillMount = () => {
-    const { companyList } = this.props;
-    this.setState({ companyList });
+    const { id, name, handle } = this.props;
+    this.setState({ id, name, handle });
   };
 
   componentWillReceiveProps = nextProps => {
@@ -33,7 +31,6 @@ class Dashboard extends Component {
   };
 
   onKeyUp = e => {
-    const { handleTyped } = this.state;
     let { name, value } = e.target;
 
     if (name === "name") {
@@ -47,18 +44,8 @@ class Dashboard extends Component {
           .join(" ");
 
         this.setState({ name: value });
-        if (!handleTyped) {
-          value = value
-            .toLowerCase()
-            .trim()
-            .replace(/\s+/g, "-");
-
-          this.setState({ handle: value });
-        }
       }
     } else if (name === "handle") {
-      this.setState({ handleTyped: true });
-
       if (e.key !== " ") {
         value = value
           .toLowerCase()
@@ -72,78 +59,34 @@ class Dashboard extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { companyId, name, handle } = this.state;
-    const { addDashboard, closePopup, getCompanies } = this.props;
+    const { id, name, handle } = this.state;
+    const { editCompany, closePopup, getCompanies } = this.props;
 
-    addDashboard({ company: companyId, name, handle }, () => closePopup());
+    editCompany({ id, name, handle }, () => closePopup());
     getCompanies();
 
     // TODO: add snackbar here
   };
 
-  handleCloseClick = e => {
+  handleClick = e => {
     const { closePopup } = this.props;
     closePopup();
   };
 
-  handleSelectClick = id => {
-    let companyId = id;
-    this.setState({ companyId });
-
-    // Remove any selected items
-    var elements = document.querySelectorAll(".selected");
-    [].forEach.call(elements, function(el) {
-      el.classList.remove("selected");
-    });
-
-    // Highlight item in list
-    const selectedItem = document.getElementById(companyId);
-    selectedItem.classList.add("selected");
-  };
-
-  renderCompanyList = () => {
-    const { companyList } = this.state;
-
-    return (
-      <div className="companyList">
-        <ul className="list">
-          {companyList.map((company, i) => {
-            return (
-              <li
-                key={i}
-                id={company.id}
-                className="selectList"
-                onClick={() => this.handleSelectClick(company.id)}
-              >
-                {company.name}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    );
-  };
-
   render() {
-    const { errors, name, handle } = this.state;
+    const { errors, id, name, handle } = this.state;
 
     return (
       <div className="popupContainer">
         <form onSubmit={this.onSubmit}>
+          <input type="hidden" name="id" value={id} />
           <div className="middleForm">
-            <div className="formField" id="selectCompanyDashboard">
-              <p className="companyTitle">Select Company</p>
-              {this.renderCompanyList()}
-              {errors.company && (
-                <div className="invalid"> {errors.company}</div>
-              )}
-            </div>
             <div className="formField">
               <p>Name</p>
               <TextFieldGroup
                 type="text"
                 name="name"
-                placeholder="Name of dashboard"
+                placeholder="Name of company"
                 onChange={this.onChange}
                 onKeyUp={this.onKeyUp}
                 value={name}
@@ -155,7 +98,7 @@ class Dashboard extends Component {
               <TextFieldGroup
                 type="text"
                 name="handle"
-                placeholder="Handle of dashboard"
+                placeholder="Handle of company"
                 onChange={this.onChange}
                 onKeyUp={this.onKeyUp}
                 value={handle}
@@ -165,13 +108,9 @@ class Dashboard extends Component {
           </div>
           <div>
             <button className="btn" type="submit">
-              <span>Add</span>
+              <span>Edit</span>
             </button>
-            <button
-              className="btn"
-              type="submit"
-              onClick={this.handleCloseClick}
-            >
+            <button className="btn" onClick={this.handleClick}>
               <span>Cancel</span>
             </button>
           </div>
@@ -181,8 +120,8 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
-  addDashboard: PropTypes.func.isRequired,
+CompanyEdit.propTypes = {
+  editCompany: PropTypes.func.isRequired,
   getCompanies: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -194,5 +133,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addDashboard, getCompanies }
-)(Dashboard);
+  { editCompany, getCompanies }
+)(CompanyEdit);

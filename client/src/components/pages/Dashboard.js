@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getCompanies, deleteCompany } from "../../actions/companyActions";
@@ -9,6 +10,9 @@ import DashboardCard from "../dashboard/DashboardCard";
 import DashboardGrid from "../dashboard/DashboardGrid";
 import Loader from "../common/Loader";
 import Snackbar from "../common/Snackbar";
+import Popup from "../popups/Popup";
+
+const portalContainer = document.getElementById("card");
 
 class Dashboard extends Component {
   constructor(props) {
@@ -18,7 +22,9 @@ class Dashboard extends Component {
       loaded: false,
       companyLoading: false,
       init: false,
-      active: false
+      active: false,
+      active2: false,
+      popupState: false
     };
 
     const { init } = this.state;
@@ -61,6 +67,28 @@ class Dashboard extends Component {
     history.push("/");
     getCompanies();
     this.toggleSnackbar();
+  };
+
+  onCompanyEdit = (id, name, handle) => {
+    this.setState({ popupState: !this.state.popupState });
+
+    this.PopUpContent = ReactDOM.createPortal(
+      <Popup
+        title="Edit Company"
+        id={id}
+        name={name}
+        handle={handle}
+        closePopup={this.onPopupExit}
+      />,
+      portalContainer
+    );
+  };
+
+  onPopupExit = () => {
+    this.setState({
+      popupState: !this.state.popupState
+    });
+    this.PopUpContent = undefined;
   };
 
   componentWillReceiveProps = nextProps => {
@@ -118,19 +146,20 @@ class Dashboard extends Component {
           return (
             <div key={i}>
               <div className="dashboardTitle">
-                <input
-                  className="companyNEdit"
-                  id="companyNinput"
-                  type="text"
-                  name="name"
-                  value={company.name}
-                  // onChange={onChange}
-                  // onFocus={onFocus}
-                  // onBlur={onBlur}
-                  // onKeyDown={onKeyDown}
-                />
+                <h2>{company.name}</h2>
                 <button className="iconOnly">
-                  <i className="material-icons">edit</i>
+                  <i
+                    className="material-icons"
+                    onClick={() =>
+                      this.onCompanyEdit(
+                        company.id,
+                        company.name,
+                        company.handle
+                      )
+                    }
+                  >
+                    edit
+                  </i>
                 </button>
                 <button
                   className="iconOnly"
@@ -171,9 +200,9 @@ class Dashboard extends Component {
           <SideNavContainer>
             <SideNav />
           </SideNavContainer>
-
           <DashboardGrid>{dashboardContent}</DashboardGrid>
         </div>
+        {this.PopUpContent}
       </div>
     );
   }

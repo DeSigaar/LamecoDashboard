@@ -32,6 +32,7 @@ export const deleteDashboard = id => dispatch => {
     .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 };
 
+// Add company
 export const addCompany = (data, closePopup) => dispatch => {
   dispatch(clearErrors());
   axios
@@ -47,6 +48,23 @@ export const addCompany = (data, closePopup) => dispatch => {
     });
 };
 
+// Edit company
+export const editCompany = (data, closePopup) => dispatch => {
+  dispatch(clearErrors());
+  axios
+    .post(`/api/company/update/${data.id}`, data)
+    .then(res => {
+      closePopup();
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+// Get dashboards
 export const getDashboards = () => dispatch => {
   axios
     .get("/api/company/ordered")
@@ -54,6 +72,7 @@ export const getDashboards = () => dispatch => {
     .catch(err => dispatch({ type: GET_DASHBOARDS, payload: null }));
 };
 
+// Add dashboard
 export const addDashboard = (data, closePopup) => dispatch => {
   dispatch(clearErrors());
   axios
@@ -69,6 +88,7 @@ export const addDashboard = (data, closePopup) => dispatch => {
     });
 };
 
+// Clear errors
 export const clearErrors = () => {
   return {
     type: CLEAR_ERRORS
