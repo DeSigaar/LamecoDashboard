@@ -174,7 +174,7 @@ class Dashboard extends Component {
                 <h2>{company.name}</h2>
                 <button className="iconOnly">
                   <i
-                    className="material-icons"
+                    className="material-icons weight900"
                     onClick={() => this.onDashboardAdd(company.id)}
                   >
                     add
