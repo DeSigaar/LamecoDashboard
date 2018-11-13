@@ -32,7 +32,7 @@
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "install-server": "npm install --save axios bcryptjs body-parser concurrently express gravatar jsonwebtoken jwt-decode mongoose node-sass-chokidar nodemailer passport passport-jwt validator && npm install --save--dev nodemon",
-    "install-client": "npm install --save axios classnames jwt-decode moment react react-copy-to-clipboard react-dom react-dropdown react-grid-layout react-live-clock react-moment react-open-weather react-redux react-router-dom react-scripts react-select react-transition-group redux redux-thunk --prefix client && npm install --save--dev node-sass-chokidar npm-run-all --prefix client",
+    "install-client": "npm install --save axios classnames jwt-decode moment react react-copy-to-clipboard react-dom react-grid-layout react-live-clock react-moment react-open-weather react-redux react-router-dom react-scripts react-select react-transition-group redux redux-thunk --prefix client && npm install --save--dev node-sass-chokidar npm-run-all --prefix client",
     "install-all": "npm run install-server && npm run install-client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run heroku-build --prefix client"
