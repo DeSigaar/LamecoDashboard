@@ -16,7 +16,7 @@ const User = require("../../models/User");
 // @access  Public
 router.post("/request", (req, res) => {
   const forgotFields = {};
-  forgotFields.email = req.body.email.toLowercase();
+  forgotFields.email = req.body.email.toLowerCase();
   forgotFields.time = req.body.time;
 
   const { errors, isValid } = validateForgotInput(forgotFields);
@@ -26,7 +26,7 @@ router.post("/request", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  const email = forgotFields.email;
+  const { email, time } = forgotFields;
   // Find user in database with email
   User.findOne({
     email
