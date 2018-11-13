@@ -26,13 +26,22 @@ class Popup extends Component {
   };
 
   render() {
-    const { companyList, title, id, name, handle, closePopup } = this.props;
+    const {
+      companyList,
+      title,
+      companyId,
+      id,
+      name,
+      handle,
+      closePopup
+    } = this.props;
 
     let PopupBodyContent;
     if (title !== "") {
       PopupBodyContent = (
         <PopupBody
           title={title}
+          companyId={companyId}
           id={id}
           name={name}
           handle={handle}
@@ -58,6 +67,7 @@ class Popup extends Component {
 
 Popup.propTypes = {
   title: PropTypes.string.isRequired,
+  companyId: PropTypes.string,
   id: PropTypes.string,
   name: PropTypes.string,
   handle: PropTypes.string,

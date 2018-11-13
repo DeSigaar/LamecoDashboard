@@ -19,8 +19,12 @@ class Dashboard extends Component {
   }
 
   componentWillMount = () => {
-    const { companyList } = this.props;
-    this.setState({ companyList });
+    const { companyList, companyId } = this.props;
+    this.setState({ companyList, companyId });
+  };
+
+  componentDidMount = () => {
+    this.handleSelectClick(this.state.companyId);
   };
 
   componentWillReceiveProps = nextProps => {
@@ -172,6 +176,7 @@ class Dashboard extends Component {
 }
 
 Dashboard.propTypes = {
+  companyId: PropTypes.string,
   addDashboard: PropTypes.func.isRequired,
   getCompanies: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired

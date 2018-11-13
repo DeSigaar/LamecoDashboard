@@ -6,7 +6,15 @@ import CompanyEdit from "./CompanyEdit";
 
 class PopupBody extends Component {
   render() {
-    const { companyList, title, id, name, handle, closePopup } = this.props;
+    const {
+      companyList,
+      title,
+      companyId,
+      id,
+      name,
+      handle,
+      closePopup
+    } = this.props;
 
     switch (title) {
       case "Add Company":
@@ -21,6 +29,7 @@ class PopupBody extends Component {
             <Dashboard
               closePopup={() => closePopup()}
               companyList={companyList}
+              companyId={companyId}
             />
           </div>
         );
@@ -43,6 +52,7 @@ class PopupBody extends Component {
 
 PopupBody.propTypes = {
   title: PropTypes.string.isRequired,
+  companyId: PropTypes.string,
   closePopup: PropTypes.func.isRequired,
   companyList: PropTypes.array
 };

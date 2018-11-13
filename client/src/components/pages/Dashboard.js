@@ -35,6 +35,17 @@ class Dashboard extends Component {
     }
   }
 
+  componentWillReceiveProps = nextProps => {
+    if (
+      nextProps.company.company !== null &&
+      nextProps.company.company.companies
+    ) {
+      this.setState({
+        list: nextProps.company.company.companies
+      });
+    }
+  };
+
   componentDidMount = () => {
     const { getCompanies } = this.props;
     this.interval = setInterval(() => {
@@ -78,6 +89,20 @@ class Dashboard extends Component {
         id={id}
         name={name}
         handle={handle}
+        closePopup={this.onPopupExit}
+      />,
+      portalContainer
+    );
+  };
+
+  onDashboardAdd = id => {
+    this.setState({ popupState: !this.state.popupState });
+
+    this.PopUpContent = ReactDOM.createPortal(
+      <Popup
+        title="Add Dashboard"
+        companyId={id}
+        companyList={this.state.list}
         closePopup={this.onPopupExit}
       />,
       portalContainer
@@ -147,6 +172,14 @@ class Dashboard extends Component {
             <div key={i}>
               <div className="dashboardTitle">
                 <h2>{company.name}</h2>
+                <button className="iconOnly">
+                  <i
+                    className="material-icons"
+                    onClick={() => this.onDashboardAdd(company.id)}
+                  >
+                    add
+                  </i>
+                </button>
                 <button className="iconOnly">
                   <i
                     className="material-icons"
