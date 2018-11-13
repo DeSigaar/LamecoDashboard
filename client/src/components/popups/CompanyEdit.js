@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { editCompany, getCompanies } from "../../actions/companyActions";
 import TextFieldGroup from "../common/TextField";
+import removeSpecial from "../../validation/remove-special";
 
 class CompanyEdit extends Component {
   constructor(props) {
@@ -35,22 +36,15 @@ class CompanyEdit extends Component {
 
     if (name === "name") {
       if (e.key !== " ") {
-        value = value
-          .toLowerCase()
-          .trim()
-          .replace(/\s+/g, " ")
-          .split(" ")
-          .map(x => x.charAt(0).toUpperCase() + x.substring(1))
-          .join(" ");
+        value = removeSpecial(value);
+        value = value.trim().replace(/\s+/g, " ");
 
         this.setState({ name: value });
       }
     } else if (name === "handle") {
       if (e.key !== " ") {
-        value = value
-          .toLowerCase()
-          .trim()
-          .replace(/\s+/g, "-");
+        value = removeSpecial(value);
+        value = value.trim().replace(/\s+/g, "-");
 
         this.setState({ handle: value });
       }
@@ -64,8 +58,6 @@ class CompanyEdit extends Component {
 
     editCompany({ id, name, handle }, () => closePopup());
     getCompanies();
-
-    // TODO: add snackbar here
   };
 
   handleClick = e => {
