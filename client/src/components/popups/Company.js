@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addCompany, getCompanies } from "../../actions/companyActions";
 import TextFieldGroup from "../common/TextField";
+import removeSpecial from "../../validation/remove-special";
 
 class Company extends Component {
   constructor(props) {
@@ -31,20 +32,13 @@ class Company extends Component {
 
     if (name === "name") {
       if (e.key !== " ") {
-        value = value
-          .toLowerCase()
-          .trim()
-          .replace(/\s+/g, " ")
-          .split(" ")
-          .map(x => x.charAt(0).toUpperCase() + x.substring(1))
-          .join(" ");
+        value = removeSpecial(value);
+        value = value.trim().replace(/\s+/g, " ");
 
         this.setState({ name: value });
         if (!handleTyped) {
-          value = value
-            .toLowerCase()
-            .trim()
-            .replace(/\s+/g, "-");
+          value = removeSpecial(value);
+          value = value.trim().replace(/\s+/g, "-");
 
           this.setState({ handle: value });
         }
@@ -53,10 +47,8 @@ class Company extends Component {
       this.setState({ handleTyped: true });
 
       if (e.key !== " ") {
-        value = value
-          .toLowerCase()
-          .trim()
-          .replace(/\s+/g, "-");
+        value = removeSpecial(value);
+        value = value.trim().replace(/\s+/g, "-");
 
         this.setState({ handle: value });
       }

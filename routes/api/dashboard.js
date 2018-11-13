@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const isEmpty = require("../../validation/is-empty");
+const removeSpecial = require("../../validation/remove-special");
 
 // Load input validation
 const validateDashboardInput = require("../../validation/dashboard");
@@ -31,17 +32,10 @@ router.post(
     // }
 
     const dashboardFields = {};
-    dashboardFields.name = req.body.name
-      .toLowerCase()
-      .trim()
-      .replace(/\s+/g, " ")
-      .split(" ")
-      .map(x => x.charAt(0).toUpperCase() + x.substring(1))
-      .join(" ");
-    dashboardFields.handle = req.body.handle
-      .toLowerCase()
-      .trim()
-      .replace(/\s+/g, "-");
+    req.body.name = removeSpecial(req.body.name);
+    dashboardFields.name = req.body.name.trim().replace(/\s+/g, " ");
+    req.body.handle = removeSpecial(req.body.handle);
+    dashboardFields.handle = req.body.handle.trim().replace(/\s+/g, "-");
     if (req.body.company) dashboardFields.company = req.body.company;
 
     const { errors, isValid } = validateDashboardInput(dashboardFields);
@@ -146,19 +140,14 @@ router.post(
     const dashboardFields = {};
     dashboardFields.dashboard = req.params.id;
     dashboardFields.company = req.body.company;
-    if (req.body.name)
-      dashboardFields.name = req.body.name
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, " ")
-        .split(" ")
-        .map(x => x.charAt(0).toUpperCase() + x.substring(1))
-        .join(" ");
-    if (req.body.handle)
-      dashboardFields.handle = req.body.handle
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, "-");
+    if (req.body.name) {
+      req.body.name = removeSpecial(req.body.name);
+      dashboardFields.name = req.body.name.trim().replace(/\s+/g, " ");
+    }
+    if (req.body.handle) {
+      req.body.handle = removeSpecial(req.body.handle);
+      dashboardFields.handle = req.body.handle.trim().replace(/\s+/g, "-");
+    }
     if (req.body.content) dashboardFields.content = req.body.content;
 
     const { errors, isValid } = validateDashboardInput(dashboardFields);
