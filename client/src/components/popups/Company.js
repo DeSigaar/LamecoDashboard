@@ -70,8 +70,6 @@ class Company extends Component {
 
     addCompany({ name, handle }, () => closePopup());
     getCompanies();
-
-    // TODO: add snackbar here
   };
 
   handleClick = e => {
