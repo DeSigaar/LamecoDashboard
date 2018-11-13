@@ -16,6 +16,7 @@
   overflow: hidden;
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   min-width: 120px;
+
   &.icon {
     padding: 8px 17px 8px 12px;
     i {
@@ -23,6 +24,7 @@
       margin-right: 5px;
     }
   }
+
   &.small {
     padding: 4px 10px 4px 8px;
   }
@@ -31,6 +33,7 @@
     color: $color-white;
     background-color: $color-red;
   }
+
   &::before {
     content: "";
     transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
@@ -45,6 +48,7 @@
     box-sizing: border-box;
     background-clip: padding-box;
   }
+
   &:hover,
   &:active {
     color: $color-white;
@@ -52,34 +56,46 @@
       left: 130%;
     }
   }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:disabled,
+  &[disabled] {
+    border-color: lighten($color-red, 40);
+    color: lighten($color-grey, 40);
+    cursor: default;
+
+    &:hover::before {
+      left: -20%;
+    }
+  }
+}
+
+.iconOnly {
+  border: none;
+  min-width: 0;
+  background: none;
+  padding: 12px 0 5px;
+  margin-left: 10px;
+  color: $color-grey;
+
+  i {
+    font-size: 17px;
+  }
+
+  &:hover {
+    color: $color-red;
+    transition: 0.3s ease all;
+  }
+
   &:focus {
     outline: none;
     box-shadow: none;
   }
 }
-
-.iconOnly {
-    border: none;
-    min-width: 0;
-    background: none;
-    padding: 12px 0 5px;
-    margin-left: 10px;
-    color: $color-grey;
-    
-    i {
-      font-size: 17px;
-    }
-
-    &:hover{
-      color: $color-red;
-      transition: 0.3s ease all;
-    }
-
-    &:focus {
-      outline: none;
-      box-shadow: none;
-    }
-  }
 
 .addButton {
   border-radius: 0px;
