@@ -77,8 +77,6 @@ class Dashboard extends Component {
 
     addDashboard({ company: companyId, name, handle }, () => closePopup());
     getCompanies();
-
-    // TODO: add snackbar here
   };
 
   handleCloseClick = e => {

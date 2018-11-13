@@ -64,8 +64,6 @@ class CompanyEdit extends Component {
 
     editCompany({ id, name, handle }, () => closePopup());
     getCompanies();
-
-    // TODO: add snackbar here
   };
 
   handleClick = e => {
