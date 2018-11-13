@@ -16,7 +16,8 @@
 
 ## About
 
-This project was made by some students from the [Fontys Hogeschool ICT](https://fontys.nl/hbo-ict/) on behalf of [Laméco](https://www.lameco.nl/).
+This project was made by some students from the [Fontys Hogeschool ICT](https://fontys.nl/hbo-ict/) on behalf of [Laméco](https://www.lameco.nl/).  
+A live preview can be found on our [deployed heroku app](https://lameco-dashboard.herokuapp.com/).
 
 ## Prerequisites
 
@@ -43,18 +44,6 @@ Install all needed node modules for both frontend and backend.
 $ npm run install-all
 ```
 
-If that doens't work for whatever reason or errors are shown. Copy the following lines and run them:
-
-```
-$ npm uninstall axios bcryptjs body-parser concurrently express gravatar jsonwebtoken jwt-decode mongoose node-sass-chokidar nodemailer passport passport-jwt react-scripts validator nodemon
-
-$ npm install --save axios bcryptjs body-parser concurrently express gravatar jsonwebtoken jwt-decode mongoose node-sass-chokidar nodemailer passport passport-jwt react-scripts validator && npm install --save-dev nodemon
-
-$ npm uninstall axios classnames jwt-decode moment react react-copy-to-clipboard react-dom react-dropdown react-grid-layout react-live-clock react-moment react-open-weather react-redux react-router-dom react-scripts react-select react-transition-group redux redux-thunk node-sass-chokidar npm-run-all --prefix client
-
-$ npm install --save axios classnames jwt-decode moment react react-copy-to-clipboard react-dom react-dropdown react-grid-layout react-live-clock react-moment react-open-weather react-redux react-router-dom react-scripts react-select react-transition-group redux redux-thunk --prefix client && npm install --save-dev node-sass-chokidar npm-run-all --prefix client
-```
-
 ### Running
 
 For the application to be able to function as normal, it needs to run both the frontend and backend.
@@ -67,7 +56,7 @@ This starts the backend on port 5000 and the frontend on port 3000 concurrently.
 
 ## API documentation
 
-The API documentation for the API used within the application can be found on Postman [here](https://documenter.getpostman.com/view/5448152/RWgxtZy1).
+The API documentation for the API used within the application can be found in our [Postman collection](https://documenter.getpostman.com/view/5448152/RWgxtZy1).
 
 ## Built with
 
@@ -82,8 +71,11 @@ The API documentation for the API used within the application can be found on Po
 
 ### Additional stuff
 
-- [React-Grid-Layout](https://github.com/STRML/react-grid-layout/)  
-  Some more stuff here :)
+- [Gravatar](https://github.com/emerleite/node-gravatar)
+- [React-Grid-Layout](https://github.com/STRML/react-grid-layout/)
+- [React-Copy-To-Clipboard](https://github.com/nkbt/react-copy-to-clipboard)
+- [React-Select](https://github.com/JedWatson/react-select)
+- [React-Live-Clock](https://github.com/pvoznyuk/react-live-clock)
 
 ## Creators
 
