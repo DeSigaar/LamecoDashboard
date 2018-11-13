@@ -11,7 +11,8 @@ const DashboardSchema = new Schema({
   name: {
     type: String,
     required: true,
-    min: 6
+    min: 3,
+    max: 30
   },
   handle: {
     type: String,

@@ -235,6 +235,7 @@ router.post(
       userFields.username = req.body.username.toLowerCase();
     if (req.body.name) userFields.name = req.body.name;
     if (req.body.password) userFields.password = req.body.password;
+    if (req.body.password2) userFields.password2 = req.body.password2;
 
     var passwordChange = false;
     if (!isEmpty(req.body.password)) {

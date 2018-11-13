@@ -24,7 +24,7 @@
     text-decoration: none;
     min-width: 222px;
     padding-bottom: 36px;
-    p{
+    p {
       visibility: hidden;
       position: absolute;
       top: 0;
@@ -45,6 +45,7 @@
     z-index: 10;
     i {
       padding: 5px;
+      margin-right: 8px;
       font-size: 18px;
       color: $color-grey;
       cursor: pointer;
@@ -52,9 +53,9 @@
       &:hover {
         color: $color-red;
       }
-      &:last-child {
-        margin-right: 10px;
-      }
+    }
+    :nth-child(3) {
+      margin-right: 4px;
     }
   }
 }
