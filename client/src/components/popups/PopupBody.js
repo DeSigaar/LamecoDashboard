@@ -1,48 +1,60 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Company from "./Company";
 import Dashboard from "./Dashboard";
+import CompanyEdit from "./CompanyEdit";
 
 class PopupBody extends Component {
-  // constructor() {
-  //   super();
-  // }
-
-  componentDidMount() {
-    console.log(this.props);
-    this.setState({
-      companyList: this.props.companyList
-    });
-  }
-
   render() {
-    let isDashboard = false;
-    let isCompany = false;
-    console.log(this.props.title);
-    if (this.props.title === "Add Dashboard") {
-      isDashboard = true;
-    }
-    if (this.props.title === "Add Company") {
-      isCompany = true;
-    }
+    const {
+      companyList,
+      title,
+      companyId,
+      id,
+      name,
+      handle,
+      closePopup
+    } = this.props;
 
-    if (isCompany) {
-      return (
-        <div className="cardBody">
-          <Company closePopup={this.props.closePopup.bind(this)} />
-        </div>
-      );
-    } else if (isDashboard) {
-      return (
-        <div className="cardBody">
-          <Dashboard
-            closePopup={this.props.closePopup.bind(this)}
-            companyList={this.state.companyList}
-          />
-        </div>
-      );
-    } else {
-      return <div>ERror!</div>;
+    switch (title) {
+      case "Add Company":
+        return (
+          <div className="cardBody">
+            <Company closePopup={() => closePopup()} />
+          </div>
+        );
+      case "Add Dashboard":
+        return (
+          <div className="cardBody">
+            <Dashboard
+              closePopup={() => closePopup()}
+              companyList={companyList}
+              companyId={companyId}
+            />
+          </div>
+        );
+      case "Edit Company":
+        return (
+          <div className="cardBody">
+            <CompanyEdit
+              closePopup={() => closePopup()}
+              id={id}
+              name={name}
+              handle={handle}
+            />
+          </div>
+        );
+      default:
+        return <div>Oops, something went wrong!</div>;
     }
   }
 }
+
+PopupBody.propTypes = {
+  title: PropTypes.string.isRequired,
+  companyId: PropTypes.string,
+  closePopup: PropTypes.func.isRequired,
+  companyList: PropTypes.array
+};
+
 export default PopupBody;

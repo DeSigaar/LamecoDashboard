@@ -2,6 +2,12 @@ body {
   overflow-y: hidden;
 }
 
+.page {
+  height: 100vh;
+  position: relative;
+  overflow-y: auto;
+}
+
 * {
   font-family: $font;
   /* width */
@@ -26,7 +32,6 @@ body {
     color: $color-grey;
     li:hover {
       color: $color-red;
-      cursor: pointer;
     }
   }
 }

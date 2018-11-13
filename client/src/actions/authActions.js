@@ -118,11 +118,12 @@ export const getCurrentProfile = () => dispatch => {
 };
 
 export const updateProfile = (data, history) => dispatch => {
+  dispatch(clearErrors());
   axios
     .post(`/api/user/update/${data.id}`, data)
     .then(res => {
       dispatch(getCurrentProfile());
-      history.push("/dashboard");
+      history.push("/");
     })
     .catch(err =>
       dispatch({
@@ -133,10 +134,11 @@ export const updateProfile = (data, history) => dispatch => {
 };
 
 export const addUser = (data, history) => dispatch => {
+  dispatch(clearErrors());
   axios
     .post("/api/user/register", data)
     .then(res => {
-      history.push("/dashboard");
+      history.push("/");
     })
     .catch(err =>
       dispatch({

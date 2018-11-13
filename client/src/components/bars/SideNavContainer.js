@@ -1,9 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 
-class SideNavContainer extends Component {
-  render() {
-    return <div className="sideNav">{this.props.children}</div>;
-  }
-}
+const SideNavContainer = ({ children }) => {
+  return <div className="sideNav">{children}</div>;
+};
+
+SideNavContainer.propTypes = {
+  children: PropTypes.object.isRequired
+};
 
 export default SideNavContainer;

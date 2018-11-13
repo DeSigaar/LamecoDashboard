@@ -6,19 +6,23 @@
     grid-template-columns: 325px auto;
     grid-template-rows: 100vh;
     grid-template-areas: "sideBar dashboard";
-    padding-top: 56px;
+    padding-top: 58px;
     height: 100vh;
 
     .dashboardGrid {
       grid-area: dashboard;
-      padding: 0 30px;
+      padding: 0 30px 30px 30px;
       overflow-y: auto;
-      height: calc(100vh - 57px);
+      height: calc(100vh - 58px);
 
-      .dashboardTitle{
+      .dashboardTitle {
         display: flex;
         flex-direction: row;
         align-items: center;
+      }
+
+      > div > div:last-child {
+        margin-bottom: 20px;
       }
 
       h2 {
@@ -28,6 +32,14 @@
       }
       > div > div > div > h2 {
         color: $color-red;
+      }
+      > div > div button {
+        opacity: 0;
+        transition: 0.3s ease all;
+      }
+      > div > div:hover button {
+        opacity: 1;
+        cursor: pointer;
       }
     }
   }

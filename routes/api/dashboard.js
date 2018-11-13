@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const isEmpty = require("../../validation/is-empty");
+const removeSpecial = require("../../validation/remove-special");
 
 // Load input validation
 const validateDashboardInput = require("../../validation/dashboard");
@@ -13,9 +14,8 @@ const Dashboard = require("../../models/Dashboard");
 // @desc    Get all dashboards
 // @access  Private
 router.get("/all", (req, res) => {
-    Dashboard.find().then(dashboards => res.json(dashboards));
-  }
-);
+  Dashboard.find().then(dashboards => res.json(dashboards));
+});
 
 // @route   POST /api/dashboard/add
 // @desc    Create a dashboard
@@ -32,16 +32,11 @@ router.post(
     // }
 
     const dashboardFields = {};
-    dashboardFields.name = req.body.name
-      .toLowerCase()
-      .split(" ")
-      .map(x => x.charAt(0).toUpperCase() + x.substring(1))
-      .join(" ");
-    dashboardFields.handle = req.body.handle
-      .toLowerCase()
-      .trim()
-      .replace(/\s+/g, "-");
-    dashboardFields.company = req.body.company;
+    req.body.name = removeSpecial(req.body.name);
+    dashboardFields.name = req.body.name.trim().replace(/\s+/g, " ");
+    req.body.handle = removeSpecial(req.body.handle);
+    dashboardFields.handle = req.body.handle.trim().replace(/\s+/g, "-");
+    if (req.body.company) dashboardFields.company = req.body.company;
 
     const { errors, isValid } = validateDashboardInput(dashboardFields);
 
@@ -87,22 +82,19 @@ router.post(
 // @route   GET /api/dashboard/:id
 // @desc    Get dashboard by given id
 // @access  Private
-router.get(
-  "/:id",
-  (req, res) => {
-    // Find dashboard in database by given ID
-    Dashboard.findById(req.params.id)
-      .then(dashboard => {
-        dashboard.__v = undefined;
-        res.json(dashboard);
-      })
-      .catch(err =>
-        res
-          .status(404)
-          .json({ dashboard_not_found: "No dashboard found with that ID" })
-      );
-  }
-);
+router.get("/:id", (req, res) => {
+  // Find dashboard in database by given ID
+  Dashboard.findById(req.params.id)
+    .then(dashboard => {
+      dashboard.__v = undefined;
+      res.json(dashboard);
+    })
+    .catch(err =>
+      res
+        .status(404)
+        .json({ dashboard_not_found: "No dashboard found with that ID" })
+    );
+});
 
 // @route   POST /api/dashboard/update/layout/:handle
 // @desc    Update dashboard layout by given handle
@@ -148,17 +140,14 @@ router.post(
     const dashboardFields = {};
     dashboardFields.dashboard = req.params.id;
     dashboardFields.company = req.body.company;
-    if (req.body.name)
-      dashboardFields.name = req.body.name
-        .toLowerCase()
-        .split(" ")
-        .map(x => x.charAt(0).toUpperCase() + x.substring(1))
-        .join(" ");
-    if (req.body.handle)
-      dashboardFields.handle = req.body.handle
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, "-");
+    if (req.body.name) {
+      req.body.name = removeSpecial(req.body.name);
+      dashboardFields.name = req.body.name.trim().replace(/\s+/g, " ");
+    }
+    if (req.body.handle) {
+      req.body.handle = removeSpecial(req.body.handle);
+      dashboardFields.handle = req.body.handle.trim().replace(/\s+/g, "-");
+    }
     if (req.body.content) dashboardFields.content = req.body.content;
 
     const { errors, isValid } = validateDashboardInput(dashboardFields);

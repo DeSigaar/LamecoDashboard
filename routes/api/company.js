@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const isEmpty = require("../../validation/is-empty");
+const removeSpecial = require("../../validation/remove-special");
 
 // Load input validation
 const validateCompanyInput = require("../../validation/company");
@@ -96,15 +97,10 @@ router.post(
     // }
 
     const companyFields = {};
-    companyFields.name = req.body.name
-      .toLowerCase()
-      .split(" ")
-      .map(x => x.charAt(0).toUpperCase() + x.substring(1))
-      .join(" ");
-    companyFields.handle = req.body.handle
-      .toLowerCase()
-      .trim()
-      .replace(/\s+/g, "-");
+    req.body.name = removeSpecial(req.body.name);
+    companyFields.name = req.body.name.trim().replace(/\s+/g, " ");
+    req.body.handle = removeSpecial(req.body.handle);
+    companyFields.handle = req.body.handle.trim().replace(/\s+/g, "-");
 
     const { errors, isValid } = validateCompanyInput(companyFields);
 
@@ -190,17 +186,12 @@ router.post(
     const companyFields = {};
     companyFields.company = req.params.id;
     if (req.body.name) {
-      companyFields.name = req.body.name
-        .toLowerCase()
-        .split(" ")
-        .map(x => x.charAt(0).toUpperCase() + x.substring(1))
-        .join(" ");
+      req.body.name = removeSpecial(req.body.name);
+      companyFields.name = req.body.name.trim().replace(/\s+/g, " ");
     }
     if (req.body.handle) {
-      companyFields.handle = req.body.handle
-        .toLowerCase()
-        .trim()
-        .replace(/\s+/g, "-");
+      req.body.handle = removeSpecial(req.body.handle);
+      companyFields.handle = req.body.handle.trim().replace(/\s+/g, "-");
     }
 
     const { errors, isValid } = validateCompanyInput(companyFields);
@@ -252,11 +243,23 @@ router.delete(
     //   return res.status(401).json({ authorized: false });
     // }
 
-    // Find company in dtabase by ID
+    // Find company in database by ID
     Company.findById(req.params.id)
       .then(company => {
         // Remove company from database
-        company.remove().then(() => res.json({ success: true }));
+        company.remove().then(() => {
+          // Remove all dashboards from company in database
+          Dashboard.find().then(dashboards => {
+            Object.entries(dashboards).forEach(([key, value]) => {
+              if (value.company == req.params.id) {
+                Dashboard.findById(value.id).then(dashboard => {
+                  dashboard.remove();
+                });
+              }
+            });
+            res.json({ success: true });
+          });
+        });
       })
       .catch(err =>
         res

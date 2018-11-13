@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import TitleBarDropdown from "./TitleBarDropdown";
-import { connect } from "react-redux";
 
 class TitleBar extends Component {
   constructor(props) {
@@ -17,11 +17,16 @@ class TitleBar extends Component {
   };
 
   render() {
-    const avatarUrl = `https:${this.props.auth.user.avatar}`;
+    const { dropdownToggle } = this.state;
+    const { avatar } = this.props.auth.user;
+
+    const avatarUrl = `https:${avatar}`;
+
     let titleBarDropdown;
-    if (this.state.dropdownToggle) {
+    if (dropdownToggle) {
       titleBarDropdown = <TitleBarDropdown />;
     }
+
     return (
       <div className="titleBar">
         <h1>

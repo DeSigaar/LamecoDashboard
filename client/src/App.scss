@@ -4,7 +4,9 @@
 @import "scss/abstracts/variables";
 
 //      /scss/base
+@import "scss/base/animations";
 @import "scss/base/buttons";
+@import "scss/base/card";
 @import "scss/base/customCheckmark";
 @import "scss/base/globals";
 @import "scss/base/inputs";
@@ -13,13 +15,23 @@
 @import "scss/base/reset";
 @import "scss/base/shadows";
 @import "scss/base/typography";
-@import "scss/base/animations";
 
 //      /scss/components/bars
 @import "scss/components/bars/sideNav";
+@import "scss/components/bars/snackbar";
 @import "scss/components/bars/titleBar";
 @import "scss/components/bars/titleBarDropdown";
-@import "scss/components/bars/snackbar";
+
+//      /scss/components/dashboard
+@import "scss/components/dashboard/dashboard";
+@import "scss/components/dashboard/dashboardCard";
+@import "scss/components/dashboard/dashboardCardHolder";
+@import "scss/components/dashboard/dashboardGrid";
+
+//      /scss/components/dashboardEdit
+@import "scss/components/dashboardEdit/dashboardEdit";
+@import "scss/components/dashboardEdit/editDashboardTitle";
+@import "scss/components/dashboardEdit/widgetSelecter";
 
 //      /scss/components/gridItems
 @import "scss/components/gridItems/clock";
@@ -27,19 +39,6 @@
 @import "scss/components/gridItems/weather";
 @import "scss/components/gridItems/widgets";
 
-// User components
-@import "scss/components/user/login";
+//      /scss/components/user
 @import "scss/components/user/adminProfile";
-
-// Popup
-@import "scss/components/card";
-
-// Dashboard
-@import "scss/components/dashboard/dashboardCard";
-@import "scss/components/dashboard/dashboardCardHolder";
-@import "scss/components/dashboard/dashboardGrid";
-
-//      /scss/components/dashboardEdit
-@import "scss/components/dashboardEdit/editDashboardTitle";
-@import "scss/components/dashboardEdit/widgetSelecter";
-@import "scss/components/dashboardEdit/dashboardEdit";
+@import "scss/components/user/login";

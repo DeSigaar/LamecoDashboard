@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import PropTypes from "prop-types";
+import axios from "axios";
 import {
   loginUser,
   forgotPassword,
   updateUserWithEmail,
   clearErrors
 } from "../../actions/authActions";
-import axios from "axios";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 import LoginImage from "./LoginImage";
 import LoginError from "./container/LoginError";
 import LoginForm from "./container/LoginForm";
@@ -36,19 +36,20 @@ class Login extends Component {
     this.loginContainerContent = "";
   }
 
-  componentWillMount() {
+  componentWillMount = () => {
     const { history } = this.props;
     const { email, time } = this.state;
     const location = history.location.pathname;
+
     // Redirect if no data is found for password reset sent and success
     if (location === "/sent-password-reset" && email === "" && time === "") {
       history.push("/login");
     } else if (location === "/password-reset-success" && email === "") {
       history.push("/login");
     }
-  }
+  };
 
-  componentDidMount() {
+  componentDidMount = () => {
     const { history, auth, match } = this.props;
     const location = history.location.pathname;
 
@@ -81,17 +82,19 @@ class Login extends Component {
         }
       });
     }
-  }
+  };
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = nextProps => {
+    const { history } = this.props;
+
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/");
+      history.push("/");
     }
 
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
-  }
+  };
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -99,11 +102,13 @@ class Login extends Component {
 
   onForgot = e => {
     e.preventDefault();
-    this.setState({ forgotpassword: "", reverse: "" });
-    this.props.clearErrors();
+    const { clearErrors, history } = this.props;
 
-    const { history } = this.props;
+    this.setState({ forgotpassword: "", reverse: "" });
+    clearErrors();
+
     const location = history.location.pathname;
+
     switch (true) {
       case location.startsWith("/forgot-password"):
       case location.startsWith("/sent-password-reset"):
@@ -125,7 +130,9 @@ class Login extends Component {
 
   onSubmitForgot = e => {
     e.preventDefault();
-    this.props.clearErrors();
+    const { clearErrors, forgotPassword, history } = this.props;
+
+    clearErrors();
 
     const currentDate = new Date();
     let validDate = new Date(currentDate);
@@ -138,9 +145,11 @@ class Login extends Component {
 
     this.setState({ time: passTime });
 
-    this.props.forgotPassword(
-      { email: this.state.email, time: validDate },
-      this.props.history,
+    const { email } = this.state;
+
+    forgotPassword(
+      { email, time: validDate },
+      history,
       () => this.changeReverse(""),
       () => this.changeReverse("reverse")
     );
@@ -152,22 +161,18 @@ class Login extends Component {
 
   onSubmitPassword = e => {
     e.preventDefault();
-
     const { email, newPassword1, newPassword2 } = this.state;
+    const { updateUserWithEmail, history } = this.props;
 
-    const resetData = { email, newPassword1, newPassword2 };
-
-    this.props.updateUserWithEmail(resetData, this.props.history);
+    updateUserWithEmail({ email, newPassword1, newPassword2 }, history);
   };
 
   onSubmitLogin = e => {
     e.preventDefault();
-
     const { info, password, remember_me } = this.state;
+    const { loginUser } = this.props;
 
-    const userData = { info, password, remember_me };
-
-    this.props.loginUser(userData);
+    loginUser({ info, password, remember_me });
   };
 
   setupContainerContent = location => {
@@ -246,7 +251,10 @@ class Login extends Component {
   };
 
   render() {
-    this.setupContainerContent(this.props.history.location.pathname);
+    const { forgotpassword } = this.state;
+    const { history } = this.props;
+
+    this.setupContainerContent(history.location.pathname);
 
     return (
       <div className="login">
@@ -259,7 +267,7 @@ class Login extends Component {
           >
             {this.loginContainerContent}
           </CSSTransition>
-          <LoginError error={this.state.forgotpassword} />
+          <LoginError error={forgotpassword} />
         </TransitionGroup>
       </div>
     );

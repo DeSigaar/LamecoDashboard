@@ -1,14 +1,18 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { getCompanies, deleteCompany } from "../../actions/companyActions";
 import TitleBar from "../bars/TitleBar";
 import SideNav from "../bars/SideNav";
 import SideNavContainer from "../bars/SideNavContainer";
 import DashboardCard from "../dashboard/DashboardCard";
 import DashboardGrid from "../dashboard/DashboardGrid";
-import { getCompanies, deleteCompany } from "../../actions/companyActions";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import Loader from "../common/Loader";
 import Snackbar from "../common/Snackbar";
+import Popup from "../popups/Popup";
+
+const portalContainer = document.getElementById("card");
 
 class Dashboard extends Component {
   constructor(props) {
@@ -18,15 +22,44 @@ class Dashboard extends Component {
       loaded: false,
       companyLoading: false,
       init: false,
-      active: false
+      active: false,
+      active2: false,
+      popupState: false
     };
 
-    if (!this.state.init) {
-      this.props.getCompanies();
+    const { init } = this.state;
+    const { getCompanies } = this.props;
+
+    if (!init) {
+      getCompanies();
     }
   }
+
+  componentWillReceiveProps = nextProps => {
+    if (
+      nextProps.company.company !== null &&
+      nextProps.company.company.companies
+    ) {
+      this.setState({
+        list: nextProps.company.company.companies
+      });
+    }
+  };
+
+  componentDidMount = () => {
+    const { getCompanies } = this.props;
+    this.interval = setInterval(() => {
+      getCompanies();
+    }, 1000);
+  };
+
+  componentWillUnmount = () => {
+    clearInterval(this.interval);
+  };
+
   toggleSnackbar = () => {
-    if (!this.state.active) {
+    const { active } = this.state;
+    if (!active) {
       this.setState({
         active: true
       });
@@ -37,24 +70,66 @@ class Dashboard extends Component {
       }, 3000);
     }
   };
+
   onCompanyDelete = i => {
-    this.props.deleteCompany(i);
-    this.props.history.push("/");
-    this.props.getCompanies();
+    const { deleteCompany, history, getCompanies } = this.props;
+
+    deleteCompany(i);
+    history.push("/");
+    getCompanies();
     this.toggleSnackbar();
   };
 
-  componentWillReceiveProps(nextProps) {
+  onCompanyEdit = (id, name, handle) => {
+    this.setState({ popupState: !this.state.popupState });
+
+    this.PopUpContent = ReactDOM.createPortal(
+      <Popup
+        title="Edit Company"
+        id={id}
+        name={name}
+        handle={handle}
+        closePopup={this.onPopupExit}
+      />,
+      portalContainer
+    );
+  };
+
+  onDashboardAdd = id => {
+    this.setState({ popupState: !this.state.popupState });
+
+    this.PopUpContent = ReactDOM.createPortal(
+      <Popup
+        title="Add Dashboard"
+        companyId={id}
+        companyList={this.state.list}
+        closePopup={this.onPopupExit}
+      />,
+      portalContainer
+    );
+  };
+
+  onPopupExit = () => {
+    this.setState({
+      popupState: !this.state.popupState
+    });
+    this.PopUpContent = undefined;
+  };
+
+  componentWillReceiveProps = nextProps => {
+    const { companyLoading } = this.state;
+    const { getCompanies } = this.props;
+
     this.setState({
       init: true
     });
     if (nextProps.company.company === null) {
-      if (!this.state.companyLoading) {
+      if (!companyLoading) {
         this.setState({
           companyLoading: true
         });
         setTimeout(this.setState({ companyLoading: false }), 10000);
-        this.props.getCompanies();
+        getCompanies();
       }
     } else if (
       nextProps.company.company !== null &&
@@ -65,7 +140,8 @@ class Dashboard extends Component {
         loaded: true
       });
     }
-  }
+  };
+
   renderDashboardList = company => {
     let elements;
     if (company["dashboards"].length <= 0) {
@@ -85,14 +161,39 @@ class Dashboard extends Component {
     }
     return <div className="cardHolder">{elements}</div>;
   };
+
   renderCompanyList = () => {
+    const { list, active } = this.state;
+
     return (
       <div>
-        {this.state.list.map((company, i) => {
+        {list.map((company, i) => {
           return (
             <div key={i}>
               <div className="dashboardTitle">
                 <h2>{company.name}</h2>
+                <button className="iconOnly">
+                  <i
+                    className="material-icons"
+                    onClick={() => this.onDashboardAdd(company.id)}
+                  >
+                    add
+                  </i>
+                </button>
+                <button className="iconOnly">
+                  <i
+                    className="material-icons"
+                    onClick={() =>
+                      this.onCompanyEdit(
+                        company.id,
+                        company.name,
+                        company.handle
+                      )
+                    }
+                  >
+                    edit
+                  </i>
+                </button>
                 <button
                   className="iconOnly"
                   onClick={() => this.onCompanyDelete(company.id)}
@@ -104,15 +205,18 @@ class Dashboard extends Component {
             </div>
           );
         })}
-        {this.state.active && <Snackbar text="Company Deleted" />}
+        {active && <Snackbar text="Company Deleted" />}
       </div>
     );
   };
+
   render() {
+    const { loaded } = this.state;
+
     document.title = "Dashboard | Laméco Dashboard";
 
     let dashboardContent;
-    if (this.state.loaded) {
+    if (loaded) {
       dashboardContent = this.renderCompanyList();
     } else {
       dashboardContent = (
@@ -129,9 +233,9 @@ class Dashboard extends Component {
           <SideNavContainer>
             <SideNav />
           </SideNavContainer>
-
           <DashboardGrid>{dashboardContent}</DashboardGrid>
         </div>
+        {this.PopUpContent}
       </div>
     );
   }
@@ -141,9 +245,11 @@ Dashboard.propTypes = {
   getCompanies: PropTypes.func.isRequired,
   deleteCompany: PropTypes.func.isRequired
 };
+
 const mapStateToProps = state => ({
   company: state.company
 });
+
 export default connect(
   mapStateToProps,
   { getCompanies, deleteCompany }

@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin: 20px 0;
+  margin: 0 0 20px 0;
   i {
     color: $color-dark-white;
     cursor: pointer;
@@ -13,6 +13,51 @@
   .dashboardName {
     h5 {
       margin: 0;
+    }
+    div {
+      position: relative;
+      height: 25px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+    input {
+      width: 100%;
+      height: 25px;
+      border-bottom: 2px solid transparent;
+    }
+    input:focus {
+      border-bottom: 2px solid $color-red-transparent;
+    }
+    i {
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 1.2em;
+    }
+  }
+  .dashboardHandle {
+    h5 {
+      margin: 0;
+    }
+    div {
+      position: relative;
+      height: 25px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+    input {
+      width: 100%;
+      height: 25px;
+      border-bottom: 2px solid transparent;
+    }
+    input:focus {
+      border-bottom: 2px solid $color-red-transparent;
+    }
+    i {
+      position: absolute;
+      right: 0;
+      top: 0;
+      font-size: 1.2em;
     }
   }
 }

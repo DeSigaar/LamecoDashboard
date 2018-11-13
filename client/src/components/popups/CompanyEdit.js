@@ -1,20 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { addCompany, getCompanies } from "../../actions/companyActions";
+import { editCompany, getCompanies } from "../../actions/companyActions";
 import TextFieldGroup from "../common/TextField";
 import removeSpecial from "../../validation/remove-special";
 
-class Company extends Component {
+class CompanyEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: "",
       name: "",
       handle: "",
-      handleTyped: false,
       errors: {}
     };
   }
+
+  componentWillMount = () => {
+    const { id, name, handle } = this.props;
+    this.setState({ id, name, handle });
+  };
 
   componentWillReceiveProps = nextProps => {
     if (nextProps.errors) {
@@ -27,7 +32,6 @@ class Company extends Component {
   };
 
   onKeyUp = e => {
-    const { handleTyped } = this.state;
     let { name, value } = e.target;
 
     if (name === "name") {
@@ -36,16 +40,8 @@ class Company extends Component {
         value = value.trim().replace(/\s+/g, " ");
 
         this.setState({ name: value });
-        if (!handleTyped) {
-          value = removeSpecial(value);
-          value = value.trim().replace(/\s+/g, "-");
-
-          this.setState({ handle: value });
-        }
       }
     } else if (name === "handle") {
-      this.setState({ handleTyped: true });
-
       if (e.key !== " ") {
         value = removeSpecial(value);
         value = value.trim().replace(/\s+/g, "-");
@@ -57,10 +53,10 @@ class Company extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { name, handle } = this.state;
-    const { addCompany, closePopup, getCompanies } = this.props;
+    const { id, name, handle } = this.state;
+    const { editCompany, closePopup, getCompanies } = this.props;
 
-    addCompany({ name, handle }, () => closePopup());
+    editCompany({ id, name, handle }, () => closePopup());
     getCompanies();
   };
 
@@ -70,11 +66,12 @@ class Company extends Component {
   };
 
   render() {
-    const { errors, name, handle } = this.state;
+    const { errors, id, name, handle } = this.state;
 
     return (
       <div className="popupContainer">
         <form onSubmit={this.onSubmit}>
+          <input type="hidden" name="id" value={id} />
           <div className="middleForm">
             <div className="formField">
               <p>Name</p>
@@ -103,7 +100,7 @@ class Company extends Component {
           </div>
           <div>
             <button className="btn" type="submit">
-              <span>Add</span>
+              <span>Edit</span>
             </button>
             <button className="btn" onClick={this.handleClick}>
               <span>Cancel</span>
@@ -115,8 +112,8 @@ class Company extends Component {
   }
 }
 
-Company.propTypes = {
-  addCompany: PropTypes.func.isRequired,
+CompanyEdit.propTypes = {
+  editCompany: PropTypes.func.isRequired,
   getCompanies: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -128,5 +125,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addCompany, getCompanies }
-)(Company);
+  { editCompany, getCompanies }
+)(CompanyEdit);

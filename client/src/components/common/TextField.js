@@ -8,6 +8,7 @@ const TextField = ({
   error,
   type,
   onChange,
+  onKeyUp,
   autoComplete
 }) => {
   return (
@@ -17,6 +18,7 @@ const TextField = ({
         name={name}
         placeholder={placeholder}
         onChange={onChange}
+        onKeyUp={onKeyUp}
         value={value}
         autoComplete={autoComplete}
       />
@@ -31,7 +33,8 @@ TextField.propTypes = {
   value: PropTypes.string,
   error: PropTypes.string,
   type: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
+  onKeyUp: PropTypes.func,
   autoComplete: PropTypes.string
 };
 

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { getCurrentProfile, addUser } from "../../actions/authActions";
 import TitleBar from "../bars/TitleBar";
 import TextFieldGroup from "../common/TextField";
-import { getCurrentProfile, addUser } from "../../actions/authActions";
 
 class UpdateProfile extends Component {
   constructor(props) {
@@ -18,21 +18,23 @@ class UpdateProfile extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = nextProps => {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
-  }
+  };
+
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
   onSubmit = e => {
     e.preventDefault();
-
     const { name, email, password, password2, username } = this.state;
+    const { user, history, addUser } = this.props;
 
     const profileData = {
-      id: this.props.user._id,
+      id: user._id,
       name,
       email,
       password,
@@ -40,21 +42,18 @@ class UpdateProfile extends Component {
       username
     };
 
-    this.props.addUser(profileData, this.props.history);
-    alert("User created??");
+    addUser(profileData, history);
   };
+
   render() {
     const { errors, name, email, password, password2, username } = this.state;
     const { history } = this.props;
+
     return (
       <div className="updateProfile">
         <TitleBar />
         <div className="profileContainer">
-          {/* Back button */}
-          <div
-            className="backButton"
-            onClick={() => history.push("/")}
-          >
+          <div className="backButton" onClick={() => history.push("/")}>
             <button className="btn icon red">
               <i className="material-icons">arrow_back</i>
               <span>Back</span>

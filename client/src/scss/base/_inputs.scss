@@ -12,6 +12,7 @@ input[type="email"] {
   }
   &.dashboardEdit {
     border-bottom: none;
+    height: 24px;
     &::placeholder {
       color: $color-grey;
     }

@@ -10,10 +10,11 @@ module.exports = function validateCompanyInput(data) {
     errors.name = "Name field is required";
   } else if (
     !Validator.isLength(data.name, {
-      min: 6
+      min: 3,
+      max: 30
     })
   ) {
-    errors.name = "Name must be at least 6 characters";
+    errors.name = "Name must be between 3 and 30 characters";
   }
 
   // Check for anything wrong with the handle
@@ -26,7 +27,7 @@ module.exports = function validateCompanyInput(data) {
       max: 30
     })
   ) {
-    errors.handle = "Handle must be between 6 and 30 characters";
+    errors.handle = "Handle must be between 3 and 30 characters";
   }
 
   return {
