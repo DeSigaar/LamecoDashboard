@@ -7,11 +7,11 @@ const removeSpecial = value => {
   var res = "";
   for (var i = 0; i < lower.length; ++i) {
     if (allowed.indexOf(lower[i]) > -1) {
+      res += value[i];
+    } else {
       if (lower[i] !== upper[i] || lower[i].trim() === "") {
         res += value[i];
       }
-    } else {
-      res += value[i];
     }
   }
   return res;

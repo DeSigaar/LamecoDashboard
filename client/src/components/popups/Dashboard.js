@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addDashboard, getCompanies } from "../../actions/companyActions";
 import TextFieldGroup from "../common/TextField";
+import isEmpty from "../../validation/is-empty";
 import removeSpecial from "../../validation/remove-special";
 
 class Dashboard extends Component {
@@ -24,7 +25,10 @@ class Dashboard extends Component {
   };
 
   componentDidMount = () => {
-    this.handleSelectClick(this.state.companyId);
+    const { companyId } = this.state;
+    if (!isEmpty(companyId)) {
+      this.handleSelectClick(companyId);
+    }
   };
 
   componentWillReceiveProps = nextProps => {
@@ -91,8 +95,13 @@ class Dashboard extends Component {
     });
 
     // Highlight item in list
-    const selectedItem = document.getElementById(companyId);
-    selectedItem.classList.add("selected");
+    if (!isEmpty(companyId)) {
+      const selectedItem = document.getElementById(companyId);
+
+      if (!isEmpty(selectedItem)) {
+        selectedItem.classList.add("selected");
+      }
+    }
   };
 
   renderCompanyList = () => {
