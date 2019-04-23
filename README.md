@@ -32,7 +32,7 @@ Make sure you have Node.js installed. If you are unsure if node is installed, ru
 Clone this repository to your local machine and move to the new folder.
 
 ```
-$ git clone https://github.com/MaxAltena/LamecoDashboard.git
+$ git clone https://github.com/de-sigaar/LamecoDashboard.git
 $ cd LamecoDashboard
 ```
 
@@ -85,4 +85,4 @@ The API documentation for the API used within the application can be found in ou
 - Mike Hendriks - [GitHub](https://github.com/mike-hendriks)
 - Bart van de Klundert - [GitHub](https://github.com/Bartvdklu)
 
-See the whole list of [contributors](https://github.com/MaxAltena/LamecoDashboard/contributors) who participated in this project.
+See the whole list of [contributors](https://github.com/de-sigaar/LamecoDashboard/contributors) who participated in this project.
