@@ -9,7 +9,7 @@
     "url": "git+https://github.com/MaxAltena/LamecoDashboard.git"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "concurrently": "^5.1.0",
